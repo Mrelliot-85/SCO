@@ -3,6 +3,7 @@ _broken_www_backup/
 _recovery_before_backendfix_20260709/
 _recovery_before_fix_20260709-183037/
 backup/
+_snapshots/
 *.dcu
 *.exe
 *.identcache
