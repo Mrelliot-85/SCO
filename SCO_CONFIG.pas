@@ -1,4 +1,4 @@
-unit SCO_CONFIG;
+﻿unit SCO_CONFIG;
 interface
 uses
   System.SysUtils, System.Classes, System.IniFiles;
@@ -27,6 +27,7 @@ type
     BonAutoDruck: Boolean;
     BonDrucker: string;
     BonBreiteMM: Integer;
+    BonRandLinksMM: Double;
     TSEAktiv: Boolean;
     TSEProvider: string;
     TSEDevicePath: string;
@@ -210,6 +211,9 @@ begin
     BonAutoDruck    := Ini.ReadInteger('Bon', 'AutoDruck', 0) = 1;
     BonDrucker      := Ini.ReadString('Bon', 'Drucker', '');
     BonBreiteMM     := Ini.ReadInteger('Bon', 'BreiteMM', 80);
+    BonRandLinksMM  := Ini.ReadFloat('Bon', 'RandLinksMM', 0);
+    if BonRandLinksMM <= 0 then
+      if BonBreiteMM <= 58 then BonRandLinksMM := 8 else BonRandLinksMM := 3;
     TSEAktiv       := Ini.ReadInteger('TSE', 'Aktiv', 0) = 1;
     TSEProvider    := Ini.ReadString('TSE', 'Provider', 'Swissbit');
     TSEDevicePath  := Ini.ReadString('TSE', 'DevicePath', '');
@@ -298,7 +302,7 @@ begin
   V := TJSONObject.ParseJSONValue(JsonText);
   try
     if not (V is TJSONObject) then
-      raise Exception.Create('Ung�ltige JSON-Daten');
+      raise Exception.Create('Ungueltige JSON-Daten');
     Root := TJSONObject(V);
     Theme := Root.GetValue<TJSONObject>('theme');
     Payment := Root.GetValue<TJSONObject>('payment');
@@ -334,6 +338,7 @@ begin
       Ini.WriteInteger('Bon', 'AutoDruck', Ord(JsonBool(Receipt, 'autoPrint', BonAutoDruck)));
       Ini.WriteString('Bon', 'Drucker', JsonStr(Receipt, 'printer', BonDrucker));
       Ini.WriteInteger('Bon', 'BreiteMM', StrToIntDef(JsonStr(Receipt, 'widthMm', IntToStr(BonBreiteMM)), BonBreiteMM));
+      Ini.WriteFloat('Bon', 'RandLinksMM', StrToFloatDef(StringReplace(JsonStr(Receipt, 'leftMarginMm', FloatToStr(BonRandLinksMM)), '.', ',', [rfReplaceAll]), BonRandLinksMM));
       Ini.WriteString('EAN', 'Regeln', JsonStr(Root, 'eanRules', EANRules));
       Ini.WriteInteger('TSE', 'Aktiv', Ord(JsonBool(TSE, 'active', TSEAktiv)));
       Ini.WriteString('TSE', 'Provider', JsonStr(TSE, 'provider', TSEProvider));
@@ -440,7 +445,8 @@ begin
       '"receipt":{' +
         '"autoPrint":' + BoolJson(BonAutoDruck) + ',' +
         '"printer":"' + JS(BonDrucker) + '",' +
-        '"widthMm":' + IntToStr(BonBreiteMM) +
+        '"widthMm":' + IntToStr(BonBreiteMM) + ',' +
+        '"leftMarginMm":' + StringReplace(FormatFloat('0.0', BonRandLinksMM), ',', '.', [rfReplaceAll]) +
       '},' +
       '"tse":{' +
         '"active":' + BoolJson(TSEAktiv) + ',' +

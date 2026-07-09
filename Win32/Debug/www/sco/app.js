@@ -1,4 +1,4 @@
-const state = {
+﻿const state = {
   page: 'start',
   items: [],
   groups: [],
@@ -27,6 +27,8 @@ const state = {
   ratings: [5, 5, 5, 5],
   scanMessage: 'Scanner bereit',
   notice: null,
+  exitAlarm: null,
+  exitAlarmTimer: null,
   nextRowId: 1,
   lastRfidEventId: 0,
   rfidSessionActive: false,
@@ -47,10 +49,14 @@ const state = {
     payment_customer: 0,
     payment_coupon: 0,
     bon_auto_print: 0,
+    receipt_width_mm: 80,
     rating_active: 1,
     demo_mode: 0,
     rfid_active: 0,
     rfid_tag_length: 24,
+    rfid_exit_alarm_seconds: 20,
+    rfid_exit_alarm_system_beep: 1,
+    rfid_exit_alarm_sound: '',
     rating_questions: [
       'Wie zufrieden sind Sie mit unserem Sortiment?',
       'Wie zufrieden sind Sie mit der Abwicklung des Zahlvorgangs?',
@@ -213,8 +219,14 @@ async function loadConfig(){
     if(c.rfid){
       state.config.rfid_active = c.rfid.active ? 1 : 0;
       state.config.rfid_tag_length = Number(c.rfid.tagLength || 24);
+      state.config.rfid_exit_alarm_seconds = Number(c.rfid.exitAlarmSeconds || 20);
+      state.config.rfid_exit_alarm_system_beep = c.rfid.exitAlarmSystemBeep !== false ? 1 : 0;
+      state.config.rfid_exit_alarm_sound = c.rfid.exitAlarmSound || '';
     }
-    if(c.receipt) state.config.bon_auto_print = c.receipt.autoPrint ? 1 : 0;
+    if(c.receipt){
+      state.config.bon_auto_print = c.receipt.autoPrint ? 1 : 0;
+      state.config.receipt_width_mm = Number(c.receipt.widthMm || 80);
+    }
     if(c.rating){
       state.config.rating_active = c.rating.active ? 1 : 0;
       if(Array.isArray(c.rating.questions)) state.config.rating_questions = c.rating.questions;
@@ -394,7 +406,8 @@ function receiptHtml(){
   const preview = state.receiptPreview ? `<pre class="bonText">${esc(state.receiptPreview)}</pre>` : `<div class="bonLoading">${state.receiptPreviewLoading ? 'Bonvorschau wird geladen ...' : 'Bonvorschau noch nicht geladen.'}</div>`;
   const status = state.receiptStatus ? `<div class="receiptNotice ${state.receiptStatus.startsWith('FEHLER') ? 'err' : 'ok'}">${esc(state.receiptStatus)}</div>` : '';
   const title = state.receiptStatus && !state.receiptStatus.startsWith('FEHLER') ? 'Bon wurde gedruckt' : 'Zahlung erfolgreich';
-  return `<section class="receiptCard card"><div class="success">OK</div><h1>${title}</h1><p>Dieser Bon entspricht dem Ausdruck.</p>${status}<div class="bonWrap"><div class="bon">${preview}</div></div><div class="receiptBtns"><button data-action="refreshReceiptPreview">Druckvorschau aktualisieren</button><button class="greenBtn" data-action="print">Bon drucken</button></div>${state.config.rating_active ? `<button class="rateBtn" data-page="rating">Einkauf bewerten</button>` : ''}<button class="plainBtn" data-action="newStart">Neuen Einkauf starten</button></section>`;
+  const width = Math.max(58, Math.min(80, Number(state.config.receipt_width_mm || 80)));
+  return `<section class="receiptCard card receiptW${width <= 58 ? '58' : '80'}"><div class="success">OK</div><h1>${title}</h1><p>Dieser Bon entspricht dem Ausdruck.</p>${status}<div class="bonWrap"><div class="bon">${preview}</div></div><div class="receiptBtns"><button data-action="refreshReceiptPreview">Druckvorschau aktualisieren</button><button class="greenBtn" data-action="print">Bon drucken</button></div>${state.config.rating_active ? `<button class="rateBtn" data-page="rating">Einkauf bewerten</button>` : ''}<button class="plainBtn" data-action="newStart">Neuen Einkauf starten</button></section>`;
 }
 
 function bonHtml(){
@@ -412,6 +425,7 @@ function ratingHtml(){
 function modalHtml(){
   if(state.adminPopup) return adminPinModal();
   if(state.paymentBusy) return paymentWaitModal();
+  if(state.exitAlarm) return exitAlarmModal();
   if(state.notice) return noticeModal();
   if(state.modal === 'products') return productModal();
   if(state.modal === 'qty') return qtyModal();
@@ -427,6 +441,34 @@ function showNotice(title, message){
 function noticeModal(){
   const n = state.notice || {};
   return `<div class="modal noticeOverlay"><div class="noticeBox card"><div class="noticeIcon">!</div><h1>${esc(n.title || 'Hinweis')}</h1><p>${esc(n.message || '')}</p><button class="noticeOk" data-action="noticeOk">OK, verstanden</button></div></div>`;
+}
+
+let exitAlarmSoundStamp = 0;
+function showExitAlarm(item, options = {}){
+  const seconds = Math.max(5, Math.min(60, Number(options.seconds || state.config.rfid_exit_alarm_seconds || 20)));
+  const entry = { name:item?.name || 'Artikel', plu:item?.plu || '', tag:item?.tag || '' };
+  const current = state.exitAlarm || { items:[], started:Date.now(), seconds };
+  if(!current.items.some(x => String(x.tag || '') === String(entry.tag || '') && String(x.plu || '') === String(entry.plu || ''))) current.items.push(entry);
+  current.seconds = seconds;
+  current.started = Date.now();
+  state.exitAlarm = current;
+  if(state.exitAlarmTimer) clearTimeout(state.exitAlarmTimer);
+  state.exitAlarmTimer = setTimeout(()=>{ state.exitAlarm = null; state.exitAlarmTimer = null; render(); }, seconds * 1000);
+  playExitAlarmSound(options);
+  render();
+}
+function playExitAlarmSound(options = {}){
+  const now = Date.now();
+  if(now - exitAlarmSoundStamp < 19000) return;
+  exitAlarmSoundStamp = now;
+  if(options.sound || state.config.rfid_exit_alarm_sound){ try{ new Audio('/api/rfid/alarm/sound?t=' + encodeURIComponent(now)).play().catch(()=>{}); }catch(e){} }
+  if(options.systemBeep || state.config.rfid_exit_alarm_system_beep){ try{ const ctx = new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.type='sine'; o.frequency.value=880; g.gain.value=.16; o.connect(g); g.connect(ctx.destination); o.start(); setTimeout(()=>{o.stop();ctx.close();},420); }catch(e){} }
+}
+function closeExitAlarm(){ if(state.exitAlarmTimer) clearTimeout(state.exitAlarmTimer); state.exitAlarmTimer = null; state.exitAlarm = null; render(); }
+function exitAlarmModal(){
+  const a = state.exitAlarm || { items:[] };
+  const items = a.items.map(x => `<li><strong>${esc(x.name)}</strong><span>${x.plu ? 'PLU ' + esc(x.plu) : ''}</span></li>`).join('');
+  return `<div class="modal exitAlarmOverlay"><div class="exitAlarmBox card"><div class="exitAlarmIcon">!</div><div class="exitAlarmKicker">Ausgangskontrolle</div><h1>Artikel nicht bezahlt</h1><p>Bitte pr&uuml;fen Sie den Einkauf. Folgende Artikel wurden an der Ausgangsantenne erkannt:</p><ul>${items}</ul><button class="exitAlarmOk" data-action="exitAlarmOk">OK, gepr&uuml;ft</button></div></div>`;
 }
 
 function adminPinModal(){
@@ -710,6 +752,7 @@ async function printReceipt(){
 
 function action(a){
   if(a === 'noticeOk'){ state.notice = null; render(); focusScanner(); }
+  if(a === 'exitAlarmOk'){ closeExitAlarm(); focusScanner(); }
   if(a === 'adminCancel'){ state.adminPopup = false; state.adminPin = ''; state.paymentMessage = ''; render(); focusScanner(); }
   if(a === 'adminBack'){ state.adminPin = state.adminPin.slice(0, -1); render(); }
   if(a === 'adminSubmit') submitAdminPin();
@@ -852,6 +895,10 @@ async function scanRFID(tag, antenna = 0){
     const j = await r.json();
     if(j.ok){
       const acceptedKey = tagKey(j.tag || key);
+      if(j.alarm){
+        showExitAlarm({ name:j.name, plu:j.plu, tag:acceptedKey }, { seconds:j.alarmSeconds, systemBeep:j.alarmSystemBeep, sound:j.alarmSound });
+        return;
+      }
       addItem({
         plu: j.plu,
         name: j.name,
@@ -866,7 +913,6 @@ async function scanRFID(tag, antenna = 0){
         tag: acceptedKey,
         image: BLANK_IMAGE
       });
-      if(j.alarm) state.scanMessage = 'RFID-Ausgang erkannt';
       return;
     }
     state.scanMessage = rfidCustomerMessage(j.message);

@@ -1,4 +1,4 @@
-﻿unit SCO_ReceiptService;
+unit SCO_ReceiptService;
 
 interface
 
@@ -454,15 +454,10 @@ begin
     try
       Printer.Canvas.Font.Name := 'Consolas';
       if SCOConfig.BonBreiteMM <= 58 then
-      begin
-        Printer.Canvas.Font.Size := 6;
-        X := MmToPrinterX(5.0);
-      end
+        Printer.Canvas.Font.Size := 6
       else
-      begin
         Printer.Canvas.Font.Size := 8;
-        X := MmToPrinterX(3.0);
-      end;
+      X := MmToPrinterX(SCOConfig.BonRandLinksMM);
       Y := MmToPrinterY(3.0);
       LineHeight := Printer.Canvas.TextHeight('Hg') + MmToPrinterY(0.6);
       Bottom := Printer.PageHeight - LineHeight - MmToPrinterY(3.0);
