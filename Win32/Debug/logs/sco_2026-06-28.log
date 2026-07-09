@@ -1,0 +1,365 @@
+﻿2026-06-28 18:32:12.849 [TRANSACTION] WEB SERVER START port=8090
+2026-06-28 18:32:12.852 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-28 18:32:12.861 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-28 18:32:13.567 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-28 18:32:15.598 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-28 18:32:15.656 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:32:16.258 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-06-28 18:32:16.346 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-06-28 18:32:16.524 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-06-28 18:32:16.570 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:32:16.851 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-06-28 18:32:16.900 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-06-28 18:32:20.547 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-06-28 18:32:22.459 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-06-28 18:32:22.470 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-06-28 18:32:22.775 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-06-28 18:32:27.047 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-28 18:32:27.608 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-28 18:32:29.001 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-28 18:32:29.830 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-06-28 18:32:29.831 [TRANSACTION] RFID TCP SERVER STOP
+2026-06-28 18:32:33.302 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-06-28 18:32:33.303 [TRANSACTION] PAY START type=zvt amount=3
+2026-06-28 18:32:33.313 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=3,00
+2026-06-28 18:32:33.315 [PAYMENT] ZVT DEMOMODUS AKTIV - Test=1 wird erzwungen
+2026-06-28 18:32:33.316 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=300 Lizenz=BJMKHDLDIEDFJJDGGEF Test=1 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-06-28 18:32:43.593 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:32:44.079 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:32:44.174 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:32:44.347 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:32:44.393 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:32:44.394 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:32:44.399 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:32:52.625 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:32:53.098 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 18:32:53.193 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 18:32:53.365 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 18:32:53.410 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:32:53.423 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:32:55.931 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:32:55.939 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:32:57.426 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:32:57.435 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:33:00.299 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:33:00.307 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:33:01.581 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:33:01.589 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:33:02.234 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:33:02.242 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:33:06.460 [PAYMENT] PAYMENT END OK=False Zahlart=ec Message=EC-Zahlung nicht erfolgreich: Karte nicht lesbar
+2026-06-28 18:33:24.888 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:33:24.901 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:33:25.154 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:33:25.217 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:33:25.218 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:33:25.529 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:35:05.878 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:35:05.888 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:43:57.081 [TRANSACTION] WEB SERVER START port=8090
+2026-06-28 18:43:57.084 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-28 18:43:57.095 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-28 18:43:57.803 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-28 18:43:59.417 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:43:59.857 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-28 18:44:00.105 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:44:00.322 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:44:00.369 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:44:00.430 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:44:00.432 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:44:00.437 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:44:09.409 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:44:09.422 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:44:09.660 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:44:09.738 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:44:09.770 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:44:10.082 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:44:11.270 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-28 18:44:11.343 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-28 18:44:11.572 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-28 18:44:11.573 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-28 18:44:13.556 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-28 18:44:26.474 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 18:44:26.791 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 18:44:26.792 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 18:44:27.120 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:44:27.129 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:44:33.401 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:44:33.609 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 18:44:33.996 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 18:44:34.010 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 18:44:34.258 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:44:34.266 [ERROR] STATISTICS ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -206
+Column unknown
+POSITIONS
+At line 1, column 125
+2026-06-28 18:49:06.404 [TRANSACTION] WEB SERVER START port=8090
+2026-06-28 18:49:06.406 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-28 18:49:06.416 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-28 18:49:07.126 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-28 18:49:09.178 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-28 18:49:10.258 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:49:10.737 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:49:10.859 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:49:10.982 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:49:11.062 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:49:11.063 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:49:11.067 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:49:12.862 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:49:12.924 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:49:13.126 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:49:13.174 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:49:13.180 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:49:13.188 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:49:14.581 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:49:14.885 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:49:14.901 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:49:14.903 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:49:14.904 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:49:15.225 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:49:16.705 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:49:16.815 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:49:16.970 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:49:17.032 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:49:17.033 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:49:17.039 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:49:19.095 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:49:19.207 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:49:19.348 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:49:19.411 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:49:19.426 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:49:19.431 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:49:19.757 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-28 18:49:19.758 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-28 18:49:19.759 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-28 18:49:19.761 [ERROR] Interner Fehler bei /api/admin/article/lookups: EAccessViolation - Zugriffsverletzung bei Adresse 00809297 in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-28 18:49:22.403 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:49:22.415 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:49:22.668 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:49:22.731 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:49:22.745 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:49:23.042 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:49:23.372 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-28 18:49:23.386 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-28 18:49:23.387 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-28 18:49:23.414 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-28 18:49:29.486 [REQUEST] GET /api/admin/article/duplicate IP=127.0.0.1
+2026-06-28 18:49:29.516 [ERROR] ADMIN ARTICLE DUPLICATE ERROR: [FireDAC][Phys][FB]attempt to store duplicate value (visible to active transactions) in unique index "IDX_ARTIKEL1"
+Problematic key value is ("NL_KEY" = 10, "ELENO" = '       1')
+2026-06-28 18:50:24.644 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-28 18:50:24.668 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-28 18:50:24.948 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-28 18:50:24.962 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-28 18:50:26.329 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:26.435 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:26.595 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:26.643 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:26.644 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:26.649 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:28.463 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:28.574 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:28.715 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:28.777 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:28.779 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:28.783 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:29.784 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:29.877 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:30.034 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:30.110 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:30.125 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:30.130 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:30.995 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:31.119 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:31.257 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:31.321 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:31.323 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:31.327 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:32.161 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:32.286 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:32.426 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:32.487 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:32.489 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:32.494 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:33.637 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:33.760 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:33.901 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:33.963 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:33.978 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:33.982 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:35.637 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:35.776 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:35.898 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:35.961 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:35.975 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:35.979 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:36.302 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-28 18:50:36.303 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-28 18:50:36.316 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-28 18:50:36.324 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-28 18:50:36.327 [ERROR] ADMIN ARTICLE LIST ERROR: Zugriffsverletzung bei Adresse 007D644F in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-28 18:50:37.856 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:37.865 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:38.107 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:38.170 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:38.183 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:38.500 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:38.863 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:39.171 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:39.187 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:39.188 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:39.189 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:39.497 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:40.695 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:40.804 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:40.959 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:41.006 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:41.012 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:41.020 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:42.204 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:42.511 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:42.527 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:42.528 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:42.530 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:42.837 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:43.460 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:43.551 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:43.723 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:43.786 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:43.787 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:43.792 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:45.257 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:45.366 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:45.522 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:45.583 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:45.585 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:45.590 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:46.515 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:46.624 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:46.781 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:46.827 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:46.841 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:46.847 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:50:50.501 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:50:50.612 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:50:50.766 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:50:50.814 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:50:50.827 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:50:50.833 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:52:35.538 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:52:35.925 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-28 18:52:36.065 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-28 18:52:36.189 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-28 18:52:36.237 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-28 18:52:36.238 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-28 18:52:36.244 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-28 18:52:40.922 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 18:52:41.294 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 18:52:41.418 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 18:52:41.558 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 18:52:41.618 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:51.941 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:54.079 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:54.329 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:54.635 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:55.285 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:56.316 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:59.102 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:52:59.365 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 18:53:00.084 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:08:15.418 [TRANSACTION] WEB SERVER START port=8090
+2026-06-28 19:08:15.422 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-28 19:08:15.433 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-28 19:08:16.136 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-28 19:08:18.158 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-28 19:08:53.035 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 19:08:53.508 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 19:08:53.622 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 19:08:53.761 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 19:08:53.824 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:08:57.612 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:08:59.018 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:11:09.134 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:11:09.400 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:11:09.630 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:11:09.929 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:11:10.341 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:11:10.937 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:14:23.616 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:14:33.811 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 19:14:34.114 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 19:14:34.129 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 19:14:34.443 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:17:42.670 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 19:17:42.685 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 19:17:42.935 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 19:17:42.998 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:35:22.186 [TRANSACTION] WEB SERVER START port=8090
+2026-06-28 19:35:22.189 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-28 19:35:22.201 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-28 19:35:22.903 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-28 19:35:39.391 [TRANSACTION] WEB SERVER START port=8090
+2026-06-28 19:35:39.394 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-28 19:35:39.405 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-28 19:35:40.107 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-28 19:35:40.869 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-28 19:35:41.428 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-28 19:35:41.536 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-28 19:35:41.680 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-28 19:35:41.741 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-28 19:35:42.111 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-28 22:07:45.365 [TRANSACTION] WEB SERVER START port=8090
+2026-06-28 22:07:45.368 [ERROR] WEB SERVER START FEHLER: EIdCouldNotBindSocket - Socket konnte nicht gebunden werden.

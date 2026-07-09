@@ -1,0 +1,96 @@
+﻿2026-06-19 11:38:07.639 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 11:38:07.641 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 11:38:09.686 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 11:39:07.556 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 11:39:07.557 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 11:39:09.599 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 11:43:01.926 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 11:43:01.927 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 11:43:03.976 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 11:48:48.179 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 11:48:48.181 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 11:48:50.219 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 11:58:07.383 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 11:58:07.384 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 11:58:09.417 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 11:59:05.443 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 11:59:05.444 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 11:59:07.482 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:03:39.113 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:03:39.114 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:03:41.153 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:19:39.057 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:19:39.058 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:19:41.101 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:25:16.316 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:25:16.317 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:25:18.369 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:34:18.028 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:34:18.029 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:34:20.062 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:35:27.849 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:35:27.850 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:35:29.900 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:37:12.979 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:37:12.980 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:37:15.018 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:39:39.544 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:39:39.545 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:39:41.588 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:53:31.627 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:53:31.628 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:53:33.681 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 12:56:32.646 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 12:56:32.647 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 12:56:34.701 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 13:00:33.002 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 13:00:33.004 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 13:00:35.037 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 13:05:39.474 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 13:05:39.475 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 13:05:41.523 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 13:51:26.424 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 13:51:26.427 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 13:51:28.477 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 14:06:42.096 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 14:06:42.097 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 14:06:44.149 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 14:09:56.579 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 14:09:56.581 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 14:09:58.627 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 15:56:57.314 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 15:56:57.315 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 15:56:59.365 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 15:58:12.940 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 15:58:12.941 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 15:58:14.986 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 15:59:40.089 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 15:59:40.090 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 15:59:42.136 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-19 16:01:28.885 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-19 16:01:28.886 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-19 16:01:30.929 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+

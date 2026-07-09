@@ -1,0 +1,389 @@
+﻿2026-06-16 12:35:53.053 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-16 12:35:55.320 [REQUEST] GET / IP=127.0.0.1
+2026-06-16 12:35:55.429 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-06-16 12:35:55.583 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-06-16 12:35:55.747 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-06-16 12:35:55.754 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 12:35:56.075 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-06-16 12:35:56.090 [REQUEST] GET /favicon.ico IP=127.0.0.1
+2026-06-16 12:35:56.091 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\favicon.ico
+2026-06-16 12:35:56.324 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 12:35:56.527 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 12:35:56.650 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-06-16 12:36:15.865 [REQUEST] GET /api/labeling IP=127.0.0.1
+2026-06-16 12:36:16.183 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 12:36:16.192 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:36:16.193 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.css
+2026-06-16 12:36:16.444 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:36:16.445 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.js
+2026-06-16 12:36:54.497 [REQUEST] GET /labeling IP=127.0.0.1
+2026-06-16 12:36:54.498 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling
+2026-06-16 12:37:04.592 [REQUEST] GET /api/labeling IP=127.0.0.1
+2026-06-16 12:37:04.605 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 12:37:04.916 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:37:04.917 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.css
+2026-06-16 12:37:04.930 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:37:04.931 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.js
+2026-06-16 12:37:09.045 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:37:09.046 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.css
+2026-06-16 12:37:09.069 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:37:09.070 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:38:55.691 [REQUEST] GET /labeling IP=127.0.0.1
+2026-06-16 12:38:55.693 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling
+2026-06-16 12:38:56.024 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:38:56.025 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:38:58.095 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-16 12:38:58.111 [REQUEST] GET /admin/admin.css IP=127.0.0.1
+2026-06-16 12:38:58.419 [REQUEST] GET /admin/admin.js IP=127.0.0.1
+2026-06-16 12:38:58.450 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 12:38:58.731 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:38:58.733 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:39:00.349 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:39:00.351 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:39:00.981 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-06-16 12:39:00.997 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-06-16 12:39:01.311 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-06-16 12:39:01.343 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 12:39:01.626 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-06-16 12:39:01.655 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 12:39:01.951 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 12:39:01.978 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:39:01.979 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:39:02.294 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-06-16 12:39:03.011 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:39:03.013 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:39:08.896 [REQUEST] GET /api/labeling IP=127.0.0.1
+2026-06-16 12:39:08.908 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 12:39:09.211 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:39:09.212 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.css
+2026-06-16 12:39:09.241 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:39:09.243 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.js
+2026-06-16 12:39:09.257 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:39:09.258 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:41:20.764 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-16 12:41:24.291 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 12:41:24.303 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:41:24.304 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.css
+2026-06-16 12:41:24.554 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:41:24.555 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.js
+2026-06-16 12:41:24.632 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:41:24.633 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:41:48.538 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 12:41:48.855 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:41:48.856 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:41:48.857 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.css
+2026-06-16 12:41:48.858 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.js
+2026-06-16 12:41:48.901 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:41:48.902 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:44:02.862 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:44:02.863 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.css
+2026-06-16 12:44:02.902 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:44:02.903 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:44:42.642 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:44:42.643 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\labeling\labeling.js
+2026-06-16 12:44:42.969 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:44:42.971 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:46:58.357 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:46:58.390 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:46:58.391 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:47:01.263 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 12:47:01.588 [REQUEST] GET /labeling/labeling.css IP=127.0.0.1
+2026-06-16 12:47:01.590 [REQUEST] GET /labeling/labeling.js IP=127.0.0.1
+2026-06-16 12:47:01.619 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 12:47:01.851 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-16 12:47:01.913 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-06-16 12:47:01.914 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-06-16 12:47:01.935 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 12:47:02.268 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 12:47:02.270 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 12:47:02.271 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 12:47:24.349 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 12:47:26.180 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 12:47:45.546 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 12:59:30.110 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-16 12:59:30.111 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-16 12:59:32.147 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-16 13:00:19.599 [REQUEST] GET / IP=127.0.0.1
+2026-06-16 13:00:19.612 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-06-16 13:00:19.861 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-06-16 13:00:19.938 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-06-16 13:00:19.945 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 13:00:20.263 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-06-16 13:00:20.526 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:20.651 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:20.851 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:20.975 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:21.175 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:21.298 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:21.502 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:21.626 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:21.828 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:21.952 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:22.152 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:22.277 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:22.479 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:22.590 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:22.808 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:22.918 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:23.137 [REQUEST] GET /api/products IP=127.0.0.1
+2026-06-16 13:00:23.246 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-06-16 13:00:24.267 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 13:00:24.595 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-16 13:00:24.596 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-16 13:00:24.847 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 13:00:24.909 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-16 13:00:24.912 [TRANSACTION] LABEL GROUPS
+2026-06-16 13:00:25.158 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:25.160 [TRANSACTION] LABEL PRODUCTS WG=12
+2026-06-16 13:00:25.236 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:27.812 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:27.814 [TRANSACTION] LABEL PRODUCTS WG=16
+2026-06-16 13:00:28.136 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:28.150 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:28.166 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:28.459 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:28.460 [TRANSACTION] LABEL PRODUCTS WG=7
+2026-06-16 13:00:28.776 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:28.777 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:29.109 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:29.110 [TRANSACTION] LABEL PRODUCTS WG=1
+2026-06-16 13:00:29.443 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:29.445 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:29.457 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:29.473 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:29.692 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:29.693 [TRANSACTION] LABEL PRODUCTS WG=15
+2026-06-16 13:00:29.925 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:30.020 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:30.021 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:30.022 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:30.034 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:30.050 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D36BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-16 13:00:32.436 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:32.437 [TRANSACTION] LABEL PRODUCTS WG=14
+2026-06-16 13:00:32.761 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:32.762 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:32.764 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:32.765 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:32.775 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:32.791 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:32.792 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D36BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-16 13:00:33.088 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:33.089 [TRANSACTION] LABEL PRODUCTS WG=13
+2026-06-16 13:00:33.090 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:33.226 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:33.415 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:33.416 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:33.417 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:33.418 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:33.429 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:33.444 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D36BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-16 13:00:34.746 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:34.748 [TRANSACTION] LABEL PRODUCTS WG=4
+2026-06-16 13:00:35.011 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:35.074 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:36.708 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:36.709 [TRANSACTION] LABEL PRODUCTS WG=3
+2026-06-16 13:00:37.037 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:37.500 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:37.501 [TRANSACTION] LABEL PRODUCTS WG=2
+2026-06-16 13:00:37.832 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:37.847 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:37.848 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:37.849 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:37.877 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D36BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-16 13:00:38.332 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:38.333 [TRANSACTION] LABEL PRODUCTS WG=8
+2026-06-16 13:00:38.655 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:38.668 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:38.684 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:38.700 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:38.716 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:59.164 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:59.165 [TRANSACTION] LABEL PRODUCTS WG=6
+2026-06-16 13:00:59.494 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:59.496 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:00:59.917 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:00:59.918 [TRANSACTION] LABEL PRODUCTS WG=10
+2026-06-16 13:01:00.239 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.240 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.242 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.243 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.244 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.252 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.268 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D36BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-16 13:01:00.558 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.560 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.571 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:01:00.898 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:01:00.899 [TRANSACTION] LABEL PRODUCTS WG=9
+2026-06-16 13:01:02.106 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:01:02.109 [TRANSACTION] LABEL PRODUCTS WG=17
+2026-06-16 13:01:04.382 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:01:04.383 [TRANSACTION] LABEL PRODUCTS WG=12
+2026-06-16 13:21:47.574 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-16 13:21:47.576 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-16 13:21:49.620 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-16 13:22:04.050 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 13:22:04.297 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-16 13:22:04.313 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-16 13:22:04.376 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 13:22:04.626 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-16 13:22:04.703 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:22:05.028 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:22:11.799 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:22:19.026 [REQUEST] GET /api/labeling/scan IP=127.0.0.1
+2026-06-16 13:22:19.032 [TRANSACTION] LABEL SCAN EAN=21321312
+2026-06-16 13:22:19.040 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:22:19.831 [REQUEST] GET /api/labeling/scan IP=127.0.0.1
+2026-06-16 13:22:19.836 [TRANSACTION] LABEL SCAN EAN=31231213
+2026-06-16 13:22:20.134 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:22:20.750 [REQUEST] GET /api/labeling/scan IP=127.0.0.1
+2026-06-16 13:22:20.752 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:22:20.756 [TRANSACTION] LABEL SCAN EAN=12312312
+2026-06-16 13:22:21.702 [REQUEST] GET /api/labeling/scan IP=127.0.0.1
+2026-06-16 13:22:21.708 [TRANSACTION] LABEL SCAN EAN=31321313
+2026-06-16 13:22:22.007 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:22:31.383 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:22:53.622 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:06.400 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 13:23:06.664 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:06.726 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:06.727 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:20.240 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-16 13:23:20.242 [TRANSACTION] LABEL WEIGHT READ
+2026-06-16 13:23:20.557 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:20.558 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:20.560 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:20.587 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D36BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-16 13:23:22.203 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-16 13:23:22.204 [TRANSACTION] LABEL WEIGHT READ
+2026-06-16 13:23:22.205 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:22.207 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:22.216 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:22.672 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-16 13:23:22.674 [TRANSACTION] LABEL WEIGHT READ
+2026-06-16 13:23:22.974 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:22.976 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:22.987 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:23.592 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-16 13:23:23.593 [TRANSACTION] LABEL WEIGHT READ
+2026-06-16 13:23:23.594 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:23.596 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:23.606 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:23.975 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-16 13:23:23.978 [TRANSACTION] LABEL WEIGHT READ
+2026-06-16 13:23:24.285 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:24.287 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:24.299 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:26.398 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:26.400 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:23:26.412 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:24:01.985 [REQUEST] GET /api/labeling/print IP=127.0.0.1
+2026-06-16 13:24:01.986 [TRANSACTION] LABEL PRINT PLU=57 Weight=0 Qty=1 MHD= Template=standard
+2026-06-16 13:24:02.289 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:24:02.290 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:24:02.291 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:24:02.318 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007C419A in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 0000001C
+2026-06-16 13:24:04.388 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:24:04.389 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:24:04.401 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:25.091 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:25.093 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:25.105 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:34.745 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:35.052 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:35.053 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:59.626 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:59.628 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:25:59.628 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:26:31.792 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:26:32.104 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:26:32.105 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:26:33.753 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:26:33.755 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:26:33.766 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 13:27:35.946 [REQUEST] GET /api/labeling/rfid/write IP=127.0.0.1
+2026-06-16 13:27:35.947 [TRANSACTION] RFID WRITE PLU=57 Weight=0
+2026-06-16 13:28:18.333 [REQUEST] GET /api/labeling/rfid/write IP=127.0.0.1
+2026-06-16 13:28:18.335 [TRANSACTION] RFID WRITE PLU=55 Weight=0
+2026-06-16 13:28:18.755 [REQUEST] GET /api/labeling/rfid/write IP=127.0.0.1
+2026-06-16 13:28:18.756 [TRANSACTION] RFID WRITE PLU=55 Weight=0
+2026-06-16 15:21:13.532 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=9100
+2026-06-16 15:21:13.533 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-16 15:21:15.581 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-16 15:21:43.909 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:43.910 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:43.911 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080BB58 in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-16 15:21:43.920 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:44.256 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:44.558 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:44.559 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:45.468 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:45.471 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:45.483 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:46.334 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-16 15:21:46.644 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-16 15:21:46.647 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-16 15:21:46.909 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-16 15:21:46.956 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-16 15:21:47.220 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 15:21:47.284 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-16 15:21:47.286 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-16 15:21:47.535 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:21:48.880 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:22:00.377 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:22:01.767 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:22:31.740 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:22:32.689 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:22:39.383 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-16 15:22:39.385 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=500
+2026-06-16 15:22:39.651 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:22:47.095 [REQUEST] GET /api/labeling/protocol/delete IP=127.0.0.1
+2026-06-16 15:22:47.096 [TRANSACTION] LABEL PROTOCOL DELETE ID=9
+2026-06-16 15:22:47.415 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-16 15:22:47.416 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-16 15:22:47.680 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-16 15:22:47.681 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=500
+2026-06-16 15:22:47.742 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:22:49.481 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:23:07.360 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:23:07.624 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:23:09.917 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 15:23:10.241 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:23:10.824 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:23:11.146 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:23:15.967 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:23:16.293 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:23:16.591 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:23:17.570 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:23:17.832 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:23:17.926 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:23:34.081 [REQUEST] GET /api/labeling/scan IP=127.0.0.1
+2026-06-16 15:23:34.085 [TRANSACTION] LABEL SCAN EAN=2300035003333
+2026-06-16 15:23:50.706 [REQUEST] GET /api/labeling/scan IP=127.0.0.1
+2026-06-16 15:23:50.711 [TRANSACTION] LABEL SCAN EAN=2300035003334
+2026-06-16 15:23:51.030 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:06.286 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 15:24:06.615 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:06.617 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:06.618 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:09.110 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 15:24:09.435 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:09.436 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:09.437 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:09.439 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:12.235 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-06-16 15:24:12.560 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:27.062 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-16 15:24:27.388 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:27.390 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:27.391 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:27.394 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:27.395 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-16 15:24:27.401 [REQUEST] GET /api/productimage IP=127.0.0.1

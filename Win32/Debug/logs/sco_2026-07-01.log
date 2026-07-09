@@ -1,0 +1,31 @@
+﻿2026-07-01 12:14:37.605 [TRANSACTION] WEB SERVER START port=8090
+2026-07-01 12:14:37.607 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-01 12:14:37.617 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-01 12:14:38.333 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-01 12:14:40.372 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-01 12:14:45.745 [TRANSACTION] WEB SERVER START port=8090
+2026-07-01 12:14:45.748 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-01 12:14:45.760 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-01 12:14:46.488 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-01 12:14:47.420 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-01 12:14:48.126 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-01 12:14:48.263 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-01 12:14:48.389 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-01 12:14:48.450 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-01 12:14:48.451 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-01 12:14:48.456 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-01 12:14:48.528 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-01 12:14:55.175 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-01 12:14:55.186 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-01 12:14:55.509 [TRANSACTION] SCALE READ OK weight=0,174 raw=A000008001.07.2615:12:220010G      0,174 kg T      0,000 kg N      0,174 kg         0,87 EUR   0,50 EUR/100g
+
+2026-07-01 12:33:20.353 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-01 12:33:20.365 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-01 12:33:20.662 [TRANSACTION] SCALE READ OK weight=0,186 raw=A000008101.07.2615:30:470010G      0,186 kg T      0,000 kg N      0,186 kg         0,93 EUR   0,50 EUR/100g
+
+2026-07-01 12:33:56.774 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-01 12:33:56.785 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-01 12:33:57.083 [TRANSACTION] SCALE READ OK weight=0,184 raw=A000008201.07.2615:31:240010G      0,184 kg T      0,000 kg N      0,184 kg         0,92 EUR   0,50 EUR/100g
+

@@ -1,0 +1,123 @@
+﻿2026-05-29 15:42:07.465 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 15:42:08.204 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 15:42:10.056 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 15:42:10.057 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 15:42:10.058 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 15:42:10.085 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D36BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-05-29 15:42:11.515 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:14:17.427 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-05-29 16:14:17.428 [TRANSACTION] PAY START type=zvt amount=1,23
+2026-05-29 16:14:17.432 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=1,23
+2026-05-29 16:14:17.435 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP= Port=5577 Betrag=123 Lizenz= Test=0 Dialog=0 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-05-29 16:14:23.140 [PAYMENT] PAYMENT END OK=False Zahlart=ec Message=EC-Zahlung nicht erfolgreich: Programmabbruch
+2026-05-29 16:16:06.349 [REQUEST] GET / IP=127.0.0.1
+2026-05-29 16:16:06.470 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-05-29 16:16:06.595 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-05-29 16:16:06.798 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-05-29 16:16:06.805 [REQUEST] GET /api/config IP=127.0.0.1
+2026-05-29 16:16:07.121 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-05-29 16:16:07.382 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:16:07.518 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:16:07.706 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-05-29 16:16:10.229 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-05-29 16:16:10.230 [TRANSACTION] PAY START type=zvt amount=1,23
+2026-05-29 16:16:10.234 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=1,23
+2026-05-29 16:16:10.236 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=123 Lizenz=BJMKHDLDIEDFJJDGGEF Test=1 Dialog=0 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-05-29 16:16:15.918 [PAYMENT] PAYMENT END OK=True Zahlart=ec Message=EC-Zahlung erfolgreich.
+2026-05-29 16:16:24.169 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-05-29 16:16:24.170 [TRANSACTION] PAY START type=zvt amount=1,23
+2026-05-29 16:16:24.177 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=1,23
+2026-05-29 16:16:24.179 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=123 Lizenz=BJMKHDLDIEDFJJDGGEF Test=1 Dialog=0 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-05-29 16:16:35.156 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-05-29 16:16:35.157 [TRANSACTION] PAY START type=zvt amount=1,23
+2026-05-29 16:16:35.163 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=1,23
+2026-05-29 16:16:35.164 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=123 Lizenz=BJMKHDLDIEDFJJDGGEF Test=1 Dialog=0 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-05-29 16:16:37.984 [PAYMENT] PAYMENT END OK=False Zahlart=ec Message=EC-Zahlung nicht erfolgreich: Karte nicht lesbar
+2026-05-29 16:16:38.262 [PAYMENT] PAYMENT END OK=False Zahlart=ec Message=EC-Zahlung nicht erfolgreich: Karte nicht lesbar
+2026-05-29 16:16:49.037 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-05-29 16:16:49.356 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-05-29 16:16:49.357 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-05-29 16:16:49.616 [REQUEST] GET /api/config IP=127.0.0.1
+2026-05-29 16:16:49.679 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-05-29 16:16:49.926 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:16:50.005 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:16:50.249 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-05-29 16:16:52.480 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:52.789 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:52.803 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:54.412 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:54.675 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:55.710 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:56.388 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:56.402 [REQUEST] GET /api/payment/start IP=127.0.0.1
+2026-05-29 16:16:56.403 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\payment\start
+2026-05-29 16:16:56.649 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:58.055 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:59.064 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:16:59.080 [REQUEST] GET /api/payment/start IP=127.0.0.1
+2026-05-29 16:16:59.081 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\payment\start
+2026-05-29 16:16:59.310 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:00.541 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-05-29 16:17:00.850 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-05-29 16:17:00.870 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-05-29 16:17:01.182 [REQUEST] GET /api/config IP=127.0.0.1
+2026-05-29 16:17:01.445 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-05-29 16:17:01.491 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:17:01.771 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:17:01.813 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-05-29 16:17:35.135 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-05-29 16:17:35.450 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-05-29 16:17:35.452 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-05-29 16:17:35.713 [REQUEST] GET /api/config IP=127.0.0.1
+2026-05-29 16:17:35.760 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-05-29 16:17:36.023 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:17:36.086 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:17:36.349 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-05-29 16:17:37.327 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:37.635 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:37.636 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:37.644 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080C0BB in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-05-29 16:17:38.991 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:39.606 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:40.630 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:41.375 [REQUEST] GET /api/pay/start IP=127.0.0.1
+2026-05-29 16:17:41.376 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\pay\start
+2026-05-29 16:17:41.682 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:42.954 [REQUEST] GET /api/pay/start IP=127.0.0.1
+2026-05-29 16:17:42.955 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:42.956 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\pay\start
+2026-05-29 16:17:43.591 [REQUEST] GET /api/pay/start IP=127.0.0.1
+2026-05-29 16:17:43.592 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\pay\start
+2026-05-29 16:17:43.900 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:44.445 [REQUEST] GET /api/pay/start IP=127.0.0.1
+2026-05-29 16:17:44.447 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:17:44.448 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\pay\start
+2026-05-29 16:17:44.709 [REQUEST] GET /api/pay/start IP=127.0.0.1
+2026-05-29 16:17:44.710 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\pay\start
+2026-05-29 16:17:44.864 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:32:14.519 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:32:15.707 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-05-29 16:32:16.011 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-05-29 16:32:16.025 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-05-29 16:32:16.085 [REQUEST] GET /api/config IP=127.0.0.1
+2026-05-29 16:32:16.349 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-05-29 16:32:16.410 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:32:16.676 [REQUEST] GET /api/products IP=127.0.0.1
+2026-05-29 16:32:16.736 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-05-29 16:32:16.997 [REQUEST] GET /.well-known/appspecific/com.chrome.devtools.json IP=127.0.0.1
+2026-05-29 16:32:16.999 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\.well-known\appspecific\com.chrome.devtools.json
+2026-05-29 16:32:19.116 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:32:19.117 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:32:19.118 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-05-29 16:32:22.703 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-05-29 16:32:22.705 [TRANSACTION] PAY START type=zvt amount=3,69
+2026-05-29 16:32:22.710 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=3,69
+2026-05-29 16:32:22.712 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=369 Lizenz=BJMKHDLDIEDFJJDGGEF Test=1 Dialog=0 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-05-29 16:32:29.450 [PAYMENT] PAYMENT END OK=True Zahlart=ec Message=EC-Zahlung erfolgreich.
+2026-05-29 16:32:40.856 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-05-29 16:32:40.857 [TRANSACTION] PAY START type=bar amount=2,59
+2026-05-29 16:32:40.861 [PAYMENT] PAYMENT START Zahlart=bar Betrag=2,59
+2026-05-29 16:32:42.900 [PAYMENT] PAYMENT END OK=False Zahlart=bar Message=Barzahlung nicht erfolgreich: CashLogy Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-05-29 17:02:22.038 [ERROR] CashLogy Init FEHLER: CashLogy Init Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+

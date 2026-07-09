@@ -1,0 +1,303 @@
+﻿2026-07-03 10:53:39.931 [TRANSACTION] WEB SERVER START port=8090
+2026-07-03 10:53:39.934 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-03 10:53:39.945 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-03 10:53:40.657 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-03 10:53:41.198 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-03 10:53:41.713 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-07-03 10:53:41.830 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-07-03 10:53:41.973 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-07-03 10:53:42.034 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:53:42.063 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-07-03 10:53:42.298 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-03 10:53:42.360 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-07-03 10:53:42.379 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:53:42.689 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-03 10:53:44.460 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:53:44.461 [ERROR] Interner Fehler bei /api/labeling/groups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:53:44.467 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-07-03 10:53:44.479 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:53:46.538 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:53:46.540 [ERROR] Interner Fehler bei /api/labeling/taras: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:53:46.861 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 10:53:46.874 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:53:48.925 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:53:48.926 [ERROR] Interner Fehler bei /api/labeling/protocol: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:54:13.089 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-07-03 10:54:13.102 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:54:15.168 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:54:15.169 [ERROR] Interner Fehler bei /api/labeling/search: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:00.437 [TRANSACTION] WEB SERVER START port=8090
+2026-07-03 10:55:00.440 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-03 10:55:00.451 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-03 10:55:01.173 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-03 10:55:01.975 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-03 10:55:02.462 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-03 10:55:02.567 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-03 10:55:02.724 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-03 10:55:02.785 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-03 10:55:02.786 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-03 10:55:02.800 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:55:03.221 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-03 10:55:04.328 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-03 10:55:04.341 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:06.280 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-03 10:55:06.408 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:06.409 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:06.593 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-03 10:55:06.608 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-03 10:55:06.610 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-03 10:55:06.623 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-03 10:55:06.936 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:55:07.197 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-03 10:55:07.209 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:08.474 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-03 10:55:08.788 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-03 10:55:08.793 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-03 10:55:08.794 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-03 10:55:08.818 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-03 10:55:09.116 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:55:09.256 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:09.257 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:09.441 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-03 10:55:09.453 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:11.322 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-03 10:55:11.505 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:11.506 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:36.395 [TRANSACTION] WEB SERVER START port=8090
+2026-07-03 10:55:36.398 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-03 10:55:36.410 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-03 10:55:37.126 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-03 10:55:38.767 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-03 10:55:39.165 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-03 10:55:39.258 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-07-03 10:55:39.350 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-07-03 10:55:39.504 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-07-03 10:55:39.581 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:55:39.596 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-07-03 10:55:39.829 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-03 10:55:39.907 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-07-03 10:55:39.919 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:42.007 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:42.008 [ERROR] Interner Fehler bei /api/labeling/groups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:42.014 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-07-03 10:55:42.028 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:44.081 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:44.083 [ERROR] Interner Fehler bei /api/labeling/taras: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:44.403 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 10:55:44.417 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:46.474 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:46.476 [ERROR] Interner Fehler bei /api/labeling/protocol: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:50.066 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-03 10:55:50.383 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-03 10:55:50.387 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-03 10:55:50.389 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-03 10:55:50.390 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-03 10:55:50.709 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:55:50.972 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-03 10:55:50.983 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:52.863 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-03 10:55:53.029 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:53.030 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:53.185 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-03 10:55:53.186 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-03 10:55:53.188 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-03 10:55:53.198 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-03 10:55:53.509 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:55:53.774 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-03 10:55:53.787 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:55:55.840 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:55:55.841 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-03 10:57:02.768 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-03 10:57:02.782 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-03 10:57:03.013 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-03 10:57:03.090 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-03 10:57:03.106 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-03 10:57:03.414 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:57:03.739 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-03 10:57:03.750 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:57:03.862 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:57:03.931 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-07-03 10:57:04.004 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-07-03 10:57:04.250 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-03 10:57:07.857 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-07-03 10:57:08.178 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-07-03 10:57:08.192 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-07-03 10:57:08.195 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-07-03 10:57:08.443 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:57:08.518 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-03 10:57:08.770 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-07-03 10:57:08.830 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-07-03 10:57:09.111 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-07-03 10:57:09.156 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 10:57:09.158 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-07-03 10:57:09.434 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:09.495 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-07-03 10:57:10.867 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-07-03 10:57:11.201 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.202 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.203 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.204 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.213 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.214 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.529 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.531 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:11.543 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.007 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-07-03 10:57:12.008 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.010 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.011 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.012 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.013 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.036 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D644F in Modul 'FOODWARE_SCO_UPDATE.exe'. Lesen von Adresse 00000000
+2026-07-03 10:57:12.330 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.332 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.337 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.341 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.342 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.344 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:12.641 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.429 [REQUEST] GET /api/labeling/rfid/save IP=127.0.0.1
+2026-07-03 10:57:13.431 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.432 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.433 [TRANSACTION] API RFID SAVE HIT PLU=820 TAG=E2806894000040235F84809B TAGLEN=24 WEIGHT=0.000 PRICE=2.99 MHD= SOURCE=reader
+2026-07-03 10:57:13.442 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.443 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.447 [TRANSACTION] RFID SAVE START PLU=820 TAG=E2806894000040235F84809B TAGLEN=24 NEEDLEN=24 SOURCE=reader WEIGHT=0 TARA=0 CLIENTPRICE=2,99
+2026-07-03 10:57:13.449 [ERROR] RFID SAVE DUPLICATE TAG=E2806894000040235F84809B ID=22
+2026-07-03 10:57:13.458 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.741 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.748 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.750 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.753 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.772 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:13.773 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:14.053 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:20.649 [REQUEST] GET /api/labeling/rfid/save IP=127.0.0.1
+2026-07-03 10:57:20.651 [TRANSACTION] API RFID SAVE HIT PLU=820 TAG=E2806894000040235F84806B TAGLEN=24 WEIGHT=0.000 PRICE=2.99 MHD= SOURCE=reader
+2026-07-03 10:57:20.652 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:20.653 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:20.654 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:20.655 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:20.657 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:57:20.663 [TRANSACTION] RFID SAVE START PLU=820 TAG=E2806894000040235F84806B TAGLEN=24 NEEDLEN=24 SOURCE=reader WEIGHT=0 TARA=0 CLIENTPRICE=2,99
+2026-07-03 10:57:28.688 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:58:54.173 [TRANSACTION] WEB SERVER START port=8090
+2026-07-03 10:58:54.175 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-03 10:58:54.186 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-03 10:58:54.901 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-03 10:58:56.186 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-03 10:58:56.673 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-07-03 10:58:56.765 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-07-03 10:58:56.936 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-07-03 10:58:56.951 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-03 10:58:56.998 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 10:58:56.999 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-07-03 10:58:57.263 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-03 10:58:57.326 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-07-03 10:58:57.338 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:58:57.415 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 10:58:57.573 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-07-03 10:58:57.746 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-07-03 10:58:57.904 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 10:58:57.905 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-07-03 10:58:58.075 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:58:58.246 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-07-03 10:58:59.176 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-07-03 10:58:59.491 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:01.495 [REQUEST] GET /api/labeling/rfid/save IP=127.0.0.1
+2026-07-03 10:59:01.496 [TRANSACTION] API RFID SAVE HIT PLU=36 TAG=E2806894000040235F84806B TAGLEN=24 WEIGHT=0.000 PRICE=3.00 MHD= SOURCE=reader
+2026-07-03 10:59:01.507 [TRANSACTION] RFID SAVE START PLU=36 TAG=E2806894000040235F84806B TAGLEN=24 NEEDLEN=24 SOURCE=reader WEIGHT=0 TARA=0 CLIENTPRICE=3
+2026-07-03 10:59:01.509 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:01.518 [TRANSACTION] RFID SAVE PRICE VK_BRUTTO PLU=36 PRICE=3
+2026-07-03 10:59:01.522 [TRANSACTION] RFID SAVE OK PLU=36 TAG=E2806894000040235F84806B PRICE=3
+2026-07-03 10:59:01.752 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 10:59:01.754 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-07-03 10:59:01.842 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:02.669 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.259 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-07-03 10:59:06.505 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.601 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.602 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.603 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.614 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.630 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.817 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.921 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-07-03 10:59:06.922 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:06.926 [ERROR] ADMIN ARTICLE GET ERROR: Zugriffsverletzung bei Adresse 0080F346 in Modul 'FOODWARE_SCO_UPDATE.exe'. Lesen von Adresse 00000000
+2026-07-03 10:59:06.928 [ERROR] Interner Fehler bei /api/admin/article: EAccessViolation - Zugriffsverletzung bei Adresse 0080EE4F in Modul 'FOODWARE_SCO_UPDATE.exe'. Lesen von Adresse 00000040
+2026-07-03 10:59:07.220 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.222 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.223 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.233 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.234 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.235 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.530 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.534 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EE4F in Modul 'FOODWARE_SCO_UPDATE.exe'. Lesen von Adresse 00000040
+2026-07-03 10:59:07.537 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:07.540 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EE4F in Modul 'FOODWARE_SCO_UPDATE.exe'. Lesen von Adresse 00000040
+2026-07-03 10:59:08.368 [REQUEST] GET /api/labeling/rfid/save IP=127.0.0.1
+2026-07-03 10:59:08.382 [TRANSACTION] API RFID SAVE HIT PLU=18 TAG=E2806894000040235F84809B TAGLEN=24 WEIGHT=0.000 PRICE=2.50 MHD= SOURCE=reader
+2026-07-03 10:59:08.383 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:08.384 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:08.385 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:08.386 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:08.388 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:08.394 [TRANSACTION] RFID SAVE START PLU=18 TAG=E2806894000040235F84809B TAGLEN=24 NEEDLEN=24 SOURCE=reader WEIGHT=0 TARA=0 CLIENTPRICE=2,5
+2026-07-03 10:59:08.692 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:08.694 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 10:59:16.395 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:33.682 [TRANSACTION] WEB SERVER START port=8090
+2026-07-03 11:34:33.685 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-03 11:34:33.696 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-03 11:34:34.414 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-03 11:34:36.450 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-03 11:34:36.800 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-03 11:34:37.287 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-07-03 11:34:37.416 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-07-03 11:34:37.554 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-07-03 11:34:37.602 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-03 11:34:37.616 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-07-03 11:34:37.878 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-03 11:34:37.924 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-07-03 11:34:37.936 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 11:34:38.014 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-03 11:34:38.188 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-07-03 11:34:38.357 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-07-03 11:34:38.512 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 11:34:38.513 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-07-03 11:34:38.682 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:38.849 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-07-03 11:34:39.829 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-07-03 11:34:40.135 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:46.197 [REQUEST] GET /api/labeling/rfid/save IP=127.0.0.1
+2026-07-03 11:34:46.198 [TRANSACTION] API RFID SAVE HIT PLU=36 TAG=E2806894000040235F84805B TAGLEN=24 WEIGHT=0.000 PRICE=3.00 MHD= SOURCE=reader
+2026-07-03 11:34:46.199 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:46.210 [TRANSACTION] RFID SAVE START PLU=36 TAG=E2806894000040235F84805B TAGLEN=24 NEEDLEN=24 SOURCE=reader WEIGHT=0 TARA=0 CLIENTPRICE=3
+2026-07-03 11:34:46.214 [TRANSACTION] RFID SAVE PRICE VK_BRUTTO PLU=36 PRICE=3
+2026-07-03 11:34:46.218 [TRANSACTION] RFID SAVE OK PLU=36 TAG=E2806894000040235F84805B PRICE=3
+2026-07-03 11:34:46.464 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 11:34:46.465 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-07-03 11:34:46.526 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:47.394 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:49.091 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:49.105 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-07-03 11:34:49.357 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:49.949 [REQUEST] GET /api/labeling/rfid/save IP=127.0.0.1
+2026-07-03 11:34:49.950 [TRANSACTION] API RFID SAVE HIT PLU=36 TAG=E2806894000050235F848065 TAGLEN=24 WEIGHT=0.000 PRICE=3.00 MHD= SOURCE=reader
+2026-07-03 11:34:49.962 [TRANSACTION] RFID SAVE START PLU=36 TAG=E2806894000050235F848065 TAGLEN=24 NEEDLEN=24 SOURCE=reader WEIGHT=0 TARA=0 CLIENTPRICE=3
+2026-07-03 11:34:49.971 [TRANSACTION] RFID SAVE PRICE VK_BRUTTO PLU=36 PRICE=3
+2026-07-03 11:34:49.974 [TRANSACTION] RFID SAVE OK PLU=36 TAG=E2806894000050235F848065 PRICE=3
+2026-07-03 11:34:50.259 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-03 11:34:50.261 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-07-03 11:34:50.290 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-03 11:34:51.486 [REQUEST] GET /api/productimage IP=127.0.0.1

@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FOODWARE SCO Hilfe</title>
+  <style>
+    :root{font-family:Arial,sans-serif;color:#17212b;background:#f5f7fa}body{margin:0}.wrap{max-width:1080px;margin:0 auto;padding:28px}header{background:#12344d;color:white;padding:24px 28px}h1{margin:0 0 8px;font-size:28px}h2{margin:26px 0 10px;font-size:20px;color:#12344d}.card{background:white;border:1px solid #dce3ea;border-radius:8px;padding:18px;margin:14px 0}code{background:#eef3f7;padding:2px 5px;border-radius:4px}pre{background:#17212b;color:#edf6ff;padding:14px;border-radius:6px;overflow:auto}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}a{color:#0b67a3}li{margin:7px 0}.muted{color:#617080}.pill{display:inline-block;background:#e8f2fa;color:#16496a;border:1px solid #cae0ef;border-radius:999px;padding:4px 10px;margin:3px 4px 3px 0;font-size:13px}
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><h1>FOODWARE SCO Hilfe</h1><div>Labeling, RFID, EAN und Diagnose</div></div></header>
+  <main class="wrap">
+    <section class="card">
+      <h2>Bedienung Labeling</h2>
+      <ul>
+        <li>Links eine Warengruppe wählen, in der Mitte den Artikel anklicken.</li>
+        <li>Alternativ im Suchfeld PLU, Text oder EAN scannen/eingeben.</li>
+        <li>Bei aktivem Modus <b>RFID codieren</b> öffnet sich nach Artikelauswahl das RFID-Popup.</li>
+        <li>RFID-Tag auflegen. Erst bei der konfigurierten Länge wird gespeichert.</li>
+        <li>Meldungen wie „bereits vorhanden“ oder „gespeichert“ werden im RFID-Popup angezeigt.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>EAN-Codierung</h2>
+      <p>13-stellige numerische Scans werden als EAN behandelt und an <code>/api/labeling/scan</code> gesendet.</p>
+      <pre>XXAAAAAGGGGGC
+XXAAAAAPPPPPC</pre>
+      <ul>
+        <li><code>XX</code>: Kennzahl. Gerade = Preis-EAN, ungerade = Gewichts-EAN.</li>
+        <li><code>AAAAA</code>: Artikelnummer.</li>
+        <li><code>GGGGG</code>: Gewicht, typischerweise in Gramm.</li>
+        <li><code>PPPPP</code>: Preiswert. Der echte Artikelpreis wird serverseitig aus <code>VARTIKEL.VK_BRUTTO</code> bestimmt.</li>
+        <li><code>C</code>: Prüfziffer, abhängig von <code>CheckEANMod10</code>.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Artikeldaten</h2>
+      <p>Die Labeling-Artikellisten kommen aus <code>VARTIKEL</code>. Wichtige Felder:</p>
+      <div>
+        <span class="pill">ELENO / PLU</span><span class="pill">BEZEICHNUNG</span><span class="pill">EAN</span><span class="pill">VK_BRUTTO</span><span class="pill">NENNGEWICHT</span><span class="pill">MHD</span><span class="pill">WG / WG_BEZ</span>
+      </div>
+      <p class="muted">Produktbilder werden normalerweise nicht aus einem Ordner geladen, sondern über <code>/api/productimage?id=...</code> aus der Datenbanktabelle <code>PRODUKT_BILDER</code>, Feld <code>BILD</code>. Die ID kommt aus <code>VARTIKEL.ID</code>. Im Labeling ist aktuell ein Blanko-Bild aktiv, damit Bilddatenbankfehler die Bedienung nicht blockieren.</p>
+    </section>
+
+    <section class="card">
+      <h2>RFID-Speicherung</h2>
+      <p>Gespeichert wird in <code>TAGINFO</code> mit Tag, Artikelnummer, Preis, Gewicht, MHD, Status, Charge und Erstelldatum.</p>
+      <ul>
+        <li>Die Tag-Länge kommt aus <code>[Labeling] TagLength</code>.</li>
+        <li>Duplikate werden erkannt und nicht erneut gespeichert.</li>
+        <li>Preislogik: <code>VARTIKEL.VK_BRUTTO</code>, danach Frontend-Fallback.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Config</h2>
+      <pre>[Labeling]
+CheckEANMod10=1
+EAN_label=0
+RFID_label=0
+RFID_encode=1
+start=RFID_encode
+TagLength=24</pre>
+    </section>
+
+    <section class="card">
+      <h2>Prüf-Endpunkte</h2>
+      <div class="grid">
+        <div><b>Ping</b><br><a href="/api/ping">/api/ping</a></div>
+        <div><b>Config</b><br><a href="/api/help/config">/api/help/config</a></div>
+        <div><b>Artikel nach Warengruppe</b><br><a href="/api/help/articles?wg=0">/api/help/articles?wg=0</a></div>
+        <div><b>Artikelsuche</b><br><a href="/api/help/articles?q=1001">/api/help/articles?q=1001</a></div>
+        <div><b>EAN prüfen</b><br><code>/api/labeling/scan?ean=...</code></div>
+        <div><b>Log prüfen</b><br><a href="/api/help/log?limit=120">/api/help/log?limit=120</a></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+
+

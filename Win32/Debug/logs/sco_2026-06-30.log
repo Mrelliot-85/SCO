@@ -1,0 +1,46 @@
+﻿2026-06-30 11:47:58.561 [TRANSACTION] WEB SERVER START port=8090
+2026-06-30 11:47:58.564 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-30 11:47:58.575 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-30 11:47:59.292 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-30 11:48:01.347 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-30 11:48:02.338 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-30 11:48:02.840 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-30 11:48:02.924 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-30 11:48:03.087 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-30 11:48:03.165 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-30 11:48:03.166 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-30 11:48:03.171 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-30 12:08:03.919 [TRANSACTION] WEB SERVER START port=8090
+2026-06-30 12:08:03.922 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-30 12:08:03.932 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-30 12:08:04.638 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-30 12:08:05.636 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-30 12:08:06.237 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-30 12:08:06.329 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-30 12:08:06.499 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-30 12:08:06.562 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-30 12:08:06.563 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-30 12:08:06.568 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-30 12:08:06.686 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-30 12:08:14.798 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-30 12:08:15.106 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-30 12:08:15.121 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-30 12:08:15.431 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-30 12:08:17.493 [ERROR] Interner Fehler bei /api/statistics: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-06-30 12:08:19.572 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-30 12:08:19.879 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-30 12:08:19.895 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-30 12:08:20.205 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-30 12:08:22.273 [ERROR] Interner Fehler bei /api/statistics: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-06-30 12:10:09.244 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-30 12:10:09.750 [REQUEST] GET /statistik/ IP=127.0.0.1
+2026-06-30 12:10:09.875 [REQUEST] GET /statistik/statistik.css IP=127.0.0.1
+2026-06-30 12:10:10.017 [REQUEST] GET /statistik/app.js IP=127.0.0.1
+2026-06-30 12:10:10.062 [REQUEST] GET /api/statistics IP=127.0.0.1
+2026-06-30 12:10:12.118 [ERROR] Interner Fehler bei /api/statistics: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-06-30 12:11:49.923 [TRANSACTION] WEB SERVER START port=8090
+2026-06-30 12:11:49.926 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-30 12:11:49.937 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-30 12:11:50.653 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe

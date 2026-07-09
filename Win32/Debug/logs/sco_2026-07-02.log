@@ -1,0 +1,115 @@
+﻿2026-07-02 17:19:02.140 [TRANSACTION] WEB SERVER START port=8090
+2026-07-02 17:19:02.142 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-02 17:19:02.154 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-02 17:19:02.869 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-02 17:19:04.925 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-02 17:19:08.718 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-02 17:19:09.216 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-02 17:19:09.335 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-02 17:19:09.480 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-02 17:19:09.542 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-02 17:19:09.543 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-02 17:19:09.549 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-02 17:19:14.252 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-02 17:19:16.330 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:19:17.198 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-02 17:19:17.210 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-02 17:19:17.456 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-02 17:19:17.523 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-02 17:19:17.524 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-02 17:19:17.771 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-02 17:19:17.849 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-02 17:19:17.862 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-02 17:19:17.863 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-02 17:19:17.868 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-02 17:19:17.877 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-02 17:19:18.094 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-02 17:19:18.184 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-02 17:19:18.186 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-02 17:19:18.188 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-02 17:19:18.194 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-02 17:19:18.511 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-02 17:19:20.565 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:19:41.843 [TRANSACTION] WEB SERVER START port=8090
+2026-07-02 17:19:41.845 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-02 17:19:41.856 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-02 17:19:42.568 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-02 17:19:44.619 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-02 17:19:48.287 [TRANSACTION] WEB SERVER START port=8090
+2026-07-02 17:19:48.290 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-02 17:19:48.305 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-02 17:19:49.023 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-02 17:19:51.076 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-02 17:20:21.363 [TRANSACTION] WEB SERVER START port=8090
+2026-07-02 17:20:21.365 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-02 17:20:21.377 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-02 17:20:22.102 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-02 17:20:24.143 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-02 17:20:25.334 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-02 17:20:25.917 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-02 17:20:26.071 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-02 17:20:26.178 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-02 17:20:26.240 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-02 17:20:26.242 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-02 17:20:26.248 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-02 17:20:29.175 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-02 17:20:29.192 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-07-02 17:20:29.442 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-02 17:20:29.488 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-02 17:20:29.764 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-02 17:20:29.812 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-02 17:20:29.824 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:20:31.888 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:20:31.889 [ERROR] Interner Fehler bei /api/groups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:20:31.909 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-02 17:20:41.270 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-07-02 17:20:41.282 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-07-02 17:20:41.333 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-07-02 17:21:35.435 [REQUEST] GET /admin IP=127.0.0.1
+2026-07-02 17:21:35.451 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-02 17:21:35.676 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-02 17:21:35.774 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-02 17:21:35.775 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-02 17:21:35.776 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-02 17:21:35.781 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-02 17:21:38.135 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-02 17:21:38.147 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:21:40.202 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:21:40.203 [ERROR] Interner Fehler bei /api/admin/article/lookups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:22:21.056 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-02 17:22:24.712 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-07-02 17:24:51.620 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-07-02 17:24:51.650 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-07-02 17:24:51.883 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-07-02 17:24:51.945 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-02 17:24:51.976 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-07-02 17:24:52.208 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-02 17:24:52.270 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-07-02 17:24:52.283 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:24:54.349 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:24:54.350 [ERROR] Interner Fehler bei /api/labeling/groups: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:24:54.355 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-07-02 17:24:54.367 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:24:56.413 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:24:56.414 [ERROR] Interner Fehler bei /api/labeling/taras: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:24:56.736 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-02 17:24:56.748 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:24:58.795 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:24:58.796 [ERROR] Interner Fehler bei /api/labeling/protocol: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:25:17.159 [REQUEST] GET /api/labeling/search IP=127.0.0.1
+2026-07-02 17:25:17.172 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:25:19.232 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:25:19.233 [ERROR] Interner Fehler bei /api/labeling/search: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:25:28.764 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-02 17:25:28.776 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:25:30.827 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:25:30.829 [ERROR] Interner Fehler bei /api/labeling/protocol: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:25:30.832 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-07-02 17:25:30.843 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-02 17:25:32.895 [ERROR] FIREBIRD CONNECT ERROR host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb class=EIBNativeException message=[FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 17:25:32.896 [ERROR] Interner Fehler bei /api/labeling/protocol: EIBNativeException - [FireDAC][Phys][FB]connection rejected by remote interface
+2026-07-02 21:51:37.915 [TRANSACTION] RFID TCP SERVER STOP

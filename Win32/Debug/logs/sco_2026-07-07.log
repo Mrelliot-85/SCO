@@ -1,0 +1,73 @@
+﻿2026-07-07 12:53:17.864 [TRANSACTION] WEB SERVER START port=8090
+2026-07-07 12:53:17.868 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-07 12:53:17.880 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-07 12:53:18.605 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-07 12:53:20.630 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-07 17:06:53.550 [TRANSACTION] WEB SERVER START port=8090
+2026-07-07 17:06:53.553 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-07 17:06:53.565 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-07 17:06:54.297 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-07 17:06:55.083 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-07 17:06:55.730 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-07 17:06:55.850 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-07 17:06:55.970 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-07 17:06:56.048 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-07 17:06:56.063 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-07 17:06:56.068 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-07 17:06:56.304 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-07 17:07:05.261 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:07:05.273 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:07:05.275 [ERROR] SCALE READ ERROR: EOSError - Systemfehler.  Code: 2.
+Das System kann die angegebene Datei nicht finden
+2026-07-07 17:07:08.810 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:07:08.823 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:07:08.824 [ERROR] SCALE READ ERROR: EOSError - Systemfehler.  Code: 2.
+Das System kann die angegebene Datei nicht finden
+2026-07-07 17:07:43.030 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:07:43.042 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:07:43.043 [ERROR] SCALE READ ERROR: EOSError - Systemfehler.  Code: 2.
+Das System kann die angegebene Datei nicht finden
+2026-07-07 17:07:47.833 [REQUEST] POST /api/admin/config IP=127.0.0.1
+2026-07-07 17:07:49.204 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-07 17:07:50.610 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:07:50.621 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:07:50.622 [ERROR] SCALE READ ERROR: EOSError - Systemfehler.  Code: 2.
+Das System kann die angegebene Datei nicht finden
+2026-07-07 17:07:54.140 [REQUEST] POST /api/admin/config IP=127.0.0.1
+2026-07-07 17:07:55.937 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-07 17:07:56.412 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:07:56.426 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:07:56.427 [ERROR] SCALE READ ERROR: EOSError - Systemfehler.  Code: 2.
+Das System kann die angegebene Datei nicht finden
+2026-07-07 17:07:58.096 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:07:58.108 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:07:58.109 [ERROR] SCALE READ ERROR: EOSError - Systemfehler.  Code: 2.
+Das System kann die angegebene Datei nicht finden
+2026-07-07 17:08:16.388 [REQUEST] POST /api/admin/config IP=127.0.0.1
+2026-07-07 17:08:18.101 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-07 17:08:18.791 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:08:18.802 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:08:19.094 [TRANSACTION] SCALE READ OK weight=0,124 raw=A000008307.07.2620:06:560010G      0,124 kg T      0,000 kg N      0,124 kg         0,62 EUR   0,50 EUR/100g
+
+2026-07-07 17:08:32.190 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:08:32.204 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:08:32.501 [TRANSACTION] SCALE READ OK weight=0,124 raw=A000008407.07.2620:07:090010G      0,124 kg T      0,000 kg N      0,124 kg         0,62 EUR   0,50 EUR/100g
+
+2026-07-07 17:08:38.573 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:08:38.584 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:08:38.770 [TRANSACTION] SCALE READ OK weight=0,124 raw=07.07.2620:07:150000G      0,124 kg T      0,000 kg N      0,124 kg         0,62 EUR   0,50 EUR/100g
+
+2026-07-07 17:08:42.328 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:08:42.341 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:08:42.527 [TRANSACTION] SCALE READ OK weight=0,124 raw=07.07.2620:07:190000G      0,124 kg T      0,000 kg N      0,124 kg         0,62 EUR   0,50 EUR/100g
+
+2026-07-07 17:08:43.405 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:08:43.418 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:08:43.719 [TRANSACTION] SCALE READ OK weight=0,124 raw=A000008507.07.2620:07:200010G      0,124 kg T      0,000 kg N      0,124 kg         0,62 EUR   0,50 EUR/100g
+
+2026-07-07 17:08:44.770 [REQUEST] GET /api/admin/scale/test IP=127.0.0.1
+2026-07-07 17:08:44.782 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-07-07 17:08:45.078 [TRANSACTION] SCALE READ OK weight=0,124 raw=A000008607.07.2620:07:220010G      0,124 kg T      0,000 kg N      0,124 kg         0,62 EUR   0,50 EUR/100g
+

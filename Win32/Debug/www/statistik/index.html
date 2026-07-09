@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FOODWARE Statistik</title><link rel="stylesheet" href="statistik.css?v=20260630-7"></head>
+<body>
+<header><div><b>FOODWARE Statistik</b><span id="viewTitle">Dashboard</span></div><nav><button id="admin">Admin</button><button id="sco">Zur SCO</button></nav></header>
+<main>
+<section class="toolbar"><div class="period" id="period"><button data-preset="today">Heute</button><button data-preset="yesterday">Gestern</button><button data-days="7">7 Tage</button><button data-days="30" class="active">30 Tage</button><button data-days="90">90 Tage</button></div><div class="dateRange"><label>Von<input id="dateFrom" type="date"></label><label>Bis<input id="dateTo" type="date"></label><button id="applyRange">Anzeigen</button><button id="refresh">Aktualisieren</button></div></section>
+<div id="status" class="status">Daten werden geladen ...</div><div id="content"></div>
+</main>
+<nav class="sectionNav" id="sectionNav">
+<button data-view="dashboard">Dashboard</button><button data-view="journal">Bonjournal</button><button data-view="sales">Artikelverkäufe</button><button data-view="restock">Bestellvorschläge</button><button data-view="rfid">RFID</button><button data-view="report">Steuerreport</button><button data-view="messages">Meldungen</button>
+</nav>
+<script src="app.js?v=20260630-7"></script></body></html>

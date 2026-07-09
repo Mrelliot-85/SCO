@@ -1,0 +1,316 @@
+﻿2026-07-09 09:37:55.695 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 09:37:55.697 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-09 09:37:55.710 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-09 09:37:56.429 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-09 09:37:58.470 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 09:38:07.726 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 09:38:08.047 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-07-09 09:38:08.049 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 09:38:08.316 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 09:38:08.377 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 09:38:08.641 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 09:38:08.657 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 09:38:08.771 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 09:38:12.370 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 09:38:15.563 [REQUEST] GET /esl IP=127.0.0.1
+2026-07-09 09:38:15.880 [REQUEST] GET /esl/ IP=127.0.0.1
+2026-07-09 09:38:15.889 [REQUEST] GET /esl/style.css IP=127.0.0.1
+2026-07-09 09:38:16.145 [REQUEST] GET /esl/app.js IP=127.0.0.1
+2026-07-09 09:38:16.457 [REQUEST] GET /api/esl/config IP=127.0.0.1
+2026-07-09 09:38:16.458 [REQUEST] GET /api/esl/labels IP=127.0.0.1
+2026-07-09 09:38:16.459 [REQUEST] GET /api/esl/sizes IP=127.0.0.1
+2026-07-09 09:38:16.470 [REQUEST] GET /api/esl/templates IP=127.0.0.1
+2026-07-09 09:38:16.722 [REQUEST] GET /api/esl/labels IP=127.0.0.1
+2026-07-09 09:38:19.009 [REQUEST] GET /api/esl/status IP=127.0.0.1
+2026-07-09 09:38:21.074 [ERROR] Interner Fehler bei /api/esl/status: EIdSocketError - Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 09:38:31.754 [REQUEST] GET /api/esl/status IP=127.0.0.1
+2026-07-09 09:38:33.468 [REQUEST] GET /esl/ IP=127.0.0.1
+2026-07-09 09:38:33.790 [REQUEST] GET /esl/style.css IP=127.0.0.1
+2026-07-09 09:38:33.791 [REQUEST] GET /esl/app.js IP=127.0.0.1
+2026-07-09 09:38:33.805 [ERROR] Interner Fehler bei /api/esl/status: EIdSocketError - Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 09:38:34.099 [REQUEST] GET /api/esl/config IP=127.0.0.1
+2026-07-09 09:38:34.102 [REQUEST] GET /api/esl/labels IP=127.0.0.1
+2026-07-09 09:38:34.102 [REQUEST] GET /api/esl/sizes IP=127.0.0.1
+2026-07-09 09:38:34.103 [REQUEST] GET /api/esl/templates IP=127.0.0.1
+2026-07-09 09:38:34.361 [REQUEST] GET /api/esl/labels IP=127.0.0.1
+2026-07-09 09:38:35.632 [REQUEST] GET /api/esl/status IP=127.0.0.1
+2026-07-09 09:38:37.685 [ERROR] Interner Fehler bei /api/esl/status: EIdSocketError - Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 09:44:10.698 [REQUEST] GET /api/esl/status IP=127.0.0.1
+2026-07-09 09:44:12.766 [ERROR] Interner Fehler bei /api/esl/status: EIdSocketError - Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 18:21:12.949 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 18:21:12.952 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-09 18:21:12.968 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-09 18:21:13.693 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-09 18:21:15.744 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 18:21:18.300 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-09 18:21:18.811 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 18:21:18.904 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-07-09 18:21:19.061 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 18:21:19.123 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:21:19.389 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 18:21:19.452 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 18:21:19.466 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 18:21:19.556 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 18:21:23.112 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 18:21:24.351 [REQUEST] GET /api/rfid/startt=1783614084349 IP=127.0.0.1
+2026-07-09 18:21:24.352 [ERROR] 404 Datei nicht gefunden: C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\www\api\rfid\startt=1783614084349
+2026-07-09 18:21:24.667 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-07-09 18:21:36.387 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-09 18:21:36.770 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 18:21:36.878 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 18:21:37.034 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 18:21:37.097 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:21:37.113 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 18:21:37.117 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:21:47.313 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 18:21:47.626 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:21:48.541 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 18:21:52.053 [REQUEST] GET /api/admin/daily-close IP=127.0.0.1
+2026-07-09 18:21:52.118 [TRANSACTION] KASSENABSCHLUSS TABLE CREATED
+2026-07-09 18:23:06.236 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-09 18:23:06.238 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-07-09 18:23:06.250 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-09 18:23:06.251 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-09 18:23:06.288 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-07-09 18:25:06.428 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 18:25:06.440 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 18:25:06.693 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 18:25:06.754 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:25:06.755 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 18:25:06.760 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:26:48.767 [REQUEST] GET /api/admin/daily-close IP=127.0.0.1
+2026-07-09 18:35:03.724 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 18:35:03.817 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:36:13.639 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:36:14.774 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 18:37:31.693 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 18:37:31.696 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-09 18:37:31.711 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-09 18:37:32.429 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-09 18:37:33.107 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-09 18:37:33.664 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 18:37:33.756 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 18:37:33.925 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 18:37:33.986 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:37:33.987 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 18:37:33.993 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:37:34.471 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 18:38:16.280 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 18:38:16.305 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 18:38:16.542 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 18:38:16.605 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:38:16.606 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 18:38:16.612 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:45:32.263 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 18:45:32.266 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-09 18:45:32.280 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-09 18:45:33.002 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-09 18:45:35.044 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 18:46:09.994 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:46:10.288 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 18:46:11.142 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:47:49.263 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 18:47:49.265 [ERROR] WEB SERVER START FEHLER: EIdCouldNotBindSocket - Socket konnte nicht gebunden werden.
+2026-07-09 18:47:54.077 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 18:47:54.078 [ERROR] WEB SERVER START FEHLER: EIdCouldNotBindSocket - Socket konnte nicht gebunden werden.
+2026-07-09 18:47:56.389 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 18:47:56.390 [ERROR] WEB SERVER START FEHLER: EIdCouldNotBindSocket - Socket konnte nicht gebunden werden.
+2026-07-09 18:48:01.390 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-09 18:48:01.869 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 18:48:01.992 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 18:48:02.115 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 18:48:02.192 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 18:48:02.193 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 18:48:02.199 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:48:13.725 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-09 18:48:13.741 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 18:48:13.833 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 18:48:13.869 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-07-09 18:48:14.180 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-07-09 18:48:14.518 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-09 18:48:16.298 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-09 18:48:33.346 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 18:48:33.656 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-07-09 18:48:33.670 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 18:48:33.980 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:48:34.242 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 18:48:34.304 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 18:48:37.848 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 18:48:39.170 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-07-09 18:48:39.185 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-07-09 18:48:39.485 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-07-09 18:48:44.065 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 18:48:44.127 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 18:48:45.016 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 18:48:51.442 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 18:48:52.046 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 18:48:52.352 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 18:48:52.629 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 18:48:53.341 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 18:48:54.990 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 18:48:54.992 [TRANSACTION] RFID TCP SERVER STOP
+2026-07-09 18:48:56.540 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-07-09 18:48:56.541 [TRANSACTION] PAY START type=bar amount=8
+2026-07-09 18:48:56.556 [PAYMENT] PAYMENT START Zahlart=bar Betrag=8,00
+2026-07-09 18:48:58.598 [PAYMENT] PAYMENT ERROR Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 18:48:58.599 [PAYMENT] PAYMENT END OK=False Zahlart=bar Message=Zahlungsfehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 18:49:00.008 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-07-09 18:49:00.009 [TRANSACTION] PAY START type=zvt amount=8
+2026-07-09 18:49:00.023 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=8,00
+2026-07-09 18:49:00.025 [PAYMENT] ZVT DEMOMODUS AKTIV - Test=1 wird erzwungen
+2026-07-09 18:49:00.027 [PAYMENT] ZVT EXE C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\EasyZVT.exe
+2026-07-09 18:49:00.028 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=800 Lizenz=BJMKHDLDIEDFJJDGGEF Test=1 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-07-09 18:49:24.172 [PAYMENT] PAYMENT END OK=True Zahlart=ec Message=EC-Zahlung erfolgreich.
+2026-07-09 18:49:24.178 [REQUEST] POST /api/sale/complete IP=127.0.0.1
+2026-07-09 18:49:24.193 [TRANSACTION] SALE COMPLETE START Items=1 DemoModus=True WriteJournal=True WriteWebUI=False
+2026-07-09 18:49:24.213 [TRANSACTION] SALE COMPLETE END BonNo=2 Items=1
+2026-07-09 18:49:24.527 [REQUEST] POST /api/receipt/preview IP=127.0.0.1
+2026-07-09 18:49:54.185 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 18:51:38.793 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 18:51:39.054 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-07-09 18:51:39.132 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 18:51:39.140 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:51:39.470 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 18:51:39.471 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 18:51:43.039 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 18:52:08.144 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 18:53:10.661 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 18:53:11.045 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 19:01:33.837 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 19:01:33.839 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-09 19:01:33.854 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-09 19:01:34.571 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-09 19:01:36.615 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 19:02:10.994 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-09 19:02:11.009 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 19:02:11.102 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 19:02:11.161 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+ME
+At line 1, column 29
+2026-07-09 19:02:11.240 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-07-09 19:02:12.510 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 19:02:12.570 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 19:02:43.030 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 19:02:43.279 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 19:02:43.371 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 19:02:43.373 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 19:02:43.374 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 19:02:43.380 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 19:02:43.755 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-09 19:02:43.781 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+ME
+At line 1, column 29
+2026-07-09 19:02:44.016 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-07-09 19:02:44.092 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-09 19:02:46.689 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 19:02:47.035 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 19:02:47.050 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-07-09 19:02:47.297 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 19:02:47.375 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 19:02:47.622 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 19:02:51.145 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 19:03:03.551 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-07-09 19:03:04.018 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 19:03:04.126 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 19:03:04.281 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 19:03:04.344 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 19:03:04.345 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 19:03:04.352 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 19:03:10.675 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-09 19:03:10.700 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+ME
+At line 1, column 29
+2026-07-09 19:03:10.940 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-07-09 19:03:11.017 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-09 19:03:20.346 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-07-09 19:03:42.957 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 19:03:43.274 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-07-09 19:03:43.289 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-07-09 19:03:43.611 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 19:03:43.873 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 19:03:43.933 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-07-09 19:03:47.459 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 19:06:17.364 [TRANSACTION] WEB SERVER START port=8090
+2026-07-09 19:06:17.367 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-07-09 19:06:17.381 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-07-09 19:06:18.101 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-07-09 19:06:20.132 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-07-09 19:06:51.925 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-07-09 19:06:51.941 [TRANSACTION] FIREBIRD CONNECT host=localhost port=3050 database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 19:06:52.035 [TRANSACTION] FIREBIRD CONNECT OK host=localhost database=D:\FOODWARE_12_Herbst.fdb
+2026-07-09 19:06:52.075 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+ME
+At line 1, column 29
+2026-07-09 19:06:52.326 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-07-09 19:06:53.165 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-07-09 19:06:53.225 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 19:07:38.654 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-07-09 19:07:38.655 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-07-09 19:07:38.668 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-07-09 19:07:45.825 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:46.452 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:46.759 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:46.774 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:46.775 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:46.776 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:46.778 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:47.085 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:47.087 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:47.088 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:47.843 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-07-09 19:07:48.942 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-07-09 19:07:48.944 [TRANSACTION] RFID TCP SERVER STOP
+2026-07-09 19:07:49.699 [REQUEST] GET /api/pay IP=127.0.0.1
+2026-07-09 19:07:49.701 [TRANSACTION] PAY START type=zvt amount=2,5
+2026-07-09 19:07:49.715 [PAYMENT] PAYMENT START Zahlart=zvt Betrag=2,50
+2026-07-09 19:07:49.718 [PAYMENT] ZVT DEMOMODUS AKTIV - Test=1 wird erzwungen
+2026-07-09 19:07:49.719 [PAYMENT] ZVT EXE C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\EasyZVT.exe
+2026-07-09 19:07:49.720 [PAYMENT] ZVT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=250 Lizenz=BJMKHDLDIEDFJJDGGEF Test=1 Kassedruck=0 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-07-09 19:07:58.553 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-07-09 19:07:58.879 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-07-09 19:07:58.881 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-07-09 19:07:58.882 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-07-09 19:07:58.893 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-07-09 19:07:59.202 [REQUEST] GET /api/config IP=127.0.0.1
+2026-07-09 19:08:04.235 [REQUEST] GET /api/admin/daily-close IP=127.0.0.1
+2026-07-09 19:08:35.348 [PAYMENT] PAYMENT END OK=True Zahlart=ec Message=EC-Zahlung erfolgreich.
+2026-07-09 19:08:35.661 [REQUEST] POST /api/sale/complete IP=127.0.0.1
+2026-07-09 19:08:35.676 [TRANSACTION] SALE COMPLETE START Items=1 DemoModus=True WriteJournal=True WriteWebUI=False
+2026-07-09 19:08:35.688 [TRANSACTION] SALE COMPLETE END BonNo=3 Items=1
+2026-07-09 19:08:35.924 [REQUEST] POST /api/receipt/preview IP=127.0.0.1
+2026-07-09 19:08:36.661 [REQUEST] POST /api/admin/daily-close/run IP=127.0.0.1
+2026-07-09 19:08:36.676 [TRANSACTION] KASSENABSCHLUSS RUN START Datum=2026-07-08 Auto=False
+2026-07-09 19:08:38.735 [PAYMENT] ZVT KASSENSCHNITT EXE C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\EasyZVT.exe
+2026-07-09 19:08:38.738 [PAYMENT] ZVT KASSENSCHNITT START e KasseNr=1 COM=LAN IP=192.168.5.207 Port=22000 Betrag=300 Lizenz=BJMKHDLDIEDFJJDGGEF Kassedruck=1 Funktion=2 Ausgabepfad=C:\Users\pc\OneDrive\Dokumente\Embarcadero\Studio\Projekte\SCO_EAN\Win32\Debug\ZVT\
+2026-07-09 19:09:05.884 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-07-09 19:09:33.981 [PAYMENT] ZVT KASSENSCHNITT END Ergebnis=999 Text=VERBINDUNGSFEHLER kein Gerät an IP 192.168.5.207 gefunden: Wartezeit 15021 ms
+2026-07-09 19:09:33.989 [TRANSACTION] KASSENABSCHLUSS TEILFEHLER Datum=2026-07-08 Umsatz=0,00
+2026-07-09 19:09:34.305 [REQUEST] GET /api/admin/daily-close IP=127.0.0.1

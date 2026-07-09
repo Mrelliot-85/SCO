@@ -1,0 +1,684 @@
+﻿2026-06-27 00:03:54.933 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 00:03:54.935 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 00:03:54.946 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 00:03:55.648 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 00:03:57.653 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 00:04:00.058 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 00:04:00.084 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 00:04:00.307 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 00:04:00.374 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 00:04:00.618 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 00:04:00.691 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 00:04:01.978 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 00:04:02.302 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:12:22.528 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 00:12:22.539 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 00:12:22.542 [ERROR] Interner Fehler bei /api/admin/articles: EFDException - [FireDAC][Phys][FB]-345. Daten zu groß für Variable [Q]. Maximale Länge = [0], tatsächliche Länge = [4] Hinweis: Setzen Sie TFDParam.Size auf einen größeren Wert
+2026-06-27 00:22:16.843 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 00:22:16.845 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 00:22:16.856 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 00:22:17.559 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 00:22:19.565 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 00:22:20.274 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 00:22:20.300 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 00:22:20.524 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 00:22:20.589 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 00:22:20.835 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 00:22:20.907 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 00:22:20.912 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 00:22:22.234 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 00:22:22.570 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:24:52.913 [REQUEST] POST /api/admin/article/save IP=127.0.0.1
+2026-06-27 00:24:52.949 [ERROR] ADMIN ARTICLE SAVE ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -303
+conversion error from string ""
+2026-06-27 00:25:34.044 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 00:25:34.371 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:26:54.001 [REQUEST] POST /api/admin/article/save IP=127.0.0.1
+2026-06-27 00:26:54.034 [ERROR] ADMIN ARTICLE SAVE ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -303
+conversion error from string ""
+2026-06-27 00:27:01.162 [REQUEST] POST /api/admin/article/save IP=127.0.0.1
+2026-06-27 00:27:01.201 [ERROR] ADMIN ARTICLE SAVE ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -303
+conversion error from string ""
+2026-06-27 00:35:52.159 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 00:35:52.162 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 00:35:52.172 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 00:35:52.875 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 00:35:54.880 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 00:36:12.972 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 00:36:12.999 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 00:36:13.223 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 00:36:13.287 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 00:36:13.536 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 00:36:13.603 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 00:36:13.613 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 00:36:14.979 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 00:36:15.313 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:39:11.306 [REQUEST] POST /api/admin/article/save IP=127.0.0.1
+2026-06-27 00:39:14.467 [REQUEST] POST /api/admin/article/image/save IP=127.0.0.1
+2026-06-27 00:39:14.783 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 00:39:14.794 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 00:39:14.806 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+2026-06-27 00:39:18.757 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-06-27 00:39:18.767 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-06-27 00:39:19.215 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-06-27 00:39:24.114 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:39:27.797 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 00:39:28.049 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 00:39:28.071 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 00:39:28.119 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 00:39:42.147 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 00:39:42.450 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 00:39:42.466 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 00:39:42.502 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 00:39:42.776 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 00:39:43.028 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 00:39:43.093 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 00:39:43.351 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 00:39:43.413 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 00:39:43.414 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 00:39:43.671 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-06-27 00:39:44.307 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 00:39:45.024 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 00:39:45.700 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 00:39:46.441 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 00:39:46.692 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 00:39:53.679 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 00:39:53.702 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 00:39:53.982 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 00:40:04.217 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-06-27 00:40:04.243 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-06-27 00:40:04.469 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-06-27 00:40:04.530 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 00:40:04.784 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-06-27 00:40:04.786 [TRANSACTION] RFID TCP SERVER STOP
+2026-06-27 00:40:04.846 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-06-27 00:40:08.295 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-06-27 00:40:09.291 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-06-27 00:40:09.302 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-06-27 00:40:09.763 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-06-27 00:40:13.556 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:40:17.014 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:40:18.227 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:40:21.059 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 00:45:49.579 [TRANSACTION] RFID TCP SERVER STOP
+2026-06-27 01:03:30.597 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 01:03:30.601 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 01:03:30.610 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 01:03:31.313 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 01:03:33.318 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 01:03:55.338 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-27 01:03:55.812 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:03:55.936 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:03:56.062 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:03:56.125 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:03:56.141 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:03:56.379 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:03:56.447 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:03:56.765 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:03:57.017 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:03:57.018 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:03:57.089 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:03:57.346 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-06-27 01:04:01.755 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 01:04:02.063 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 01:04:02.064 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-27 01:04:02.084 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 01:04:02.085 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-27 01:04:02.314 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:04:02.414 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:04:02.440 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:04:02.632 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:04:04.512 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:08:05.114 [REQUEST] POST /api/admin/label/save IP=127.0.0.1
+2026-06-27 01:08:05.117 [TRANSACTION] LABEL TEMPLATE SAVE id=label-1782515046011
+2026-06-27 01:08:05.365 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:08:08.628 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-06-27 01:08:28.445 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:08:28.471 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:08:28.697 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:08:28.762 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:08:28.787 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:08:29.015 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:08:29.077 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:08:29.340 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:08:29.395 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:08:29.397 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:08:29.660 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:29.709 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-06-27 01:08:32.385 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:34.679 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:37.069 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:08:37.398 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:37.399 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:37.400 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:37.401 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:37.402 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:37.409 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:37.418 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D620B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-27 01:08:37.711 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:38.473 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:38.474 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:38.475 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:38.484 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:38.485 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-27 01:08:38.486 [TRANSACTION] LABEL WEIGHT READ
+2026-06-27 01:08:38.487 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:38.493 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D620B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-27 01:08:38.497 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-06-27 01:08:38.784 [TRANSACTION] SCALE READ OK weight=0,09 raw=A000007327.06.2604:05:150010G      0,090 kg T      0,000 kg N      0,090 kg         0,45 EUR   0,50 EUR/100g
+
+2026-06-27 01:08:38.787 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:38.788 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.101 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.102 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.103 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.105 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.106 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.601 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.602 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.603 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.604 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.605 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.613 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:08:39.621 [ERROR] Interner Fehler bei /api/productimage: EFDException - [FireDAC][Comp][Clnt]-510. Anweisung [] muss sich im inaktiven Status befinden
+2026-06-27 01:08:39.926 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:12:39.442 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 01:12:39.445 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 01:12:39.456 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 01:12:40.164 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 01:12:41.977 [REQUEST] GET /sco/ IP=127.0.0.1
+2026-06-27 01:12:41.989 [REQUEST] GET /sco/style.css IP=127.0.0.1
+2026-06-27 01:12:42.207 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 01:12:42.223 [REQUEST] GET /sco/app.js IP=127.0.0.1
+2026-06-27 01:12:42.547 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:12:42.796 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-06-27 01:12:42.873 [REQUEST] GET /api/groups IP=127.0.0.1
+2026-06-27 01:12:46.440 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-06-27 01:13:17.507 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-06-27 01:13:17.518 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-06-27 01:13:18.040 [REQUEST] GET /sco/assets/logo.png IP=127.0.0.1
+2026-06-27 01:13:18.832 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:13:19.919 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:13:19.932 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:13:19.948 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:13:20.133 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:15:54.315 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 01:15:54.563 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 01:15:54.642 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-27 01:15:54.643 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 01:15:54.644 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-27 01:15:54.649 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:15:54.966 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:15:54.967 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:15:54.985 [ERROR] Interner Fehler bei /api/admin/article/lookups: EDatabaseError - Das Feld 'WG' wurde nicht gefunden
+2026-06-27 01:15:55.583 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:15:57.380 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-06-27 01:19:09.890 [TRANSACTION] RFID TCP SERVER STOP
+2026-06-27 01:36:41.418 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 01:36:41.421 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 01:36:41.435 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 01:36:42.137 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 01:36:44.194 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 01:36:47.100 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-27 01:36:47.575 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:36:47.714 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:36:47.825 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:36:47.888 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:36:47.902 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:36:48.151 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:36:48.213 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:36:48.463 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:36:48.588 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:36:48.791 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:36:48.792 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:36:48.916 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:36:49.134 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-06-27 01:36:50.179 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:36:50.490 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:36:51.778 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:36:52.192 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:36:53.486 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:36:53.500 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:36:53.750 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:36:56.513 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 01:36:56.826 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 01:36:56.827 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-27 01:36:56.829 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 01:36:56.830 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-27 01:36:57.089 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:36:57.166 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:36:57.188 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:36:57.445 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:36:57.447 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:37:02.870 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:37:02.889 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:37:03.183 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:37:03.199 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:37:03.651 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:37:03.665 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:37:03.666 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:37:03.681 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:37:04.718 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:37:04.738 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:37:05.021 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:37:05.035 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:37:10.682 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:37:10.932 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:37:19.217 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:37:20.906 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-06-27 01:39:58.290 [REQUEST] POST /api/admin/label/save IP=127.0.0.1
+2026-06-27 01:39:58.294 [TRANSACTION] LABEL TEMPLATE SAVE id=label-1782515046011
+2026-06-27 01:39:58.553 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:40:04.566 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:40:04.912 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:35.097 [REQUEST] GET /api/rfid/stop IP=127.0.0.1
+2026-06-27 01:41:35.142 [REQUEST] GET /sco/assets/startscreen.png IP=127.0.0.1
+2026-06-27 01:41:36.246 [REQUEST] GET /api/rfid/start IP=127.0.0.1
+2026-06-27 01:41:36.256 [TRANSACTION] RFID TCP SERVER ACTIVE ip=0.0.0.0 port=3178
+2026-06-27 01:41:37.191 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:37.238 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:37.239 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:37.240 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:37.241 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 007D620B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-27 01:41:38.502 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.503 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.504 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.510 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080F102 in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-27 01:41:38.514 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.515 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.516 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:38.517 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:38.530 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 004081EE in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:38.657 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.659 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:38.828 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.829 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.876 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.883 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:38.921 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.925 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:38.969 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:38.971 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:39.125 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:39.128 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:40.480 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:41:40.482 [ERROR] Interner Fehler bei /api/productimage: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:45.326 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:41:45.530 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:41:45.655 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:41:45.662 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:41:45.664 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:41:45.981 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:41:46.290 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:41:46.303 [ERROR] Interner Fehler bei /api/labeling/groups: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:46.556 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:41:46.567 [ERROR] LABEL TARAS ERROR: Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:46.618 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:41:46.620 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:41:46.623 [ERROR] LABEL PROTOCOL LIST ERROR: Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:50.323 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:41:50.356 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:41:50.432 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:41:50.651 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:41:50.657 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:41:50.977 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:41:51.241 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:41:51.252 [ERROR] Interner Fehler bei /api/labeling/groups: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:51.334 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:41:51.346 [ERROR] LABEL TARAS ERROR: Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:51.568 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:41:51.569 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:41:51.572 [ERROR] LABEL PROTOCOL LIST ERROR: Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:41:55.087 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:41:55.100 [ERROR] LABEL PRODUCTS ERROR: Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:42:00.588 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-27 01:42:00.976 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:42:01.108 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:42:01.232 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:42:01.309 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:42:01.324 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:42:01.588 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:42:01.650 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:42:01.665 [ERROR] Interner Fehler bei /api/labeling/groups: EAccessViolation - Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:42:01.903 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:42:01.915 [ERROR] LABEL TARAS ERROR: Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:42:01.980 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:42:01.981 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:42:01.984 [ERROR] LABEL PROTOCOL LIST ERROR: Zugriffsverletzung bei Adresse 0080EC0B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000040
+2026-06-27 01:42:26.049 [TRANSACTION] RFID TCP SERVER STOP
+2026-06-27 01:42:28.380 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 01:42:28.383 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 01:42:28.394 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 01:42:29.111 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 01:42:31.044 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-27 01:42:31.156 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 01:42:31.516 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:42:31.624 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:42:31.781 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:42:31.841 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:42:31.858 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:42:32.123 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:42:32.324 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:42:32.431 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:42:32.696 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:42:32.757 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:42:32.759 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:42:33.023 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:33.335 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-06-27 01:42:35.323 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:35.336 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:42:35.585 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:36.471 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:36.793 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:43.576 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:42:43.596 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:44.214 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:42:44.227 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:44.854 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:42:45.196 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:45.197 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:45.198 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:45.458 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:42:45.614 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:46.329 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:42:46.644 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:47.983 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:42:48.247 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.311 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.313 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.314 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.324 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.325 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:42:48.558 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.621 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.636 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.653 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:42:48.667 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.682 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.870 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.933 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.947 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.980 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.981 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:48.995 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:49.182 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:49.245 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:49.729 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:49.731 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:49.732 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:49.742 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:49.759 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:42:49.761 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:42:50.552 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:51:44.751 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 01:51:44.754 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 01:51:44.765 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 01:51:45.482 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 01:51:47.527 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 01:51:49.181 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-27 01:51:49.755 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 01:51:50.003 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 01:51:50.006 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-27 01:51:50.083 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 01:51:50.084 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-27 01:51:50.089 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:51:52.718 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:51:54.303 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-06-27 01:52:18.593 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:52:18.660 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:52:18.895 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:52:18.897 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:52:21.997 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:52:21.999 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:52:22.012 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:52:22.029 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:52:22.295 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:52:22.312 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:52:22.599 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:52:22.600 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:52:23.543 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:52:23.545 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:52:23.557 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:52:23.573 [ERROR] ADMIN ARTICLE LOOKUP ERROR: Zugriffsverletzung bei Adresse 007D620B in Modul 'FOODWARE_SCO.exe'. Lesen von Adresse 00000000
+2026-06-27 01:52:23.575 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:52:25.151 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:52:25.495 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:30.721 [REQUEST] POST /api/admin/article/save IP=127.0.0.1
+2026-06-27 01:52:32.422 [REQUEST] GET /api/admin/article/lookups IP=127.0.0.1
+2026-06-27 01:52:32.424 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 01:52:32.425 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:52:32.470 [ERROR] ADMIN ARTICLE LOOKUP ERROR: [FireDAC][Phys][FB]Dynamic SQL Error
+SQL error code = -204
+Table unknown
+EINHEIT
+At line 1, column 29
+2026-06-27 01:52:35.733 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 01:52:36.069 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 01:52:36.083 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 01:52:36.085 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 01:52:36.318 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 01:52:36.409 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 01:52:36.642 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 01:52:36.720 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:52:36.968 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 01:52:37.047 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:52:37.049 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:52:37.296 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:37.375 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-06-27 01:52:40.407 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:52:40.734 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:40.737 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:40.738 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:40.740 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:40.748 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:40.749 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:41.063 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:52:41.188 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:41.391 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:42.002 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:52:42.004 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-27 01:52:42.005 [TRANSACTION] LABEL WEIGHT READ
+2026-06-27 01:52:42.016 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-06-27 01:52:42.128 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:42.314 [TRANSACTION] SCALE READ OK weight=0,09 raw=A000007427.06.2604:49:190010G      0,090 kg T      0,000 kg N      0,090 kg         0,45 EUR   0,50 EUR/100g
+
+2026-06-27 01:52:42.325 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:43.533 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:44.570 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:48.407 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:52:48.409 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-27 01:52:48.411 [TRANSACTION] LABEL WEIGHT READ
+2026-06-27 01:52:48.421 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-06-27 01:52:48.536 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:48.717 [TRANSACTION] SCALE READ OK weight=0,09 raw=A000007527.06.2604:49:250010G      0,090 kg T      0,000 kg N      0,090 kg         0,45 EUR   0,50 EUR/100g
+
+2026-06-27 01:52:48.724 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:51.632 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:52:51.633 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-27 01:52:51.634 [TRANSACTION] LABEL WEIGHT READ
+2026-06-27 01:52:51.645 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-06-27 01:52:51.772 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:51.943 [TRANSACTION] SCALE READ OK weight=0,09 raw=A000007627.06.2604:49:280010G      0,090 kg T      0,000 kg N      0,090 kg         0,45 EUR   0,50 EUR/100g
+
+2026-06-27 01:52:51.951 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:53.595 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-27 01:52:53.597 [TRANSACTION] LABEL WEIGHT READ
+2026-06-27 01:52:53.598 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:53.607 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-06-27 01:52:53.907 [TRANSACTION] SCALE READ OK weight=0,09 raw=A000007727.06.2604:49:300010G      0,090 kg T      0,000 kg N      0,090 kg         0,45 EUR   0,50 EUR/100g
+
+2026-06-27 01:52:53.914 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:54.233 [REQUEST] GET /api/labeling/print IP=127.0.0.1
+2026-06-27 01:52:54.234 [TRANSACTION] LABEL PRINT PLU=1424 Weight=0,09 Tara=0 Qty=1 MHD= Template=0
+2026-06-27 01:52:54.245 [TRANSACTION] LABEL TAGINFO OK TAG=2204688374237 PLU=1424 TARA=0
+2026-06-27 01:52:54.559 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:52:54.560 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:52:54.824 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:52:59.728 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-06-27 01:53:00.053 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:03.084 [REQUEST] GET /api/admin/article IP=127.0.0.1
+2026-06-27 01:53:03.394 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-27 01:53:03.395 [TRANSACTION] LABEL WEIGHT READ
+2026-06-27 01:53:03.406 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-06-27 01:53:03.519 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:03.706 [TRANSACTION] SCALE READ OK weight=0,09 raw=A000007827.06.2604:49:400010G      0,090 kg T      0,000 kg N      0,090 kg         0,45 EUR   0,50 EUR/100g
+
+2026-06-27 01:53:04.021 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:08.362 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:11.026 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:17.850 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:21.477 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-06-27 01:53:21.742 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:46.267 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:53:49.906 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:06.629 [REQUEST] GET /api/labeling/weight IP=127.0.0.1
+2026-06-27 01:54:06.630 [TRANSACTION] LABEL WEIGHT READ
+2026-06-27 01:54:06.641 [TRANSACTION] SCALE READ vendor=soehnle3820 mode=serial
+2026-06-27 01:54:06.935 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:06.965 [TRANSACTION] SCALE READ OK weight=0,192 raw=A000007927.06.2604:50:430010G      0,192 kg T      0,000 kg N      0,192 kg         0,96 EUR   0,50 EUR/100g
+
+2026-06-27 01:54:07.278 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 01:54:07.279 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 01:54:07.289 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:41.463 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:54:41.793 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:41.795 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:41.801 [ERROR] Interner Fehler bei /api/productimage: EFDException - [FireDAC][DatS]-1. Name [_FD_SEL] ist in der Liste doppelt vorhanden
+2026-06-27 01:54:41.807 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.126 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 01:54:42.462 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.464 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.465 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.475 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.491 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.506 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.789 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.791 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:42.792 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.226 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.228 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.239 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.241 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.255 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.258 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.539 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.545 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:53.554 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:54.881 [REQUEST] GET /api/admin/label IP=127.0.0.1
+2026-06-27 01:54:55.145 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.208 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.209 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.211 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.214 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.222 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.459 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.522 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 01:54:55.524 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 13:05:14.347 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 13:05:14.351 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 13:05:14.363 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 13:05:15.066 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 13:05:17.099 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 13:05:20.177 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 13:05:20.216 [REQUEST] GET /api/admin/label-printer/test IP=127.0.0.1
+2026-06-27 13:05:54.685 [REQUEST] GET /api/admin/articles IP=127.0.0.1
+2026-06-27 13:05:57.026 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-27 13:05:57.507 [REQUEST] GET /labeling/ IP=127.0.0.1
+2026-06-27 13:05:57.615 [REQUEST] GET /labeling/style.css IP=127.0.0.1
+2026-06-27 13:05:57.773 [REQUEST] GET /labeling/app.js IP=127.0.0.1
+2026-06-27 13:05:57.850 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 13:05:57.882 [REQUEST] GET /labeling/manifest.json IP=127.0.0.1
+2026-06-27 13:05:58.096 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 13:05:58.173 [REQUEST] GET /api/labeling/groups IP=127.0.0.1
+2026-06-27 13:05:58.434 [REQUEST] GET /api/labeling/products IP=127.0.0.1
+2026-06-27 13:05:58.512 [REQUEST] GET /api/labeling/taras IP=127.0.0.1
+2026-06-27 13:05:58.760 [REQUEST] GET /api/labeling/protocol IP=127.0.0.1
+2026-06-27 13:05:58.761 [TRANSACTION] LABEL PROTOCOL LIST LIMIT=5
+2026-06-27 13:05:58.837 [REQUEST] GET /api/productimage IP=127.0.0.1
+2026-06-27 13:05:59.103 [REQUEST] GET /labeling/assets/blanko.svg IP=127.0.0.1
+2026-06-27 13:05:59.386 [TRANSACTION] WEB SERVER ALREADY ACTIVE port=8090
+2026-06-27 13:05:59.466 [REQUEST] GET /admin/ IP=127.0.0.1
+2026-06-27 13:05:59.895 [REQUEST] GET /admin/labeldesigner.css IP=127.0.0.1
+2026-06-27 13:05:59.900 [REQUEST] GET /admin/app.js IP=127.0.0.1
+2026-06-27 13:05:59.901 [REQUEST] GET /admin/labeldesigner.js IP=127.0.0.1
+2026-06-27 13:05:59.910 [REQUEST] GET /admin/style.css IP=127.0.0.1
+2026-06-27 13:06:00.159 [REQUEST] GET /api/config IP=127.0.0.1
+2026-06-27 13:06:02.507 [REQUEST] GET /api/admin/labels IP=127.0.0.1
+2026-06-27 13:43:06.806 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 13:43:06.810 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 13:43:06.821 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 13:43:07.532 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 13:43:09.582 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+
+2026-06-27 13:52:24.884 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 13:52:24.888 [TRANSACTION] WEB SERVER ACTIVE port=8090
+2026-06-27 13:52:24.899 [PAYMENT] CashLogy Init Start Host=127.0.0.1 Port=8092
+2026-06-27 13:52:25.422 [TRANSACTION] WEB SERVER START port=8090
+2026-06-27 13:52:25.425 [ERROR] WEB SERVER START FEHLER: EIdCouldNotBindSocket - Socket konnte nicht gebunden werden.
+2026-06-27 13:52:25.616 [ERROR] CashLogy Connector EXE nicht gefunden: C:\Cashlogy\CashlogyConnector.exe
+2026-06-27 13:52:27.669 [ERROR] CashLogy Init FEHLER: CashLogy TCP nicht erreichbar (127.0.0.1:8092). Bitte pruefen: Connector laeuft nur einmal, TCP-Port ist frei und im Connector korrekt eingestellt. Fehler: Socket-Fehler # 10061Verbindung abgelehnt.
+

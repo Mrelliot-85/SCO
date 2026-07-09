@@ -1,0 +1,9 @@
+{
+  "name": "FOODWARE Labeling",
+  "short_name": "Labeling",
+  "start_url": "/labeling/",
+  "scope": "/labeling/",
+  "display": "standalone",
+  "background_color": "#f2f6f9",
+  "theme_color": "#185b7d"
+}
