@@ -1,4 +1,4 @@
-﻿const state = {
+const state = {
   page: 'start',
   items: [],
   groups: [],
@@ -60,20 +60,20 @@
     rating_questions: [
       'Wie zufrieden sind Sie mit unserem Sortiment?',
       'Wie zufrieden sind Sie mit der Abwicklung des Zahlvorgangs?',
-      'Wie gefÃ¤llt Ihnen der Hofladen?',
+      'Wie gefällt Ihnen der Hofladen?',
       'Wie bewerten Sie das Einkaufserlebnis insgesamt?'
     ]
   }
 };
 
 const BLANK_IMAGE = 'assets/blanko.svg';
-const RFID_RETURN_MESSAGE = 'Artikel wurde entfernt. Bitte stellen Sie den Artikel zurÃ¼ck an seinen Platz.';
-const RFID_RETURN_ALL_MESSAGE = 'Alle Artikel wurden entfernt. Bitte stellen Sie alle Artikel zurÃ¼ck an ihren Platz.';
+const RFID_RETURN_MESSAGE = 'Artikel wurde entfernt. Bitte stellen Sie den Artikel zurück an seinen Platz.';
+const RFID_RETURN_ALL_MESSAGE = 'Alle Artikel wurden entfernt. Bitte stellen Sie alle Artikel zurück an ihren Platz.';
 function rfidCustomerMessage(msg){
   const m = String(msg || '').toLowerCase();
   if(m.includes('status') || m.includes('verkauft') || m.includes('gesperrt') || m.includes('entwertet')) return 'Artikel bereits bezahlt oder entwertet.';
-  if(m.includes('taginfo') || m.includes('nicht gefunden') || m.includes('fehlt') || m.includes('unvollstaendig') || m.includes('unvollstÃ¤ndig')) return 'Artikel nicht lesbar. Bitte Artikel erneut auflegen oder manuell hinzufuegen.';
-  return 'Artikel nicht lesbar. Bitte Artikel erneut auflegen oder manuell hinzufuegen.';
+  if(m.includes('taginfo') || m.includes('nicht gefunden') || m.includes('fehlt') || m.includes('unvollständig') || m.includes('unvollständig')) return 'Artikel nicht lesbar. Bitte Artikel erneut auflegen oder manuell hinzufügen.';
+  return 'Artikel nicht lesbar. Bitte Artikel erneut auflegen oder manuell hinzufügen.';
 }
 const recentRfidScans = Object.create(null);
 const rfidInFlight = Object.create(null);
@@ -229,6 +229,7 @@ async function loadConfig(){
     if(c.receipt){
       state.config.bon_auto_print = c.receipt.autoPrint ? 1 : 0;
       state.config.receipt_width_mm = Number(c.receipt.widthMm || 80);
+      state.config.receipt_left_margin_mm = Number(c.receipt.leftMarginMm || 0);
     }
     if(c.rating){
       state.config.rating_active = c.rating.active ? 1 : 0;
@@ -293,11 +294,11 @@ function currentStep(){
 
 function stepInfo(){
   const map = {
-    start: ['Start', 'Willkommen im SB-Shop', 'Starten Sie hier Ihren Einkauf. Scannen Sie Artikel selbst oder wÃ¤hlen Sie Artikel ohne EAN aus.'],
-    cart: ['Einkauf', 'Artikel erfassen', 'Scannen Sie Ihre Artikel. Im Warenkorb kÃ¶nnen Sie jeden Artikel einzeln entfernen.'],
-    payment: ['Zahlung', 'Einkauf prÃ¼fen und bezahlen', 'PrÃ¼fen Sie Ihre Artikel, gehen Sie bei Bedarf zurÃ¼ck und wÃ¤hlen Sie danach die Zahlungsart.'],
-    receipt: ['Bon', 'Bon erhalten', 'Die Zahlung war erfolgreich. Sie kÃ¶nnen den Bon drucken oder den Einkauf bewerten.'],
-    rating: ['Bewertung', 'Ihre Meinung zÃ¤hlt', 'Bewerten Sie kurz Ihren Einkauf. Danach startet der nÃ¤chste Einkauf.']
+    start: ['Start', 'Willkommen im SB-Shop', 'Starten Sie hier Ihren Einkauf. Scannen Sie Artikel selbst oder wählen Sie Artikel ohne EAN aus.'],
+    cart: ['Einkauf', 'Artikel erfassen', 'Scannen Sie Ihre Artikel. Im Warenkorb können Sie jeden Artikel einzeln entfernen.'],
+    payment: ['Zahlung', 'Einkauf prüfen und bezahlen', 'Prüfen Sie Ihre Artikel, gehen Sie bei Bedarf zurück und wählen Sie danach die Zahlungsart.'],
+    receipt: ['Bon', 'Bon erhalten', 'Die Zahlung war erfolgreich. Sie können den Bon drucken oder den Einkauf bewerten.'],
+    rating: ['Bewertung', 'Ihre Meinung zählt', 'Bewerten Sie kurz Ihren Einkauf. Danach startet der nächste Einkauf.']
   };
   return map[state.page] || map.start;
 }
@@ -307,6 +308,7 @@ function canUseStep(target){
   if(target === 'cart') return state.page !== 'start' || state.items.length > 0;
   if(target === 'payment') return state.items.length > 0 && (state.page === 'payment' || state.page === 'receipt' || state.page === 'rating');
   if(target === 'receipt') return state.paymentComplete;
+  if(target === 'rating') return state.paymentComplete || state.page === 'receipt' || state.page === 'rating';
   return false;
 }
 
@@ -347,7 +349,7 @@ function availablePaymentText(){
   if(state.config.payment_ec) list.push('EC- und Kartenzahlung');
   if(state.config.payment_coupon) list.push('Gutschein');
   if(state.config.payment_customer) list.push('Kundenkarte');
-  return list.join(' Â· ') || 'Zahlungsmittel werden am Terminal angezeigt';
+  return list.join(' · ') || 'Zahlungsmittel werden am Terminal angezeigt';
 }
 
 function startHtml(){
@@ -355,11 +357,11 @@ function startHtml(){
 }
 
 function cartHtml(){
-  return `<section class="cartCard card"><div class="cartTools"><button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufÃ¼gen</b></button><button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button><button class="clear" data-action="clear"><span>Ã—</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>Ã—</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
+  return `<section class="cartCard card"><div class="cartTools"><button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufügen</b></button><button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button><button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
 }
 
 function emptyHtml(){
-  return `<div class="empty"><i>SCAN</i><h2>Scanner bereit</h2><p>Bitte scannen Sie einen Artikel oder wÃ¤hlen Sie â€žArtikelâ€œ.</p></div>`;
+  return `<div class="empty"><i>SCAN</i><h2>Scanner bereit</h2><p>Bitte scannen Sie einen Artikel oder wählen Sie „Artikel“.</p></div>`;
 }
 
 function articlePic(x){
@@ -409,19 +411,25 @@ function receiptHtml(){
   const preview = state.receiptPreview ? `<pre class="bonText">${esc(state.receiptPreview)}</pre>` : `<div class="bonLoading">${state.receiptPreviewLoading ? 'Bonvorschau wird geladen ...' : 'Bonvorschau noch nicht geladen.'}</div>`;
   const status = state.receiptStatus ? `<div class="receiptNotice ${state.receiptStatus.startsWith('FEHLER') ? 'err' : 'ok'}">${esc(state.receiptStatus)}</div>` : '';
   const title = state.receiptStatus && !state.receiptStatus.startsWith('FEHLER') ? 'Bon wurde gedruckt' : 'Zahlung erfolgreich';
-  const width = Math.max(58, Math.min(80, Number(state.config.receipt_width_mm || 80)));
-  return `<section class="receiptCard card receiptW${width < 70 ? '58' : '80'}"><div class="success">OK</div><h1>${title}</h1><p>Dieser Bon entspricht dem Ausdruck.</p>${status}<div class="bonWrap"><div class="bon">${preview}</div></div><div class="receiptBtns"><button data-action="refreshReceiptPreview">Druckvorschau aktualisieren</button><button class="greenBtn" data-action="print">Bon drucken</button></div>${state.config.rating_active ? `<button class="rateBtn" data-page="rating">Einkauf bewerten</button>` : ''}<button class="plainBtn" data-action="newStart">Neuen Einkauf starten</button></section>`;
+  const textMm = Math.max(40, Math.min(80, Number(state.config.receipt_width_mm || 80)));
+  const leftMm = Math.max(0, Math.min(40, Number(state.config.receipt_left_margin_mm || 0)));
+  const textPx = Math.round(302 * textMm / 80);
+  const leftPx = Math.round(302 * leftMm / 80);
+  const ratingActive = Number(state.config.rating_active || 0) !== 0;
+  return `<section class="receiptCard card receiptW80" style="--receipt-text-px:${textPx}px;--receipt-left-px:${leftPx}px"><div class="success">OK</div><h1>${title}</h1><p>Dieser Bon entspricht dem Ausdruck.</p>${status}<div class="bonWrap"><div class="bon">${preview}</div></div><div class="receiptBtns"><button data-action="refreshReceiptPreview">Druckvorschau aktualisieren</button><button class="greenBtn" data-action="print">Bon drucken</button></div>${ratingActive ? `<button class="rateBtn" data-page="rating">Einkauf bewerten</button>` : ''}<button class="plainBtn" data-action="newStart">Neuen Einkauf starten</button></section>`;
 }
 
 function bonHtml(){
   const sum = total();
   const vat = sum * 0.07;
   const net = sum - vat;
-  return `<div class="bonCenter"><b>${esc(state.theme.customer)}</b><br>${esc(state.theme.phone)}<br>${new Date().toLocaleString('de-DE')}</div>${state.items.map(x => `<div class="bonItem"><b>${esc(x.name)}</b><div><span>${qtyText(x)} Â· ${money(x.ep)}</span><b>${money(x.gp)}</b></div></div>`).join('')}<div class="bonSum"><div><span>Netto</span><span>${money(net)}</span></div><div><span>MwSt.</span><span>${money(vat)}</span></div><div class="strong"><span>Summe</span><span>${money(sum)}</span></div></div>`;
+  return `<div class="bonCenter"><b>${esc(state.theme.customer)}</b><br>${esc(state.theme.phone)}<br>${new Date().toLocaleString('de-DE')}</div>${state.items.map(x => `<div class="bonItem"><b>${esc(x.name)}</b><div><span>${qtyText(x)} · ${money(x.ep)}</span><b>${money(x.gp)}</b></div></div>`).join('')}<div class="bonSum"><div><span>Netto</span><span>${money(net)}</span></div><div><span>MwSt.</span><span>${money(vat)}</span></div><div class="strong"><span>Summe</span><span>${money(sum)}</span></div></div>`;
 }
 
 function ratingHtml(){
-  const qs = state.config.rating_questions;
+  const qs = Array.isArray(state.config.rating_questions) && state.config.rating_questions.length
+    ? state.config.rating_questions
+    : ['Wie zufrieden waren Sie?', 'Wie gut war die Bedienung?', 'Wie bewerten Sie die Auswahl?', 'Wie wahrscheinlich empfehlen Sie uns weiter?'];
   return `<section class="ratingCard card"><h1>Ihre Meinung ist uns wichtig</h1>${qs.map((q, i) => `<div class="question"><b>${esc(q)}</b><div>${[1,2,3,4,5].map(n => `<button class="star ${n <= state.ratings[i] ? 'active' : ''}" data-rating="${i}:${n}">&#9733;</button>`).join('')}</div></div>`).join('')}<button class="payWide" data-action="saveRating">Bewertung speichern</button></section>`;
 }
 
@@ -475,7 +483,7 @@ function exitAlarmModal(){
 }
 
 function adminPinModal(){
-  return `<div class="modal adminModal"><div class="adminPin card"><h1>Admin-Zugang</h1><p>Bitte PIN eingeben.</p><div class="pinDots">${[0,1,2,3].map(i => `<span class="${state.adminPin.length > i ? 'filled' : ''}"></span>`).join('')}</div>${state.paymentMessage ? `<div class="adminError">${esc(state.paymentMessage)}</div>` : ''}<div class="pinPad">${[1,2,3,4,5,6,7,8,9].map(n => `<button data-pin="${n}">${n}</button>`).join('')}<button data-action="adminCancel">Abbruch</button><button data-pin="0">0</button><button data-action="adminBack">&larr;</button></div><button class="adminSubmit" data-action="adminSubmit" ${state.adminPin.length ? '' : 'disabled'}>Ã–ffnen</button></div></div>`;
+  return `<div class="modal adminModal"><div class="adminPin card"><h1>Admin-Zugang</h1><p>Bitte PIN eingeben.</p><div class="pinDots">${[0,1,2,3].map(i => `<span class="${state.adminPin.length > i ? 'filled' : ''}"></span>`).join('')}</div>${state.paymentMessage ? `<div class="adminError">${esc(state.paymentMessage)}</div>` : ''}<div class="pinPad">${[1,2,3,4,5,6,7,8,9].map(n => `<button data-pin="${n}">${n}</button>`).join('')}<button data-action="adminCancel">Abbruch</button><button data-pin="0">0</button><button data-action="adminBack">&larr;</button></div><button class="adminSubmit" data-action="adminSubmit" ${state.adminPin.length ? '' : 'disabled'}>Öffnen</button></div></div>`;
 }
 function paymentWaitModal(){
   const method = state.selectedPayment === 'Bargeld' ? 'Zahlautomat' : 'Kartenterminal';
@@ -485,20 +493,20 @@ function paymentWaitModal(){
 
 function productModal(){
   const list = state.products.filter(p => Number(p.group) === Number(state.selectedGroup));
-  return `<div class="modal"><div class="productModal card"><aside><h2>Warengruppen</h2><div class="groupList">${state.groups.map(g => `<button class="groupBtn ${g.id === state.selectedGroup ? 'active' : ''}" data-group="${g.id}">${esc(g.name)}</button>`).join('')}</div></aside><section><div class="modalTop"><div><h2>Artikel ohne EAN</h2><p>Warengruppe wÃ¤hlen und Artikel Ã¼bernehmen.</p></div><button data-action="closeModal">&larr; Zurueck</button></div><div class="productGrid">${list.length ? list.map(p => `<button class="productBtn" data-product="${p.plu}"><div class="prodImg"><img src="${esc(p.image || BLANK_IMAGE)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="articleIcon" style="display:none">ART</span></div><b>${esc(p.name)}</b><span>PLU ${p.plu} Â· ${esc(p.note || '')}</span><strong>${money(p.ep)} / ${esc(p.unit)}</strong></button>`).join('') : '<p>Keine Artikel in dieser Warengruppe gefunden.</p>'}</div></section></div></div>`;
+  return `<div class="modal"><div class="productModal card"><aside><h2>Warengruppen</h2><div class="groupList">${state.groups.map(g => `<button class="groupBtn ${g.id === state.selectedGroup ? 'active' : ''}" data-group="${g.id}">${esc(g.name)}</button>`).join('')}</div></aside><section><div class="modalTop"><div><h2>Artikel ohne EAN</h2><p>Warengruppe wählen und Artikel übernehmen.</p></div><button data-action="closeModal">&larr; Zurück</button></div><div class="productGrid">${list.length ? list.map(p => `<button class="productBtn" data-product="${p.plu}"><div class="prodImg"><img src="${esc(p.image || BLANK_IMAGE)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="articleIcon" style="display:none">ART</span></div><b>${esc(p.name)}</b><span>PLU ${p.plu} · ${esc(p.note || '')}</span><strong>${money(p.ep)} / ${esc(p.unit)}</strong></button>`).join('') : '<p>Keine Artikel in dieser Warengruppe gefunden.</p>'}</div></section></div></div>`;
 }
 
 function qtyModal(){
   const p = state.selectedProduct;
   if(!p) return '';
-  return `<div class="modal"><div class="dialog card"><div class="modalTop"><h2>${esc(p.name)}</h2><button data-action="closeModal">&larr; Zurueck</button></div><div class="qtyBox"><button data-action="qtyMinus">-</button><b>${state.qty}</b><button data-action="qtyPlus">+</button></div><div class="dialogSum"><span>Summe</span><b class="green">${money(state.qty * p.ep)}</b></div><button class="payWide" data-action="addQty">Ãœbernehmen</button></div></div>`;
+  return `<div class="modal"><div class="dialog card"><div class="modalTop"><h2>${esc(p.name)}</h2><button data-action="closeModal">&larr; Zurück</button></div><div class="qtyBox"><button data-action="qtyMinus">-</button><b>${state.qty}</b><button data-action="qtyPlus">+</button></div><div class="dialogSum"><span>Summe</span><b class="green">${money(state.qty * p.ep)}</b></div><button class="payWide" data-action="addQty">Übernehmen</button></div></div>`;
 }
 
 function weightModal(){
   const p = state.selectedProduct;
   if(!p) return '';
   const q = Number(String(state.manualWeight).replace(',', '.')) || 0;
-  return `<div class="modal"><div class="dialog card"><div class="modalTop"><h2>${esc(p.name)}</h2><button data-action="closeModal">&larr; Zurueck</button></div><div class="scaleBox"><span>Gewicht</span><b>${state.manualWeight} kg</b></div><input class="manualInput" id="weightInput" value="${esc(state.manualWeight)}"><div class="dialogSum"><span>Summe</span><b class="green">${money(q * p.ep)}</b></div><button class="payWide" data-action="addWeight">Ãœbernehmen</button></div></div>`;
+  return `<div class="modal"><div class="dialog card"><div class="modalTop"><h2>${esc(p.name)}</h2><button data-action="closeModal">&larr; Zurück</button></div><div class="scaleBox"><span>Gewicht</span><b>${state.manualWeight} kg</b></div><input class="manualInput" id="weightInput" value="${esc(state.manualWeight)}"><div class="dialogSum"><span>Summe</span><b class="green">${money(q * p.ep)}</b></div><button class="payWide" data-action="addWeight">Übernehmen</button></div></div>`;
 }
 
 async function submitAdminPin(){
@@ -604,7 +612,7 @@ async function startPayment(){
 
   const amount = payAmount();
   if(amount <= 0){
-    state.paymentMessage = 'Zahlung nicht moeglich: Der offene Betrag ist 0,00 EUR. Bitte Artikel/Preise pruefen.';
+    state.paymentMessage = 'Zahlung nicht möglich: Der offene Betrag ist 0,00 EUR. Bitte Artikel/Preise pruefen.';
     render();
     return;
   }
@@ -860,7 +868,7 @@ function addItem(item){
   state.items.push(item);
   state.modal = null;
   state.selectedProduct = null;
-  state.scanMessage = item.name + ' wurde hinzugefÃ¼gt';
+  state.scanMessage = item.name + ' wurde hinzugefügt';
   state.page = 'cart';
   render();
   focusScanner();
