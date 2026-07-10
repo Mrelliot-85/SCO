@@ -159,13 +159,14 @@ function AdminArticleListJson(const Search, SortField, SortDir: string): string;
 var
   Q: TFDQuery;
   First: Boolean;
-  OrderField, Dir, S: string;
+  OrderField, Dir, S, SearchLike: string;
 begin
   SCOConfig.Load;
   OrderField := SafeSort(SortField);
   Dir := UpperCase(Trim(SortDir));
   if Dir <> 'DESC' then Dir := 'ASC';
   S := Trim(Search);
+  SearchLike := '%' + UpperCase(S) + '%';
 
   Q := TFDQuery.Create(nil);
   try
@@ -174,9 +175,14 @@ begin
       'select first 300 ID, NUMMER, BEZEICHNUNG, BEZEICHNUNG2, EINHEIT, ME_BEZ, WG, WG_BEZ, EAN, ' +
       'MWST_1, STANDARD_ETIKETT, MHD, LAGERTEMPERATUR, TARANR, NENNGEWICHT, VK_BRUTTO ' +
       'from VARTIKEL ' +
-      'where (:Q = '''' or BEZEICHNUNG containing :Q or coalesce(BEZEICHNUNG2,'''') containing :Q or cast(NUMMER as varchar(30)) containing :Q or coalesce(EAN,'''') containing :Q) ' +
+      'where (:Q = '''' or upper(coalesce(cast(BEZEICHNUNG as varchar(255)),'''')) like :LIKEQ ' +
+      'or upper(coalesce(cast(BEZEICHNUNG2 as varchar(255)),'''')) like :LIKEQ ' +
+      'or upper(cast(NUMMER as varchar(30))) like :LIKEQ ' +
+      'or upper(cast(ELENO as varchar(30))) like :LIKEQ ' +
+      'or upper(coalesce(cast(EAN as varchar(50)),'''')) like :LIKEQ) ' +
       'order by ' + OrderField + ' ' + Dir;
     Q.ParamByName('Q').AsString := S;
+    Q.ParamByName('LIKEQ').AsString := SearchLike;
     Q.Open;
 
     Result := '[';
