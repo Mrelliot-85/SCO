@@ -166,8 +166,20 @@ function messageKind(){
 
   return 'info';
 }
+function productIsKg(p){
+  return !!p && String(p.unit || '').toLowerCase() === 'kg';
+}
+
 function unitIsKg(){
-  return state.selectedProduct && String(state.selectedProduct.unit).toLowerCase() === 'kg';
+  return productIsKg(state.selectedProduct);
+}
+
+function clearPieceWeight(){
+  state.weight = 0;
+  state.tara = 0;
+  state.stable = false;
+  state.scaleRaw = '';
+  state.scaleLastAt = '';
 }
 
 function netWeight(){
@@ -482,15 +494,16 @@ function selectProduct(p){
   state.message = p ? (p.name + ' ausgewählt') : 'Suchfeld bereit';
 
   if(p){
-    if(String(p.unit || '').toLowerCase() === 'kg' && parseNum(p.nenngewicht) > 0 && parseNum(state.weight) <= 0)
-      state.weight = parseNum(p.nenngewicht);
-    if(String(p.unit || '').toLowerCase() !== 'kg')
-      state.weight = 0;
-
-    if(p.taranr)
-      setTaraByNr(p.taranr);
-    else
-      state.tara = 0;
+    if(productIsKg(p)){
+      if(parseNum(p.nenngewicht) > 0 && parseNum(state.weight) <= 0)
+        state.weight = parseNum(p.nenngewicht);
+      if(p.taranr)
+        setTaraByNr(p.taranr);
+      else
+        state.tara = 0;
+    }else{
+      clearPieceWeight();
+    }
     state.template = Number(p.labelNumber || 0);
     loadActiveLabel(state.template);
     loadProductFoodDetails(p);
@@ -1261,7 +1274,7 @@ async function writeRfid(){
 
   const url =
     '/api/labeling/rfid/write?plu=' + encodeURIComponent(p.plu) +
-    '&weight=' + encodeURIComponent(Number(state.weight || 0).toFixed(3));
+    '&weight=' + encodeURIComponent(Number(unitIsKg() ? (state.weight || 0) : 0).toFixed(3));
 
   try{
     state.message = 'RFID wird codiert...';
@@ -1512,9 +1525,15 @@ async function searchByScan(ean){
     if(j.ok){
       const p = mapProduct(j);
       state.selectedProduct = p;
-      state.weight = String(p.unit || '').toLowerCase() === 'kg'
-        ? Number(j.weight || j.qty || p.nenngewicht || 0)
-        : 0;
+      if(productIsKg(p)){
+        state.weight = Number(j.weight || j.qty || p.nenngewicht || 0);
+        if(p.taranr)
+          setTaraByNr(p.taranr);
+        else
+          state.tara = 0;
+      }else{
+        clearPieceWeight();
+      }
       state.mhd = j.mhd || p.mhd || state.mhd || '';
       state.message = j.name + ' gefunden' + (j.source ? ' (' + j.source + ')' : '');
 
