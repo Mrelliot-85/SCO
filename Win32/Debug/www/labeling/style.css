@@ -25,6 +25,8 @@ button{border:0;cursor:pointer;}
 .modes{display:flex;justify-content:center;gap:12px;}
 .modes button{height:58px;padding:0 24px;border-radius:8px;background:#ffffff;color:var(--fw-blue-dark);font-size:18px;font-weight:900;box-shadow:0 2px 0 rgba(0,0,0,.12);}
 .modes button.active{background:var(--fw-green);color:#102033;}
+.modes .invalidateMode{background:#ffe9e9;color:#8b1c1c;}
+.modes .counterMode{background:#102033;color:white;min-width:132px;padding:0 18px;}
 .modes .helpButton{height:58px;padding:0 20px;border-radius:8px;background:#e8f2f8;color:var(--fw-blue-dark);font-size:18px;font-weight:900;box-shadow:0 2px 0 rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;text-decoration:none;}
 .customer{text-align:right;font-weight:700;color:#e8f3fa;}
 .customer b{display:block;font-size:21px;color:white;}
@@ -184,6 +186,16 @@ button{border:0;cursor:pointer;}
   margin:0 0 10px;
   font-size:16px;
   color:var(--fw-muted);
+}
+
+.invalidateBox{
+  grid-template-columns:1fr;
+  border-color:#f3b9b9;
+  background:#fff3f3;
+}
+
+.invalidateModal h2{
+  color:#8b1c1c;
 }
 
 .rfidFacts{

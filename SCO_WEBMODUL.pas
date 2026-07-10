@@ -1,4 +1,4 @@
-﻿unit SCO_WEBMODUL;
+unit SCO_WEBMODUL;
 
 interface
 
@@ -1151,6 +1151,16 @@ begin
         end;
 
 
+        if SameText(Path, '/api/labeling/rfid/invalidate') then
+        begin
+          LogTransaction(
+            'API RFID INVALIDATE HIT TAG=' + Request.QueryFields.Values['tag'] +
+            ' TAGLEN=' + IntToStr(Length(Request.QueryFields.Values['tag']))
+          );
+          ConnectDB;
+          SendJson(Response, LabelingInvalidateRfidJson(Request.QueryFields.Values['tag']));
+          Exit;
+        end;
         if SameText(Path, '/api/labeling/protocol') then
         begin
           ConnectDB;

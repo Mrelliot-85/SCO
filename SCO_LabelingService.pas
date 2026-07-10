@@ -13,6 +13,7 @@ function LabelingPrintJson(PLU: Integer; Weight: Double; Tara: Double; Qty: Inte
   const MHD, TemplateName: string): string;
 function LabelingWriteRfidJson(PLU: Integer; Weight: Double): string;
 function LabelingSaveRfidJson(PLU: Integer; const Tag, MHD, Source: string; Weight: Double; Tara: Double; Price: Double): string;
+function LabelingInvalidateRfidJson(const Tag: string): string;
 function LabelingProtocolJson(Limit: Integer): string;
 function LabelingProtocolDeleteJson(ID: Integer): string;
 function LabelingProtocolStatusJson(ID, Status: Integer): string;
@@ -498,6 +499,70 @@ begin
   LabelingDBLock.Acquire;
   try
     Result := LabelingSaveRfidJsonInternal(PLU, Tag, MHD, Source, Weight, Tara, Price);
+  finally
+    LabelingDBLock.Release;
+  end;
+end;
+
+function LabelingInvalidateRfidJsonInternal(const Tag: string): string;
+var
+  Q: TFDQuery;
+  CleanTag: string;
+  ID, OldStatus, PLU: Integer;
+  NeedLen: Integer;
+begin
+  SCOConfig.Load;
+  CleanTag := Trim(Tag);
+  NeedLen := SCOConfig.LabelingTagLength;
+  LogTransaction('RFID INVALIDATE START TAG=' + CleanTag + ' TAGLEN=' + IntToStr(Length(CleanTag)));
+
+  if CleanTag = '' then
+    Exit('{"ok":false,"message":"Kein RFID-Tag gelesen."}');
+
+  if (NeedLen > 0) and (Length(CleanTag) <> NeedLen) then
+    Exit('{"ok":false,"message":"RFID-Tag hat falsche Laenge: ' + IntToStr(Length(CleanTag)) + ' / ' + IntToStr(NeedLen) + '."}');
+
+  Q := TFDQuery.Create(nil);
+  try
+    try
+      Q.Connection := FB;
+      Q.SQL.Text := 'select first 1 ID, NUMMER, STATUS from TAGINFO where TAG = :TAG order by CREATEDATE desc';
+      Q.ParamByName('TAG').AsString := CleanTag;
+      Q.Open;
+      if Q.IsEmpty then
+      begin
+        LogTransaction('RFID INVALIDATE NOT FOUND TAG=' + CleanTag);
+        Exit('{"ok":false,"message":"RFID-Tag wurde in TAGINFO nicht gefunden.","tag":"' + JS(CleanTag) + '"}');
+      end;
+
+      ID := Q.FieldByName('ID').AsInteger;
+      PLU := StrToIntDef(Q.FieldByName('NUMMER').AsString, 0);
+      OldStatus := StrToIntDef(Q.FieldByName('STATUS').AsString, 0);
+      Q.Close;
+
+      Q.SQL.Text := 'update TAGINFO set STATUS = 9, CHANGEDATE = CURRENT_TIMESTAMP where ID = :ID';
+      Q.ParamByName('ID').AsInteger := ID;
+      Q.ExecSQL;
+
+      LogTransaction('RFID INVALIDATE OK ID=' + IntToStr(ID) + ' TAG=' + CleanTag + ' PLU=' + IntToStr(PLU) + ' OLDSTATUS=' + IntToStr(OldStatus));
+      Result := '{"ok":true,"message":"RFID-Tag wurde entwertet.","tag":"' + JS(CleanTag) + '","id":' + IntToStr(ID) + ',"plu":' + IntToStr(PLU) + ',"oldStatus":' + IntToStr(OldStatus) + ',"status":9}';
+    except
+      on E: Exception do
+      begin
+        LogError('RFID INVALIDATE ERROR: ' + E.Message);
+        Result := '{"ok":false,"message":"' + JS(E.Message) + '"}';
+      end;
+    end;
+  finally
+    Q.Free;
+  end;
+end;
+
+function LabelingInvalidateRfidJson(const Tag: string): string;
+begin
+  LabelingDBLock.Acquire;
+  try
+    Result := LabelingInvalidateRfidJsonInternal(Tag);
   finally
     LabelingDBLock.Release;
   end;
