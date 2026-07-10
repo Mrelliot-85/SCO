@@ -51,6 +51,9 @@ const state = {
   rfidAction: 'encode',
   rfidTag: '',
   rfidMessage: '',
+  rfidDuplicateTag: '',
+  rfidDuplicateId: 0,
+  rfidDuplicateStatus: null,
   encodeCounter: Number(sessionStorage.getItem('labelingEncodeCounter') || 0),
 
   modal: null,
@@ -833,6 +836,8 @@ function rfidPopupHtml(){
           <button class="${state.afterSaveMode === 'same' ? 'active' : ''}" data-action="rfidMulti">${invalidate ? 'Mehrfachentwertung' : 'Mehrfachcodierung'}</button>
         </div>
 
+        ${(!invalidate && state.rfidDuplicateTag) ? `<div class="rfidOverwriteLine"><button class="danger" data-action="rfidOverwrite">RFID-Tag ueberschreiben und freigeben</button></div>` : ''}
+
         <div class="modalButtons">
           <button data-action="cancelRfid">Abbrechen</button>
         </div>
@@ -1130,6 +1135,9 @@ async function action(a){
     state.waitingForRfid = false;
     state.rfidAction = 'encode';
     state.rfidMessage = '';
+    state.rfidDuplicateTag = '';
+    state.rfidDuplicateId = 0;
+    state.rfidDuplicateStatus = null;
     render();
     setTimeout(() => $('searchInput')?.focus(), 100);
     return;
@@ -1146,6 +1154,12 @@ async function action(a){
     state.afterSaveMode = 'same';
     state.rfidMessage = state.rfidAction === 'invalidate' ? 'Mehrfachentwertung aktiv. Warte auf RFID-Tag...' : 'Mehrfachcodierung aktiv. Warte auf RFID-Tag...';
     render();
+    return;
+  }
+
+  if(a === 'rfidOverwrite'){
+    const tag = state.rfidDuplicateTag || state.rfidTag;
+    if(tag) await saveRfidTag(tag, true);
     return;
   }
 
@@ -1185,6 +1199,9 @@ function resetSelection(){
   state.search = '';
   state.waitingForRfid = false;
   state.rfidMessage = '';
+  state.rfidDuplicateTag = '';
+  state.rfidDuplicateId = 0;
+  state.rfidDuplicateStatus = null;
   state.showPluPad = false;
   state.searchOpen = false;
   state.mhd = '';
@@ -1319,6 +1336,9 @@ function startRfidWait(mode){
 
   state.waitingForRfid = true;
   state.rfidTag = '';
+  state.rfidDuplicateTag = '';
+  state.rfidDuplicateId = 0;
+  state.rfidDuplicateStatus = null;
   state.rfidMessage =
     state.afterSaveMode === 'same'
       ? 'Mehrfachcodierung aktiv. Warte auf RFID-Tag...'
@@ -1336,6 +1356,9 @@ function startRfidInvalidateWait(mode){
   state.rfidAction = 'invalidate';
   state.waitingForRfid = true;
   state.rfidTag = '';
+  state.rfidDuplicateTag = '';
+  state.rfidDuplicateId = 0;
+  state.rfidDuplicateStatus = null;
   state.rfidMessage =
     state.afterSaveMode === 'same'
       ? 'Mehrfachentwertung aktiv. Warte auf RFID-Tag...'
@@ -1413,7 +1436,7 @@ async function invalidateRfidTag(tag){
     state.savingRfid = false;
   }
 }
-async function saveRfidTag(tag){
+async function saveRfidTag(tag, overwrite = false){
   if(state.savingRfid){
     debugLog('rfid save ignored', { reason: 'already saving' });
     return;
@@ -1448,7 +1471,8 @@ async function saveRfidTag(tag){
     '&tara=' + encodeURIComponent(Number(unitIsKg() ? (state.tara || 0) : 0).toFixed(3)) +
     '&price=' + encodeURIComponent(Number(totalPrice() || p.price || 0).toFixed(2)) +
     '&mhd=' + encodeURIComponent(state.mhd || '') +
-    '&source=' + encodeURIComponent(p.source || state.rfidSource || 'reader');
+    '&source=' + encodeURIComponent(p.source || state.rfidSource || 'reader') +
+    (overwrite ? '&overwrite=1' : '');
 
   debugLog('rfid save start', {
     plu: p.plu,
@@ -1471,7 +1495,16 @@ async function saveRfidTag(tag){
       : (j.message || 'RFID-Tag konnte nicht gespeichert werden.');
     state.rfidMessage = state.message;
 
+    if(j.duplicate || j.canOverwrite){
+      state.rfidDuplicateTag = j.tag || cleanTag;
+      state.rfidDuplicateId = Number(j.id || 0);
+      state.rfidDuplicateStatus = j.status ?? null;
+    }
+
     if(j.ok){
+      state.rfidDuplicateTag = '';
+      state.rfidDuplicateId = 0;
+      state.rfidDuplicateStatus = null;
       state.waitingForRfid = false;
       state.encodeCounter = Number(state.encodeCounter || 0) + 1;
       sessionStorage.setItem('labelingEncodeCounter', String(state.encodeCounter));

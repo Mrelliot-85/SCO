@@ -453,3 +453,19 @@ button{border:0;cursor:pointer;}
 .manualWeightDisplay{height:72px;display:flex;align-items:center;justify-content:center;margin:14px 0;border:2px solid #17723a;border-radius:10px;background:#f3faef;color:#123d28;font-size:34px;font-weight:950}
 .manualWeightPad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 .manualWeightPad button{min-height:66px;border:1px solid #c9d8cf;border-radius:10px;background:#fff;color:#123d28;font-size:27px;font-weight:950;touch-action:manipulation}
+.rfidOverwriteLine{
+  margin-top:14px;
+  display:flex;
+  justify-content:center;
+}
+
+.rfidOverwriteLine .danger{
+  min-height:56px;
+  border-radius:8px;
+  background:#fff1f2;
+  color:#b42318;
+  border:2px solid #fecdd3;
+  font-size:18px;
+  font-weight:900;
+  padding:0 22px;
+}

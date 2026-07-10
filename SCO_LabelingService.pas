@@ -12,7 +12,7 @@ function LabelPrinterTestJson(const Host: string; Port: Integer; const WindowsPr
 function LabelingPrintJson(PLU: Integer; Weight: Double; Tara: Double; Qty: Integer;
   const MHD, TemplateName: string): string;
 function LabelingWriteRfidJson(PLU: Integer; Weight: Double): string;
-function LabelingSaveRfidJson(PLU: Integer; const Tag, MHD, Source: string; Weight: Double; Tara: Double; Price: Double): string;
+function LabelingSaveRfidJson(PLU: Integer; const Tag, MHD, Source: string; Weight: Double; Tara: Double; Price: Double; Overwrite: Boolean = False): string;
 function LabelingInvalidateRfidJson(const Tag: string): string;
 function LabelingProtocolJson(Limit: Integer): string;
 function LabelingProtocolDeleteJson(ID: Integer): string;
@@ -343,11 +343,11 @@ begin
 end;
 
 function LabelingSaveRfidJsonInternal(PLU: Integer; const Tag, MHD, Source: string;
-  Weight: Double; Tara: Double; Price: Double): string;
+  Weight: Double; Tara: Double; Price: Double; Overwrite: Boolean): string;
 var
   Q: TFDQuery;
   CleanTag, UnitName: string;
-  Typ: Integer;
+  Typ, ExistingID: Integer;
   NeedLen: Integer;
   ParsedMHD: TDateTime;
   SavePrice, StoreWeight: Double;
@@ -355,6 +355,7 @@ begin
   SCOConfig.Load;
   NeedLen := SCOConfig.LabelingTagLength;
   CleanTag := Trim(Tag);
+  ExistingID := 0;
 
   LogWeighing('RFID_SAVE_START PLU=' + IntToStr(PLU) + ' TAG=' + CleanTag + ' SOURCE=' + Source + ' BRUTTO=' + LogNumber(Weight + Tara, '0.000') + 'kg TARA=' + LogNumber(Tara, '0.000') + 'kg NETTO=' + LogNumber(Weight, '0.000') + 'kg CLIENTPRICE=' + LogNumber(Price, '0.00') + ' MHD=' + MHD);
 
@@ -403,14 +404,21 @@ begin
 
       if not Q.IsEmpty then
       begin
-        LogError('RFID SAVE DUPLICATE TAG=' + CleanTag + ' ID=' + Trim(Q.FieldByName('ID').AsString));
-        Result :=
-          '{"ok":false,' +
-          '"message":"RFID-Tag ist bereits vorhanden und wurde nicht erneut gespeichert.",' +
-          '"id":' + SafeJsonNumber(FieldStrDef(Q, 'ID', '0'), '0') + ',' +
-          '"status":' + Trim(Q.FieldByName('STATUS').AsString) + ',' +
-          '"tag":"' + JS(CleanTag) + '"}';
-        Exit;
+        ExistingID := Q.FieldByName('ID').AsInteger;
+        if not Overwrite then
+        begin
+          LogError('RFID SAVE DUPLICATE TAG=' + CleanTag + ' ID=' + Trim(Q.FieldByName('ID').AsString));
+          Result :=
+            '{"ok":false,' +
+            '"duplicate":true,' +
+            '"canOverwrite":true,' +
+            '"message":"RFID-Tag ist bereits vorhanden und wurde nicht erneut gespeichert.",' +
+            '"id":' + SafeJsonNumber(FieldStrDef(Q, 'ID', '0'), '0') + ',' +
+            '"status":' + Trim(Q.FieldByName('STATUS').AsString) + ',' +
+            '"tag":"' + JS(CleanTag) + '"}';
+          Exit;
+        end;
+        LogTransaction('RFID SAVE OVERWRITE REQUEST TAG=' + CleanTag + ' ID=' + IntToStr(ExistingID));
       end;
 
       Q.Close;
@@ -464,11 +472,18 @@ begin
         Tara := 0;
       end;
 
-      Q.SQL.Text :=
-        'insert into TAGINFO ' +
-        '(TAG, MHD, TYP, GEWICHT, TARA, PREIS, NUMMER, STATUS, CREATEDATE, CHANGEDATE, CHARGE) ' +
-        'values ' +
-        '(:TAG, :MHD, :TYP, :GEWICHT, :TARA, :PREIS, :NUMMER, 0, CURRENT_TIMESTAMP, null, :CHARGE)';
+      if ExistingID > 0 then
+        Q.SQL.Text :=
+          'update TAGINFO set ' +
+          'TAG = :TAG, MHD = :MHD, TYP = :TYP, GEWICHT = :GEWICHT, TARA = :TARA, ' +
+          'PREIS = :PREIS, NUMMER = :NUMMER, STATUS = 0, CHANGEDATE = CURRENT_TIMESTAMP, CHARGE = :CHARGE ' +
+          'where ID = :ID'
+      else
+        Q.SQL.Text :=
+          'insert into TAGINFO ' +
+          '(TAG, MHD, TYP, GEWICHT, TARA, PREIS, NUMMER, STATUS, CREATEDATE, CHANGEDATE, CHARGE) ' +
+          'values ' +
+          '(:TAG, :MHD, :TYP, :GEWICHT, :TARA, :PREIS, :NUMMER, 0, CURRENT_TIMESTAMP, null, :CHARGE)';
 
       Q.ParamByName('TAG').AsString := CleanTag;
 
@@ -488,11 +503,13 @@ begin
       Q.ParamByName('PREIS').AsFloat := SavePrice;
       Q.ParamByName('NUMMER').AsInteger := PLU;
       Q.ParamByName('CHARGE').AsString := '';
+      if ExistingID > 0 then
+        Q.ParamByName('ID').AsInteger := ExistingID;
 
       Q.ExecSQL;
 
       LogTransaction(
-        'RFID SAVE OK PLU=' + IntToStr(PLU) +
+        IfThen(ExistingID > 0, 'RFID SAVE OVERWRITE OK PLU=', 'RFID SAVE OK PLU=') + IntToStr(PLU) +
         ' TAG=' + CleanTag +
         ' PRICE=' + FloatToStr(SavePrice) +
         ' UNIT=' + UnitName +
@@ -502,7 +519,7 @@ begin
 
       Result :=
         '{"ok":true,' +
-        '"message":"RFID-Tag wurde gespeichert.",' +
+        '"message":"' + JS(IfThen(ExistingID > 0, 'RFID-Tag wurde ueberschrieben.', 'RFID-Tag wurde gespeichert.')) + '",' +
         '"tag":"' + JS(CleanTag) + '",' +
         '"plu":' + IntToStr(PLU) + '}';
 
@@ -520,11 +537,11 @@ end;
 
 
 function LabelingSaveRfidJson(PLU: Integer; const Tag, MHD, Source: string;
-  Weight: Double; Tara: Double; Price: Double): string;
+  Weight: Double; Tara: Double; Price: Double; Overwrite: Boolean): string;
 begin
   LabelingDBLock.Acquire;
   try
-    Result := LabelingSaveRfidJsonInternal(PLU, Tag, MHD, Source, Weight, Tara, Price);
+    Result := LabelingSaveRfidJsonInternal(PLU, Tag, MHD, Source, Weight, Tara, Price, Overwrite);
   finally
     LabelingDBLock.Release;
   end;

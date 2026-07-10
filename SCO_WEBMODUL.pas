@@ -1133,7 +1133,8 @@ begin
             ' WEIGHT=' + Request.QueryFields.Values['weight'] +
             ' PRICE=' + Request.QueryFields.Values['price'] +
             ' MHD=' + Request.QueryFields.Values['mhd'] +
-            ' SOURCE=' + Request.QueryFields.Values['source']
+            ' SOURCE=' + Request.QueryFields.Values['source'] +
+            ' OVERWRITE=' + Request.QueryFields.Values['overwrite']
           );
           ConnectDB;
           SendJson(Response,
@@ -1144,7 +1145,8 @@ begin
               Request.QueryFields.Values['source'],
               StrToFloatDef(StringReplace(Request.QueryFields.Values['weight'], '.', ',', []), 0),
               StrToFloatDef(StringReplace(Request.QueryFields.Values['tara'], '.', ',', []), 0),
-              StrToFloatDef(StringReplace(Request.QueryFields.Values['price'], '.', ',', []), 0)
+              StrToFloatDef(StringReplace(Request.QueryFields.Values['price'], '.', ',', []), 0),
+              (Request.QueryFields.Values['overwrite'] = '1') or SameText(Request.QueryFields.Values['overwrite'], 'true')
             )
           );
           Exit;
