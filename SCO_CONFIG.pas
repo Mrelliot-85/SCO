@@ -1,4 +1,4 @@
-﻿unit SCO_CONFIG;
+unit SCO_CONFIG;
 interface
 uses
   System.SysUtils, System.Classes, System.IniFiles;
@@ -162,6 +162,31 @@ begin
   Result := StringReplace(Result, #10, '\n', [rfReplaceAll]);
 end;
 
+function JsonFloat(O: TJSONObject; const Name: string; Default: Double): Double;
+var
+  V: TJSONValue;
+  FS: TFormatSettings;
+  Text: string;
+begin
+  Result := Default;
+  if Assigned(O) then
+  begin
+    V := O.GetValue(Name);
+    if Assigned(V) then
+    begin
+      if V is TJSONNumber then
+        Result := TJSONNumber(V).AsDouble
+      else
+      begin
+        FS := TFormatSettings.Create;
+        FS.DecimalSeparator := '.';
+        Text := StringReplace(V.Value, ',', '.', [rfReplaceAll]);
+        if not TryStrToFloat(Text, Result, FS) then
+          Result := Default;
+      end;
+    end;
+  end;
+end;
 function JsonBool(O: TJSONObject; const Name: string; Default: Boolean): Boolean;
 var V: TJSONValue;
 begin
@@ -338,7 +363,7 @@ begin
       Ini.WriteInteger('Bon', 'AutoDruck', Ord(JsonBool(Receipt, 'autoPrint', BonAutoDruck)));
       Ini.WriteString('Bon', 'Drucker', JsonStr(Receipt, 'printer', BonDrucker));
       Ini.WriteInteger('Bon', 'BreiteMM', StrToIntDef(JsonStr(Receipt, 'widthMm', IntToStr(BonBreiteMM)), BonBreiteMM));
-      Ini.WriteFloat('Bon', 'RandLinksMM', StrToFloatDef(StringReplace(JsonStr(Receipt, 'leftMarginMm', FloatToStr(BonRandLinksMM)), '.', ',', [rfReplaceAll]), BonRandLinksMM));
+      Ini.WriteFloat('Bon', 'RandLinksMM', JsonFloat(Receipt, 'leftMarginMm', BonRandLinksMM));
       Ini.WriteString('EAN', 'Regeln', JsonStr(Root, 'eanRules', EANRules));
       Ini.WriteInteger('TSE', 'Aktiv', Ord(JsonBool(TSE, 'active', TSEAktiv)));
       Ini.WriteString('TSE', 'Provider', JsonStr(TSE, 'provider', TSEProvider));

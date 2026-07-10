@@ -214,8 +214,8 @@ body,.shell,.startPage{background:#eef4f7!important;background-image:none!import
 .paymentPage{align-content:center!important;overflow:auto!important;padding-top:clamp(18px,4vh,52px)!important;padding-bottom:clamp(18px,4vh,52px)!important}
 
 /* Receipt paper width and RFID exit alarm 20260709-final */
-.receiptW58 .bonWrap{width:300px!important;padding:18px!important}.receiptW58 .bon{padding:16px!important}.receiptW58 .bonText{font-size:12px!important;line-height:1.22!important;white-space:pre!important}.receiptW58 .receiptBtns,.receiptW58 .rateBtn{width:300px!important}
-.receiptW80 .bonWrap{width:430px!important}.receiptW80 .bonText{white-space:pre!important}
+.receiptW58 .bonWrap{width:auto!important;padding:18px!important}.receiptW58 .bon{width:219px!important;padding:14px!important}.receiptW58 .bonText{font-size:12px!important;line-height:1.22!important;white-space:pre!important}.receiptW58 .receiptBtns,.receiptW58 .rateBtn{width:300px!important}
+.receiptW80 .bonWrap{width:auto!important}.receiptW80 .bon{width:302px!important}.receiptW80 .bonText{white-space:pre!important}
 .exitAlarmOverlay{z-index:120;background:rgba(70,6,8,.78)!important;backdrop-filter:blur(3px)}
 .exitAlarmBox{width:min(820px,calc(100vw - 70px));max-height:86vh;overflow:auto;padding:42px;text-align:center;border:6px solid #b91c1c!important;background:#fffdf8!important;box-shadow:0 32px 90px rgba(0,0,0,.42)!important}
 .exitAlarmIcon{width:112px;height:112px;margin:0 auto 18px;border-radius:999px;background:#b91c1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:82px;font-weight:1000;line-height:1;box-shadow:0 12px 28px rgba(185,28,28,.28)}

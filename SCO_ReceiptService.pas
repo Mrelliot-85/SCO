@@ -22,6 +22,7 @@ type
     function PreviewFromJson(const JsonText: string): string;
     function PrintFromJson(const JsonText: string): string;
     function TestPrint: string;
+    function TestPreview: string;
     function OpenDesigner: string;
     function PrintPlainText(const Text: string): string;
   end;
@@ -479,17 +480,73 @@ begin
     Lines.Free;
   end;
 end;
+function BuildReceiptTestText: string;
+var
+  Lines: TStringList;
+begin
+  SCOConfig.Load;
+  Lines := TStringList.Create;
+  try
+    Lines.Add(CenterText(SCOConfig.Kunde));
+    if Trim(SCOConfig.Telefon) <> '' then
+      Lines.Add(CenterText('Tel. ' + SCOConfig.Telefon));
+    Lines.Add(CenterText('Bon Nr. TEST'));
+    Lines.Add(CenterText(FormatDateTime('dd.mm.yyyy hh:nn:ss', Now)));
+    Lines.Add(LineOf('='));
+    Lines.Add(FitText('Testartikel 1', ReceiptWidth));
+    Lines.Add(TwoCol('1 Stck Stck x 3,50', '3,50 EUR'));
+    Lines.Add(FitText('Testartikel 2 langer Name', ReceiptWidth));
+    Lines.Add(TwoCol('0,250 kg kg x 20,00', '5,00 EUR'));
+    Lines.Add(LineOf('-'));
+    Lines.Add(TwoCol('Netto 7%', '7,94 EUR'));
+    Lines.Add(TwoCol('MwSt 7%', '0,56 EUR'));
+    Lines.Add(TwoCol('SUMME', '8,50 EUR'));
+    Lines.Add(LineOf('='));
+    Lines.Add('Zahlart: EC-/Kartenzahlung');
+    Lines.Add(LineOf('-'));
+    Lines.Add('EC-Zahlung');
+    Lines.Add('Ergebnis: Zahlung erfolgt');
+    Lines.Add('Zeit: ' + FormatDateTime('dd.mm.yyyy hh:nn:ss', Now));
+    Lines.Add('Karte: girocard');
+    Lines.Add('PAN: 672xxxxxxxxxx3009');
+    Lines.Add('Beleg: 1234');
+    Lines.Add('AID: 777415');
+    Lines.Add('Betrag: 8,50 EUR');
+    Lines.Add(LineOf('-'));
+    Lines.Add('Hinweis:');
+    AddWrappedBlock(Lines, SCOConfig.TSEInactiveText);
+    if Trim(SCOConfig.UStId) <> '' then
+      AddWrapped(Lines, 'USt-IdNr.: ' + SCOConfig.UStId);
+    Lines.Add(LineOf('-'));
+    Lines.Add(CenterText('Vielen Dank fuer Ihren Einkauf!'));
+    Lines.Add(CenterText('Ihr ' + SCOConfig.Kunde));
+    Lines.Add('');
+    Lines.Add('');
+    Result := Lines.Text;
+  finally
+    Lines.Free;
+  end;
+end;
+
+function TSCOReceiptService.TestPreview: string;
+begin
+  try
+    Result := JsonTextResult(True, 'Testbonvorschau erstellt.', BuildReceiptTestText);
+  except
+    on E: Exception do
+    begin
+      LogError('RECEIPT TEST PREVIEW ERROR ' + E.ClassName + ': ' + E.Message);
+      Result := JsonTextResult(False, 'Testbonvorschau Fehler: ' + E.Message, '');
+    end;
+  end;
+end;
+
 function TSCOReceiptService.TestPrint: string;
 var
   TestText: string;
 begin
   try
-    TestText := CenterText('FOODWARE SCO') + sLineBreak +
-      CenterText('Bondrucker Test') + sLineBreak +
-      LineOf('=') + sLineBreak +
-      'Datum: ' + FormatDateTime('dd.mm.yyyy hh:nn:ss', Now) + sLineBreak +
-      'Der Bondruck funktioniert.' + sLineBreak +
-      LineOf('-') + sLineBreak + sLineBreak + sLineBreak;
+    TestText := BuildReceiptTestText;
     TThread.Synchronize(nil,
       procedure
       begin

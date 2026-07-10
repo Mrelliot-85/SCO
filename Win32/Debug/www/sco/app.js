@@ -1,4 +1,4 @@
-﻿const state = {
+const state = {
   page: 'start',
   items: [],
   groups: [],
@@ -153,6 +153,9 @@ function startRFIDSession(){
       if(!j.ok){
         state.rfidSessionActive = false;
         state.scanMessage = j.message || 'RFID konnte nicht gestartet werden';
+        if(state.page === 'cart') render();
+      }else{
+        state.scanMessage = 'RFID aktiv - bitte Artikel auflegen';
         if(state.page === 'cart') render();
       }
     })

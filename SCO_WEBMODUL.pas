@@ -1,4 +1,4 @@
-﻿unit SCO_WEBMODUL;
+unit SCO_WEBMODUL;
 
 interface
 
@@ -777,8 +777,14 @@ begin
 
     if SameText(Path, '/api/rfid/start') then
     begin
+      SCOConfig.Load;
+      if not SCOConfig.RFIDAktiv then
+      begin
+        SendJson(Response, '{"ok":false,"message":"RFID ist in der Config deaktiviert.","active":false}');
+        Exit;
+      end;
       StartRFIDTcpService;
-      SendJson(Response, '{"ok":true,"message":"RFID gestartet."}');
+      SendJson(Response, '{"ok":true,"message":"RFID gestartet.","active":true,"host":"' + SCOConfig.RFIDHost + '","port":' + IntToStr(SCOConfig.RFIDTCPPort) + '}');
       Exit;
     end;
     if SameText(Path, '/api/rfid/stop') then
@@ -830,6 +836,26 @@ begin
       Receipt := TSCOReceiptService.Create;
       try
         SendJson(Response, Receipt.PreviewFromJson(Request.Content));
+      finally
+        Receipt.Free;
+      end;
+      Exit;
+    end;
+    if SameText(Path, '/api/admin/receipt/test/preview') then
+    begin
+      Receipt := TSCOReceiptService.Create;
+      try
+        SendJson(Response, Receipt.TestPreview);
+      finally
+        Receipt.Free;
+      end;
+      Exit;
+    end;
+    if SameText(Path, '/api/admin/receipt/test/print') then
+    begin
+      Receipt := TSCOReceiptService.Create;
+      try
+        SendJson(Response, Receipt.PrintPlainText(Request.Content));
       finally
         Receipt.Free;
       end;
