@@ -482,8 +482,10 @@ function selectProduct(p){
   state.message = p ? (p.name + ' ausgewählt') : 'Suchfeld bereit';
 
   if(p){
-    if(parseNum(p.nenngewicht) > 0 && parseNum(state.weight) <= 0)
+    if(String(p.unit || '').toLowerCase() === 'kg' && parseNum(p.nenngewicht) > 0 && parseNum(state.weight) <= 0)
       state.weight = parseNum(p.nenngewicht);
+    if(String(p.unit || '').toLowerCase() !== 'kg')
+      state.weight = 0;
 
     if(p.taranr)
       setTaraByNr(p.taranr);
@@ -1429,11 +1431,11 @@ async function saveRfidTag(tag){
   const url =
     '/api/labeling/rfid/save?plu=' + encodeURIComponent(p.plu) +
     '&tag=' + encodeURIComponent(cleanTag) +
-    '&weight=' + encodeURIComponent(Number(netWeight() || 0).toFixed(3)) +
-    '&tara=' + encodeURIComponent(Number(state.tara || 0).toFixed(3)) +
+    '&weight=' + encodeURIComponent(Number(unitIsKg() ? (netWeight() || 0) : 0).toFixed(3)) +
+    '&tara=' + encodeURIComponent(Number(unitIsKg() ? (state.tara || 0) : 0).toFixed(3)) +
     '&price=' + encodeURIComponent(Number(totalPrice() || p.price || 0).toFixed(2)) +
     '&mhd=' + encodeURIComponent(state.mhd || '') +
-    '&source=' + encodeURIComponent(state.rfidSource || 'reader');
+    '&source=' + encodeURIComponent(p.source || state.rfidSource || 'reader');
 
   debugLog('rfid save start', {
     plu: p.plu,
@@ -1510,7 +1512,9 @@ async function searchByScan(ean){
     if(j.ok){
       const p = mapProduct(j);
       state.selectedProduct = p;
-      state.weight = Number(j.weight || j.qty || p.nenngewicht || 0);
+      state.weight = String(p.unit || '').toLowerCase() === 'kg'
+        ? Number(j.weight || j.qty || p.nenngewicht || 0)
+        : 0;
       state.mhd = j.mhd || p.mhd || state.mhd || '';
       state.message = j.name + ' gefunden' + (j.source ? ' (' + j.source + ')' : '');
 

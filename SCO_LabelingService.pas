@@ -415,8 +415,15 @@ begin
 
       Q.Close;
 
-      SavePrice := GetArtikelVKBrutto(PLU);
-      LogTransaction('RFID SAVE PRICE VK_BRUTTO PLU=' + IntToStr(PLU) + ' PRICE=' + FloatToStr(SavePrice));
+      SavePrice := Price;
+      if SavePrice > 0 then
+        LogTransaction('RFID SAVE PRICE EAN/CLIENT PLU=' + IntToStr(PLU) + ' PRICE=' + FloatToStr(SavePrice));
+
+      if SavePrice <= 0 then
+      begin
+        SavePrice := GetArtikelVKBrutto(PLU);
+        LogTransaction('RFID SAVE PRICE VK_BRUTTO PLU=' + IntToStr(PLU) + ' PRICE=' + FloatToStr(SavePrice));
+      end;
 
       if SavePrice <= 0 then
       begin
@@ -452,7 +459,10 @@ begin
         UnitName := FieldStrDef(Q, 'ME_BEZ', '');
       Q.Close;
       if not SameText(Trim(UnitName), 'kg') then
+      begin
         StoreWeight := 0;
+        Tara := 0;
+      end;
 
       Q.SQL.Text :=
         'insert into TAGINFO ' +

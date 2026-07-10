@@ -457,7 +457,7 @@ var
   Q, Info: TFDQuery;
   CleanTag, ActualTag, Name, UnitName, FailMessage: string;
   PLU, WG, MWST, TagStatus, TagNummer: Integer;
-  Weight, EP, GP: Double;
+  Weight, EP, GP, TagPrice: Double;
   Alarm: Boolean;
 begin
   RfidScanLock.Enter;
@@ -476,7 +476,7 @@ begin
   try
     Q.Connection := FB;
     Q.SQL.Text :=
-      'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, r.GEWICHT, a.VK_BRUTTO as PREIS, a.BEZEICHNUNG, a.ME_BEZ, a.WG, a.MWSTSATZ1, a.MWST_1 ' +
+      'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, r.GEWICHT, r.PREIS as TAGPREIS, a.VK_BRUTTO as PREIS, a.BEZEICHNUNG, a.ME_BEZ, a.WG, a.MWSTSATZ1, a.MWST_1 ' +
       'FROM TAGINFO r INNER JOIN VARTIKEL a ON r.NUMMER = a.NUMMER ' +
       'WHERE r.TAG STARTING WITH :TAG AND COALESCE(r.STATUS, 0) = 0';
     Q.ParamByName('TAG').AsString := CleanTag;
@@ -514,15 +514,24 @@ begin
     WG := Q.FieldByName('WG').AsInteger;
     Weight := Q.FieldByName('GEWICHT').AsFloat;
     EP := Q.FieldByName('PREIS').AsFloat;
+    TagPrice := Q.FieldByName('TAGPREIS').AsFloat;
     if SameText(Trim(UnitName), 'kg') then
     begin
       if Weight <= 0 then Weight := 1;
       GP := EP * Weight;
+      if TagPrice > 0 then
+        GP := TagPrice;
     end
     else
     begin
       Weight := 1;
-      GP := EP;
+      if TagPrice > 0 then
+      begin
+        EP := TagPrice;
+        GP := TagPrice;
+      end
+      else
+        GP := EP;
     end;
     MWST := 7;
     if Q.FindField('MWSTSATZ1') <> nil then
