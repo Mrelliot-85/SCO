@@ -346,11 +346,11 @@ function LabelingSaveRfidJsonInternal(PLU: Integer; const Tag, MHD, Source: stri
   Weight: Double; Tara: Double; Price: Double): string;
 var
   Q: TFDQuery;
-  CleanTag: string;
+  CleanTag, UnitName: string;
   Typ: Integer;
   NeedLen: Integer;
   ParsedMHD: TDateTime;
-  SavePrice: Double;
+  SavePrice, StoreWeight: Double;
 begin
   SCOConfig.Load;
   NeedLen := SCOConfig.LabelingTagLength;
@@ -440,6 +440,20 @@ begin
         LogTransaction('RFID SAVE PRICE CLIENT FALLBACK PLU=' + IntToStr(PLU) + ' PRICE=' + FloatToStr(SavePrice));
       end;
 
+      UnitName := '';
+      StoreWeight := Weight;
+      Q.SQL.Text :=
+        'select first 1 ME_BEZ from VARTIKEL ' +
+        'where trim(cast(NUMMER as varchar(20))) = :PLU or trim(cast(NUMMER as varchar(20))) = :PLU5 or trim(cast(ELENO as varchar(20))) = :PLU';
+      Q.ParamByName('PLU').AsString := IntToStr(PLU);
+      Q.ParamByName('PLU5').AsString := Format('%.5d', [PLU]);
+      Q.Open;
+      if not Q.IsEmpty then
+        UnitName := FieldStrDef(Q, 'ME_BEZ', '');
+      Q.Close;
+      if not SameText(Trim(UnitName), 'kg') then
+        StoreWeight := 0;
+
       Q.SQL.Text :=
         'insert into TAGINFO ' +
         '(TAG, MHD, TYP, GEWICHT, TARA, PREIS, NUMMER, STATUS, CREATEDATE, CHANGEDATE, CHARGE) ' +
@@ -459,7 +473,7 @@ begin
       end;
 
       Q.ParamByName('TYP').AsInteger := Typ;
-      Q.ParamByName('GEWICHT').AsFloat := Weight;
+      Q.ParamByName('GEWICHT').AsFloat := StoreWeight;
       Q.ParamByName('TARA').AsFloat := Tara;
       Q.ParamByName('PREIS').AsFloat := SavePrice;
       Q.ParamByName('NUMMER').AsInteger := PLU;
@@ -470,9 +484,11 @@ begin
       LogTransaction(
         'RFID SAVE OK PLU=' + IntToStr(PLU) +
         ' TAG=' + CleanTag +
-        ' PRICE=' + FloatToStr(SavePrice)
+        ' PRICE=' + FloatToStr(SavePrice) +
+        ' UNIT=' + UnitName +
+        ' STOREWEIGHT=' + FloatToStr(StoreWeight)
       );
-      LogWeighing('RFID_SAVE_OK PLU=' + IntToStr(PLU) + ' TAG=' + CleanTag + ' TYP=' + IntToStr(Typ) + ' STATUS=0 BRUTTO=' + LogNumber(Weight + Tara, '0.000') + 'kg TARA=' + LogNumber(Tara, '0.000') + 'kg NETTO=' + LogNumber(Weight, '0.000') + 'kg PREIS=' + LogNumber(SavePrice, '0.00') + ' MHD=' + MHD);
+      LogWeighing('RFID_SAVE_OK PLU=' + IntToStr(PLU) + ' TAG=' + CleanTag + ' TYP=' + IntToStr(Typ) + ' STATUS=0 BRUTTO=' + LogNumber(Weight + Tara, '0.000') + 'kg TARA=' + LogNumber(Tara, '0.000') + 'kg NETTO=' + LogNumber(Weight, '0.000') + 'kg STOREGEWICHT=' + LogNumber(StoreWeight, '0.000') + 'kg EINHEIT=' + UnitName + ' PREIS=' + LogNumber(SavePrice, '0.00') + ' MHD=' + MHD);
 
       Result :=
         '{"ok":true,' +

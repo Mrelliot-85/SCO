@@ -514,8 +514,16 @@ begin
     WG := Q.FieldByName('WG').AsInteger;
     Weight := Q.FieldByName('GEWICHT').AsFloat;
     EP := Q.FieldByName('PREIS').AsFloat;
-    if Weight <= 0 then Weight := 1;
-    GP := EP * Weight;
+    if SameText(Trim(UnitName), 'kg') then
+    begin
+      if Weight <= 0 then Weight := 1;
+      GP := EP * Weight;
+    end
+    else
+    begin
+      Weight := 1;
+      GP := EP;
+    end;
     MWST := 7;
     if Q.FindField('MWSTSATZ1') <> nil then
       MWST := StrToIntDef(StringReplace(Q.FieldByName('MWSTSATZ1').AsString, '%', '', [rfReplaceAll]), 0);
