@@ -1,4 +1,4 @@
-﻿unit SCO_StatisticsService;
+unit SCO_StatisticsService;
 
 interface
 
@@ -453,7 +453,7 @@ begin
       ',"hours":' + Hours +
       ',"weekdays":' + Weekdays +
       ',"daily":' + Daily +
-      ',"journal":' + Journal + ',' +
+      ',"journal":' + Journal +
       ',"ratings":' + Ratings + '}';
   except
     on E: Exception do

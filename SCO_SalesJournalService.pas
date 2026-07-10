@@ -530,7 +530,14 @@ begin
       on E: Exception do LogError('WEBUI STATUS RFID ERFASST ERROR ' + E.Message);
     end;
     if Alarm then
+    begin
       LogError('RFID AUSGANGSKONTROLLE TAG=' + CleanTag + ' ANTENNE=' + IntToStr(Antenna) + ' PLU=' + IntToStr(PLU) + ' ARTIKEL=' + Name);
+      try
+        AddWebUIMeldung('Ausgangskontrolle', 'Artikel nicht bezahlt: PLU ' + IntToStr(PLU) + ' - ' + Name + ' / Tag ' + ActualTag);
+      except
+        on E: Exception do LogError('WEBUI MELDUNG AUSGANGSKONTROLLE ERROR ' + E.Message);
+      end;
+    end;
     LogTransaction('RFID SCAN OK tag=' + ActualTag + ' plu=' + IntToStr(PLU) + ' name=' + Name);
     Result :=
       '{"ok":true,' +
