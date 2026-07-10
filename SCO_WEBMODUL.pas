@@ -1,4 +1,4 @@
-unit SCO_WEBMODUL;
+﻿unit SCO_WEBMODUL;
 
 interface
 
@@ -44,6 +44,7 @@ SCO_LabelingService,
   SCO_SalesJournalService,
   SCO_StatisticsService,
   SCO_DailyCloseService,
+  SCO_RatingService,
   SCO_ESLService,
   SCO_Logger,
   Winapi.Windows, Winapi.ShellAPI, IdTCPClient;
@@ -342,6 +343,7 @@ begin
     (Pos('/api/esl/', Path) = 1) or
     SameText(Path, '/api/rfid/scan') or
     SameText(Path, '/api/rfid/release') or
+    SameText(Path, '/api/rating/save') or
     SameText(Path, '/api/sale/complete');
 end;
 
@@ -750,6 +752,13 @@ begin
         Request.QueryFields.Values['host'],
         StrToIntDef(Request.QueryFields.Values['port'], 0),
         Request.QueryFields.Values['printer']));
+      Exit;
+    end;
+
+    if SameText(Path, '/api/rating/save') then
+    begin
+      ConnectDB;
+      SendJson(Response, RatingSaveJson(Request.Content));
       Exit;
     end;
 
@@ -1289,6 +1298,8 @@ begin
 end;
 
 end.
+
+
 
 
 

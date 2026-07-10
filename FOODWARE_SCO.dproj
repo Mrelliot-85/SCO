@@ -117,6 +117,7 @@
         <DCCReference Include="SCO_LabelingService.pas"/>
         <DCCReference Include="SCO_ScaleService.pas"/>
         <DCCReference Include="SCO_SalesJournalService.pas"/>
+        <DCCReference Include="SCO_RatingService.pas"/>
         <DCCReference Include="URFIDReaderService.pas">
             <Form>/ URFIDConnect in &apos;URFIDConnect.pas&apos; {Form2};</Form>
         </DCCReference>
@@ -956,6 +957,7 @@
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
     <Import Project="$(MSBuildProjectName).deployproj" Condition="Exists('$(MSBuildProjectName).deployproj')"/>
 </Project>
+
 
 
 

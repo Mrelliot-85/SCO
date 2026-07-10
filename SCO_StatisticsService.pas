@@ -1,4 +1,4 @@
-unit SCO_StatisticsService;
+﻿unit SCO_StatisticsService;
 
 interface
 
@@ -239,11 +239,59 @@ begin
   except on E:Exception do begin LogError('STATISTICS WEBUI: '+E.Message); Result:='{"available":false,"message":"'+J(E.Message)+'","captured":0,"removed":0,"purchased":0,"products":[],"messages":[]}'; end; end;
   Q.Free; C.Free;
 end;
+function RatingRows(FromDate, ToDate: TDateTime): string;
+var
+  Q: TFDQuery;
+  First: Boolean;
+  Count: Integer;
+  Avg: Double;
+begin
+  Result := '{"count":0,"average":0,"items":[]}';
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FB;
+    Q.SQL.Text :=
+      'select ID, BON, DATUM, RATING1, RATING2, RATING3, RATING4, FILIAL_ID, RATING ' +
+      'from BEWERTUNG where DATUM between :FROMDATE and :TODATE order by DATUM desc, ID desc';
+    SetRange(Q, FromDate, ToDate);
+    Q.Open;
+    Result := '{"count":0,"average":0,"items":[';
+    First := True;
+    Count := 0;
+    Avg := 0;
+    while not Q.Eof do
+    begin
+      if not First then Result := Result + ',';
+      Result := Result + '{"id":' + IntToStr(IField(Q,'ID')) +
+        ',"bon":' + IntToStr(IField(Q,'BON')) +
+        ',"date":"' + FormatDateTime('yyyy-mm-dd', Q.FieldByName('DATUM').AsDateTime) + '"' +
+        ',"branch":' + IntToStr(IField(Q,'FILIAL_ID')) +
+        ',"rating1":' + N(FField(Q,'RATING1')) +
+        ',"rating2":' + N(FField(Q,'RATING2')) +
+        ',"rating3":' + N(FField(Q,'RATING3')) +
+        ',"rating4":' + N(FField(Q,'RATING4')) +
+        ',"rating":' + N(FField(Q,'RATING')) + '}';
+      Inc(Count);
+      Avg := Avg + FField(Q,'RATING');
+      First := False;
+      Q.Next;
+    end;
+    if Count > 0 then Avg := Avg / Count;
+    Result := Result + '],"count":' + IntToStr(Count) + ',"average":' + N(Avg) + '}';
+  except
+    on E: Exception do
+    begin
+      LogError('STATISTICS RATINGS: ' + E.Message);
+      Result := '{"count":0,"average":0,"items":[],"message":"' + J(E.Message) + '"}';
+    end;
+  end;
+  Q.Free;
+end;
 function StatisticsJson(Days: Integer; const FromText, ToText: string): string;
 var
   Q: TFDQuery;
   FromDate, ToDate: TDateTime;
-  KPI, Payments, Hours, Weekdays, Daily, Journal, Taxes, SendState: string;
+  KPI, Payments, Hours, Weekdays, Daily, Journal, Taxes, SendState, Ratings: string;
   First: Boolean;
 begin
   ResolveRange(Days, FromText, ToText, FromDate, ToDate);
@@ -256,6 +304,7 @@ begin
   Journal := '[]';
   Taxes := '[]';
   SendState := '{"rows":0,"sent":0,"open":0}';
+  Ratings := '{"count":0,"average":0,"items":[]}';
 
   Q := TFDQuery.Create(nil);
   try
@@ -388,6 +437,7 @@ begin
     Q.Close;
 
     Journal := JournalRows(FromDate, ToDate);
+    Ratings := RatingRows(FromDate, ToDate);
 
     Result := '{"ok":true,"days":' + IntToStr(Days) +
       ',"from":"' + FormatDateTime('yyyy-mm-dd', FromDate) +
@@ -403,7 +453,8 @@ begin
       ',"hours":' + Hours +
       ',"weekdays":' + Weekdays +
       ',"daily":' + Daily +
-      ',"journal":' + Journal + '}';
+      ',"journal":' + Journal + ',' +
+      ',"ratings":' + Ratings + '}';
   except
     on E: Exception do
     begin
@@ -447,3 +498,7 @@ begin
 end;
 
 end.
+
+
+
+

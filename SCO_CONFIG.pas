@@ -1,4 +1,4 @@
-unit SCO_CONFIG;
+﻿unit SCO_CONFIG;
 interface
 uses
   System.SysUtils, System.Classes, System.IniFiles;
@@ -374,6 +374,19 @@ begin
       Ini.WriteString('TSE', 'InactiveText', EncodeIniText(JsonStr(TSE, 'inactiveText', TSEInactiveText)));
       Ini.WriteString('TSE', 'UStId', JsonStr(TSE, 'ustId', UStId));
       Ini.WriteInteger('Bewertung', 'Aktiv', Ord(JsonBool(Rating, 'active', BewertungAktiv)));
+      if Rating <> nil then
+      begin
+        if (Rating.GetValue('questions') is TJSONArray) and (TJSONArray(Rating.GetValue('questions')).Count > 0) then
+        begin
+          Ini.WriteString('Bewertung', 'Frage1', TJSONArray(Rating.GetValue('questions')).Items[0].Value);
+          if TJSONArray(Rating.GetValue('questions')).Count > 1 then
+            Ini.WriteString('Bewertung', 'Frage2', TJSONArray(Rating.GetValue('questions')).Items[1].Value);
+          if TJSONArray(Rating.GetValue('questions')).Count > 2 then
+            Ini.WriteString('Bewertung', 'Frage3', TJSONArray(Rating.GetValue('questions')).Items[2].Value);
+          if TJSONArray(Rating.GetValue('questions')).Count > 3 then
+            Ini.WriteString('Bewertung', 'Frage4', TJSONArray(Rating.GetValue('questions')).Items[3].Value);
+        end;
+      end;
       Ini.WriteString('ZVT', 'Host', JsonStr(ZVT, 'host', ZVT_Host));
       Ini.WriteString('ZVT', 'Exe', JsonStr(ZVT, 'exe', ZVT_ExePath));
       Ini.WriteInteger('ZVT', 'Kasse', StrToIntDef(JsonStr(ZVT, 'kasse', IntToStr(ZVT_Kasse)), ZVT_Kasse));
@@ -583,6 +596,7 @@ initialization
 finalization
   SCOConfig.Free;
 end.
+
 
 
 
