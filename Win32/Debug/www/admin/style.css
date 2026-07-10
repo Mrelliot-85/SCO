@@ -60,3 +60,15 @@
 @media(max-width:760px){.rfidAlarmAdminBackdrop{padding:16px}.rfidAlarmAdminBox{width:calc(100vw - 32px);padding:28px}.rfidAlarmAdminBox h1{font-size:32px}.rfidAlarmAdminLead{font-size:18px}.rfidAlarmAdminArticle{flex-direction:column;align-items:flex-start}.rfidAlarmAdminIcon{width:86px;height:86px;font-size:58px}}
 /* Admin receipt preview */
 .receiptAdminStatus{margin:12px 0;padding:12px 14px;border-radius:12px;background:#eaf7ee;color:#0b5f27;font-weight:900;border:1px solid #bfe5c9}.receiptAdminPreview{margin:14px 0 4px;background:#eef2f6;border-radius:18px;padding:18px;display:inline-block}.receiptAdminPreview pre{margin:0;background:#fff;color:#111;font-family:Consolas,'Courier New',monospace;line-height:1.22;white-space:pre;box-shadow:0 10px 28px rgba(16,28,41,.10)}.receiptAdmin58 pre{width:219px;font-size:12px;padding:14px}.receiptAdmin80 pre{width:302px;font-size:13px;padding:18px}@media(max-width:760px){.receiptAdminPreview{max-width:100%;overflow:auto}.receiptAdmin80 pre,.receiptAdmin58 pre{max-width:none}}
+
+/* Kassenabschluss Tabelle und Bonvorschau */
+.closeTableWrap{width:100%;overflow-x:auto;overflow-y:hidden;border:1px solid #dde3ea;border-radius:14px;background:#fff;margin-top:14px;scrollbar-gutter:stable}
+.closeTableWrap .closeTable{margin:0;border:0;border-radius:0;min-width:1320px;table-layout:auto}
+.closeTable th,.closeTable td{padding:12px 14px;vertical-align:top;white-space:nowrap}
+.closeTable th{font-size:13px;text-transform:uppercase;letter-spacing:.02em}
+.closeTable td{font-size:14px}.closeTable td b{font-size:15px}.closeTable small{display:block;color:#66756b;margin-top:4px;max-width:240px;white-space:normal;line-height:1.25}
+.closeTable th:nth-child(1),.closeTable td:nth-child(1){min-width:132px;text-align:left}.closeTable th:nth-child(2),.closeTable td:nth-child(2){min-width:110px;text-align:left}.closeTable th:nth-child(10),.closeTable td:nth-child(10){min-width:210px;text-align:left}
+.closeStatus{display:inline-flex;align-items:center;min-height:28px;border-radius:999px;padding:4px 10px;background:#eaf7ee;color:#0b5f27;font-weight:900}
+.closeShowBtn{min-height:40px;border:0;border-radius:10px;background:#eaf7ee;color:#0b5f27;font-weight:900;padding:0 14px;white-space:nowrap}
+.closeDetail td{padding:0 14px 12px!important;background:#f8faf8}.closeDetail summary{cursor:pointer;color:#176b35;font-weight:900;padding:10px 0}.closeDetail pre{white-space:pre-wrap;max-height:180px;overflow:auto;background:#f3f6f4;border-radius:10px;padding:10px}
+.closeReceiptModal{z-index:80;background:rgba(16,28,41,.52)}.closeReceiptCard{width:min(640px,calc(100vw - 48px));max-height:calc(100vh - 48px);overflow:auto;text-align:center;padding:24px}.closeReceiptCard .modalHead{text-align:left}.closeReceiptCard .receiptAdminPreview{margin:10px auto 18px}.closeReceiptActions{justify-content:center}.closeReceiptActions button{min-width:190px}
