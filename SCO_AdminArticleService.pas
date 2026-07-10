@@ -1,4 +1,4 @@
-﻿unit SCO_AdminArticleService;
+unit SCO_AdminArticleService;
 
 interface
 
@@ -174,7 +174,7 @@ begin
       'select first 300 ID, NUMMER, BEZEICHNUNG, BEZEICHNUNG2, EINHEIT, ME_BEZ, WG, WG_BEZ, EAN, ' +
       'MWST_1, STANDARD_ETIKETT, MHD, LAGERTEMPERATUR, TARANR, NENNGEWICHT, VK_BRUTTO ' +
       'from VARTIKEL ' +
-      'where (:Q = '''' or BEZEICHNUNG containing :Q or cast(NUMMER as varchar(30)) containing :Q or coalesce(EAN,'''') containing :Q) ' +
+      'where (:Q = '''' or BEZEICHNUNG containing :Q or coalesce(BEZEICHNUNG2,'''') containing :Q or cast(NUMMER as varchar(30)) containing :Q or coalesce(EAN,'''') containing :Q) ' +
       'order by ' + OrderField + ' ' + Dir;
     Q.ParamByName('Q').AsString := S;
     Q.Open;
@@ -633,7 +633,7 @@ function AdminGroupSaveJson(const Body: string): string;
 var O: TJSONObject; Q: TFDQuery; Number: Integer; Name: string;
 begin
   O := TJSONObject.ParseJSONValue(Body) as TJSONObject;
-  if O = nil then Exit('{"ok":false,"message":"UngÃ¼ltige Warengruppe."}');
+  if O = nil then Exit('{"ok":false,"message":"Ungültige Warengruppe."}');
   Q := TFDQuery.Create(nil);
   try
     SCOConfig.Load;
@@ -674,7 +674,7 @@ begin
     if Used > 0 then raise Exception.Create('Warengruppe ist noch ' + IntToStr(Used) + ' Artikel(n) zugeordnet.');
     Q.SQL.Text := 'delete from GRUPPEN where NL_KEY = :NLKEY and NUMMER = :WG';
     Q.ParamByName('NLKEY').AsInteger := SCOConfig.NLKey; Q.ParamByName('WG').AsInteger := Number; Q.ExecSQL;
-    Result := '{"ok":true,"message":"Warengruppe gelÃ¶scht."}';
+    Result := '{"ok":true,"message":"Warengruppe gelöscht."}';
   except on E: Exception do begin LogError('ADMIN GROUP DELETE ERROR: ' + E.Message); Result := '{"ok":false,"message":"' + JS(E.Message) + '"}'; end; end;
   Q.Free;
 end;
