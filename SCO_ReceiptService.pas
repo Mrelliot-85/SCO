@@ -64,6 +64,23 @@ begin
   Result := Round(MM * DPI / 25.4);
 end;
 
+function ReceiptPrintOffsetMM: Double;
+var
+  PaperMM: Integer;
+begin
+  PaperMM := SCOConfig.BonBreiteMM;
+  if PaperMM <= 0 then
+    PaperMM := 80;
+
+  Result := SCOConfig.BonRandLinksMM;
+  if Result < 0 then
+    Result := 0;
+
+  // TG2480H/Windows-Treiber bleibt oft auf 80 mm eingestellt. Bei schmaleren
+  // Rollen liegt die Rolle dann nicht bei X=0; der Inhalt muss nach rechts.
+  if PaperMM < 80 then
+    Result := Result + ((80 - PaperMM) / 2);
+end;
 function EscapeJson(const S: string): string;
 begin
   Result := S;
@@ -458,7 +475,7 @@ begin
         Printer.Canvas.Font.Size := 6
       else
         Printer.Canvas.Font.Size := 8;
-      X := MmToPrinterX(SCOConfig.BonRandLinksMM);
+      X := MmToPrinterX(ReceiptPrintOffsetMM);
       Y := MmToPrinterY(3.0);
       LineHeight := Printer.Canvas.TextHeight('Hg') + MmToPrinterY(0.6);
       Bottom := Printer.PageHeight - LineHeight - MmToPrinterY(3.0);

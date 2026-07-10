@@ -410,7 +410,7 @@ function receiptHtml(){
   const status = state.receiptStatus ? `<div class="receiptNotice ${state.receiptStatus.startsWith('FEHLER') ? 'err' : 'ok'}">${esc(state.receiptStatus)}</div>` : '';
   const title = state.receiptStatus && !state.receiptStatus.startsWith('FEHLER') ? 'Bon wurde gedruckt' : 'Zahlung erfolgreich';
   const width = Math.max(58, Math.min(80, Number(state.config.receipt_width_mm || 80)));
-  return `<section class="receiptCard card receiptW${width <= 58 ? '58' : '80'}"><div class="success">OK</div><h1>${title}</h1><p>Dieser Bon entspricht dem Ausdruck.</p>${status}<div class="bonWrap"><div class="bon">${preview}</div></div><div class="receiptBtns"><button data-action="refreshReceiptPreview">Druckvorschau aktualisieren</button><button class="greenBtn" data-action="print">Bon drucken</button></div>${state.config.rating_active ? `<button class="rateBtn" data-page="rating">Einkauf bewerten</button>` : ''}<button class="plainBtn" data-action="newStart">Neuen Einkauf starten</button></section>`;
+  return `<section class="receiptCard card receiptW${width < 70 ? '58' : '80'}"><div class="success">OK</div><h1>${title}</h1><p>Dieser Bon entspricht dem Ausdruck.</p>${status}<div class="bonWrap"><div class="bon">${preview}</div></div><div class="receiptBtns"><button data-action="refreshReceiptPreview">Druckvorschau aktualisieren</button><button class="greenBtn" data-action="print">Bon drucken</button></div>${state.config.rating_active ? `<button class="rateBtn" data-page="rating">Einkauf bewerten</button>` : ''}<button class="plainBtn" data-action="newStart">Neuen Einkauf starten</button></section>`;
 }
 
 function bonHtml(){
