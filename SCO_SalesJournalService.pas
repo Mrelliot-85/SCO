@@ -541,18 +541,26 @@ begin
       if Q.FieldByName('MWST_1').AsInteger = 1 then MWST := 19 else MWST := 7;
     end;
     if MWST <> 19 then MWST := 7;
-    try
-      AddWebUIStatus(1, 0, 0, PLU, ActualTag, Name, 'Artikel erfasst', Weight, EP, GP);
-    except
-      on E: Exception do LogError('WEBUI STATUS RFID ERFASST ERROR ' + E.Message);
-    end;
     if Alarm then
     begin
       LogError('RFID AUSGANGSKONTROLLE TAG=' + CleanTag + ' ANTENNE=' + IntToStr(Antenna) + ' PLU=' + IntToStr(PLU) + ' ARTIKEL=' + Name);
       try
+        AddWebUIStatus(4, 0, 0, PLU, ActualTag, Name, 'Ausgangskontrolle - Artikel nicht bezahlt', Weight, EP, GP);
+      except
+        on E: Exception do LogError('WEBUI STATUS AUSGANGSKONTROLLE ERROR ' + E.Message);
+      end;
+      try
         AddWebUIMeldung('Ausgangskontrolle', 'Artikel nicht bezahlt: PLU ' + IntToStr(PLU) + ' - ' + Name + ' / Tag ' + ActualTag);
       except
         on E: Exception do LogError('WEBUI MELDUNG AUSGANGSKONTROLLE ERROR ' + E.Message);
+      end;
+    end
+    else
+    begin
+      try
+        AddWebUIStatus(1, 0, 0, PLU, ActualTag, Name, 'Artikel erfasst', Weight, EP, GP);
+      except
+        on E: Exception do LogError('WEBUI STATUS RFID ERFASST ERROR ' + E.Message);
       end;
     end;
     LogTransaction('RFID SCAN OK tag=' + ActualTag + ' plu=' + IntToStr(PLU) + ' name=' + Name);

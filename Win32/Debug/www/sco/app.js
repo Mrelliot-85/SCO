@@ -55,6 +55,8 @@ const state = {
     demo_mode: 0,
     rfid_active: 0,
     rfid_tag_length: 24,
+    rfid_exit_alarm_active: 1,
+    rfid_exit_alarm_antenna: 4,
     rfid_exit_alarm_seconds: 20,
     rfid_exit_alarm_system_beep: 1,
     rfid_exit_alarm_sound: '',
@@ -124,7 +126,7 @@ function logRfidRemoval(item){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
       status:2, bon:0, pos:0, plu:Number(item.plu||0), tag:item.tag,
-      name:item.name||'', message:'Artikel entfernt', qty:Number(item.qty||0),
+      name:item.name||'', message:'Artikel geloescht / zurueckgelegt', qty:Number(item.qty||0),
       ep:Number(item.ep||0), gp:Number(item.gp||0)
     })
   }).catch(e=>console.warn('rfid status entfernen nicht erreichbar',e));
@@ -167,14 +169,9 @@ function startRFIDSession(){
     });
 }
 function stopRFIDSession(){
-  const wasActive = state.rfidSessionActive;
   state.rfidSessionActive = false;
   Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
   Object.keys(recentRfidScans).forEach(k => delete recentRfidScans[k]);
-  state.lastRfidEventId = 0;
-  if(wasActive){
-    fetch('/api/rfid/stop', { cache:'no-store' }).catch(e => console.warn('rfid stop nicht erreichbar', e));
-  }
 }
 function applyTheme(){
   document.documentElement.style.setProperty('--green', state.theme.green);
@@ -184,7 +181,7 @@ function applyTheme(){
 
 async function boot(){
   await loadConfig();
-  fetch('/api/rfid/stop', { cache:'no-store' }).catch(() => {});
+  if(state.config.rfid_active) fetch('/api/rfid/start?t=' + encodeURIComponent(Date.now()), { cache:'no-store' }).catch(() => {});
   await loadGroupsAndProducts();
   applyTheme();
   render();
@@ -224,6 +221,8 @@ async function loadConfig(){
     if(c.rfid){
       state.config.rfid_active = c.rfid.active ? 1 : 0;
       state.config.rfid_tag_length = Number(c.rfid.tagLength || 24);
+      state.config.rfid_exit_alarm_active = c.rfid.exitAlarmActive !== false ? 1 : 0;
+      state.config.rfid_exit_alarm_antenna = Number(c.rfid.exitAlarmAntenna || 4);
       state.config.rfid_exit_alarm_seconds = Number(c.rfid.exitAlarmSeconds || 20);
       state.config.rfid_exit_alarm_system_beep = c.rfid.exitAlarmSystemBeep !== false ? 1 : 0;
       state.config.rfid_exit_alarm_sound = c.rfid.exitAlarmSound || '';
@@ -1014,8 +1013,29 @@ async function scanEAN(ean){
     }
   }
 }
+function isExitAlarmEvent(ev){
+  return state.config.rfid_exit_alarm_active && Number(ev?.antenna || 0) === Number(state.config.rfid_exit_alarm_antenna || 4);
+}
+async function scanRFIDExitAlarm(tag, antenna){
+  const key = tagKey(tag);
+  if(!key) return;
+  try{
+    const r = await fetch('/api/rfid/scan?tag=' + encodeURIComponent(key) + '&antenna=' + encodeURIComponent(antenna), { cache:'no-store' });
+    const j = await r.json();
+    if(!j.alarm) return;
+    if(j.ok){
+      showExitAlarm({ name:j.name || 'RFID-Artikel', plu:j.plu || '', tag:key }, { seconds:j.alarmSeconds, systemBeep:j.alarmSystemBeep, sound:j.alarmSound });
+      return;
+    }
+    if(Number(j.status || 0) === 0 || String(j.message || '').toLowerCase().includes('nicht gefunden')){
+      showExitAlarm({ name:'RFID-Artikel nicht zugeordnet', plu:j.plu || '', tag:key }, { seconds:state.config.rfid_exit_alarm_seconds, systemBeep:state.config.rfid_exit_alarm_system_beep, sound:state.config.rfid_exit_alarm_sound });
+    }
+  }catch(e){
+    console.warn('rfid ausgangskontrolle nicht erreichbar', e);
+  }
+}
 async function pollRFIDEvents(){
-  if(!state.rfidSessionActive) return;
+  if(!state.config.rfid_active) return;
   try{
     const r = await fetch('/api/rfid/events?after=' + encodeURIComponent(state.lastRfidEventId || 0), { cache:'no-store' });
     const j = await r.json();
@@ -1023,9 +1043,12 @@ async function pollRFIDEvents(){
     const shoppingActive = state.rfidSessionActive && state.page === 'cart';
     for(const ev of j.events){
       state.lastRfidEventId = Math.max(Number(state.lastRfidEventId || 0), Number(ev.id || 0));
+      if(Number(ev.status || 0) !== 1 || !ev.tag) continue;
+      if(isExitAlarmEvent(ev)){
+        await scanRFIDExitAlarm(ev.tag, Number(ev.antenna || 0));
+        continue;
+      }
       if(!shoppingActive) continue;
-      if(Number(ev.status || 0) !== 1) continue;
-      if(!ev.tag) continue;
       await scanRFID(ev.tag, Number(ev.antenna || 0));
     }
   }catch(e){
