@@ -7,7 +7,7 @@ function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt
 function apiUrl(path){return location.protocol==='file:'?'http://localhost:8090'+path:path}
 function setAdminTab(tab){state.tab=tab;try{history.replaceState(null,'','/admin/?tab='+encodeURIComponent(tab))}catch(e){}render();if(tab==='closing')setTimeout(loadDailyCloses,0)}
 async function readJsonResponse(r){const t=await r.text();try{return JSON.parse(t)}catch(e){throw new Error('API liefert kein JSON: '+t.slice(0,80))}}
-async function load(){try{state.config=await readJsonResponse(await fetch(apiUrl('/api/config'),{cache:'no-store'}))}catch(e){state.config={customer:'',subtitle:'',phone:'',logo:'',theme:{green:'#107a2a',dark:'#101c29',accent:'#f2b01e'},payment:{cash:true,ec:true,customer:false,coupon:false},receipt:{autoPrint:false,printer:'',widthMm:80,leftMarginMm:3},eanRules:'',rating:{active:true},zvt:{host:'',kasse:1,port:5577,test:true},cashlogy:{exe:'',host:'127.0.0.1',port:8092},rfid:{active:false,tagLength:24,tcpPort:3178,host:'',bindIp:'0.0.0.0',exitAlarmActive:true,exitAlarmAntenna:4,exitAlarmSeconds:20,exitAlarmSystemBeep:true,exitAlarmSound:''},scale:{active:false,vendor:'soehnle3820',mode:'serial',comPort:'COM3',baud:9600,host:'',port:23,request:'<A>',timeoutMs:2500},labeling:{printer:'',printerHost:'',printerPort:9100},database:{host:'localhost',port:3050,database:'',user:'SYSDBA',password:'masterkey',charset:'NONE'},dailyClose:{active:false,time:'02:00',zvt:true,cashlogy:true},tse:{active:false,provider:'Swissbit',devicePath:'',apiUrl:'',clientId:'FOODWARE_SCO',serial:'',inactiveText:'Hinweis:\\nDieses Kassensystem verarbeitet ausschliesslich unbare Zahlungen (EC-/Kreditkarte mit PIN) gemaess Paragraph 146a AO. Eine Technische Sicherheitseinrichtung (TSE) ist daher nicht erforderlich.',ustId:''},demoMode:true}}render()}
+async function load(){try{state.config=await readJsonResponse(await fetch(apiUrl('/api/config'),{cache:'no-store'}))}catch(e){state.config={customer:'',subtitle:'',phone:'',address:'',logo:'',theme:{green:'#107a2a',dark:'#101c29',accent:'#f2b01e'},payment:{cash:true,ec:true,customer:false,coupon:false},receipt:{autoPrint:false,printer:'',widthMm:80,leftMarginMm:3},eanRules:'',rating:{active:true},zvt:{host:'',kasse:1,port:5577,test:true},cashlogy:{exe:'',host:'127.0.0.1',port:8092},rfid:{active:false,tagLength:24,tcpPort:3178,host:'',bindIp:'0.0.0.0',exitAlarmActive:true,exitAlarmAntenna:4,exitAlarmSeconds:20,exitAlarmSystemBeep:true,exitAlarmSound:''},scale:{active:false,vendor:'soehnle3820',mode:'serial',comPort:'COM3',baud:9600,host:'',port:23,request:'<A>',timeoutMs:2500},labeling:{printer:'',printerHost:'',printerPort:9100},database:{host:'localhost',port:3050,database:'',user:'SYSDBA',password:'masterkey',charset:'NONE'},dailyClose:{active:false,time:'02:00',zvt:true,cashlogy:true},tse:{active:false,provider:'Swissbit',devicePath:'',apiUrl:'',clientId:'FOODWARE_SCO',serial:'',inactiveText:'Hinweis:\\nDieses Kassensystem verarbeitet ausschliesslich unbare Zahlungen (EC-/Kreditkarte mit PIN) gemaess Paragraph 146a AO. Eine Technische Sicherheitseinrichtung (TSE) ist daher nicht erforderlich.',ustId:''},demoMode:true}}render()}
 function navBadge(label){return label.split(/[ /]+/).map(x=>x[0]||'').join('').slice(0,2).toUpperCase()}
 function layout(body){document.body.innerHTML=`<div class="top"><div class="brand">FOODWARE Admin</div><div>lokale Verwaltung</div></div><div class="wrap"><aside class="nav"><div class="navTitle"><strong>Admin Menu</strong><span>Konfiguration und Wartung</span></div><div class="navButtons">${tabs.map(t=>`<a class="${state.tab===t[0]?'active':''}" href="${apiUrl('/admin/?tab='+encodeURIComponent(t[0]))}" onclick="setAdminTab('${t[0]}');return false"><span>${navBadge(t[1])}</span><b>${t[1]}</b></a>`).join('')}</div></aside><main class="card">${body}</main></div>`;ensureScoBack();}
 function goSco(){location.href=apiUrl('/sco/')}
@@ -23,7 +23,7 @@ function ensureScoBack(){
 function input(id,label,val,type='text'){return `<div class="field"><label>${label}</label><input id="${id}" type="${type}" value="${esc(val)}"></div>`}
 function textarea(id,label,val){return `<div class="field full"><label>${label}</label><textarea id="${id}">${esc(val)}</textarea></div>`}
 function check(id,label,val){return `<label class="toggle"><input id="${id}" type="checkbox" ${val?'checked':''}>${label}</label>`}
-function design(){const c=state.config,t=c.theme||{};return `<h1 class="sectionTitle">Design & Shopdaten</h1><div class="hint">Logo-Pfad z.B. assets/logo.png. Beschreibung erscheint im SCO-Willkommensbereich.</div><div class="grid">${input('customer','Shopname',c.customer)}${input('subtitle','Kurztext',c.subtitle)}${input('phone','Telefon',c.phone)}${input('logo','Logo',c.logo)}${input('green','Hauptfarbe',t.green,'color')}${input('dark','Dunkle Farbe',t.dark,'color')}${input('accent','Akzentfarbe',t.accent,'color')}</div><div class="deviceActions"><button onclick="openReceiptDesigner()">Bon-Textvorlage öffnen</button></div><button class="save" onclick="saveConfig()">Speichern</button>`}
+function design(){const c=state.config,t=c.theme||{};return `<h1 class="sectionTitle">Design & Shopdaten</h1><div class="hint">Logo-Pfad z.B. assets/logo.png. Beschreibung erscheint im SCO-Willkommensbereich.</div><div class="grid">${input('customer','Shopname',c.customer)}${input('subtitle','Kurztext',c.subtitle)}${input('phone','Telefon',c.phone)}${input('address','Adresse Bonkopf',c.address||'')}${input('logo','Logo',c.logo)}${input('green','Hauptfarbe',t.green,'color')}${input('dark','Dunkle Farbe',t.dark,'color')}${input('accent','Akzentfarbe',t.accent,'color')}</div><div class="deviceActions"><button onclick="openReceiptDesigner()">Bon-Textvorlage öffnen</button></div><button class="save" onclick="saveConfig()">Speichern</button>`}
 function payment(){const c=state.config;const leftPx=Math.round(302*Math.max(0,Math.min(40,Number(c.receipt?.leftMarginMm||0)))/80);const receiptStyle=`--receipt-left-px:${leftPx}px`;const qs=c.rating?.questions||['Wie zufrieden waren Sie?','Wie gut war die Bedienung?','Wie bewerten Sie die Auswahl?','Wie wahrscheinlich empfehlen Sie uns weiter?'];const ratingFields=`<div class="innerCard ratingAdmin"><b>Bewertungsfragen</b><p>Diese vier Fragen erscheinen nach dem Einkauf am SCO-Terminal und werden in BEWERTUNG gespeichert.</p><div class="grid">${input('ratingQuestion1','Frage 1',qs[0]||'')}${input('ratingQuestion2','Frage 2',qs[1]||'')}${input('ratingQuestion3','Frage 3',qs[2]||'')}${input('ratingQuestion4','Frage 4',qs[3]||'')}</div></div>`;return `<h1 class="sectionTitle">Zahlung, Bon & Bewertung</h1><div class="grid">${check('cash','Bargeld aktiv',c.payment?.cash)}${check('ec','EC/Karte aktiv',c.payment?.ec)}${check('customerPay','Kundenkonto/Kundenkarte aktiv',c.payment?.customer)}${check('coupon','Gutschein aktiv',c.payment?.coupon)}${check('autoPrint','Bon automatisch drucken',c.receipt?.autoPrint)}${check('rating','Bewertung aktiv',c.rating?.active)}${input('receiptPrinter','Bondrucker leer = Standarddrucker',c.receipt?.printer||'')}${input('receiptWidthMm','Bonbreite in mm (58-80)',c.receipt?.widthMm||80,'number')}${input('receiptLeftMarginMm','Linker Druckrand in mm',c.receipt?.leftMarginMm||3,'number')}</div>${ratingFields}<div class="deviceActions"><button onclick="openReceiptDesigner()">Bon-Textvorlage öffnen</button><button onclick="saveConfig().then(receiptPrinterPreview)">Bonvorschau anzeigen</button><button onclick="receiptPrinterPrintPreview()">Vorschau drucken</button></div>${state.receiptTestStatus?`<div class="receiptAdminStatus">${esc(state.receiptTestStatus)}</div>`:''}${state.receiptTestPreview?`<div class="receiptAdminPreview receiptAdmin80" style="${receiptStyle}"><pre>${esc(state.receiptTestPreview)}</pre></div>`:''}${state.lastDevice?`<pre class="deviceResult">${esc(state.lastDevice)}</pre>`:''}<button class="save" onclick="saveConfig()">Speichern</button>`}
 async function receiptPrinterPreview(){state.receiptTestStatus='Bonvorschau wird erstellt ...';state.lastDevice='';render();try{const r=await fetch(apiUrl('/api/admin/receipt/test/preview'),{cache:'no-store'});const j=await readJsonResponse(r);state.receiptTestStatus=(j.ok?'OK: ':'FEHLER: ')+(j.message||'');state.receiptTestPreview=j.text||''}catch(e){state.receiptTestStatus='FEHLER: '+e.message}render()}
 async function receiptPrinterPrintPreview(){if(!state.receiptTestPreview){await receiptPrinterPreview();if(!state.receiptTestPreview)return;}state.lastDevice='Angezeigte Bonvorschau wird gedruckt ...';render();try{const r=await fetch(apiUrl('/api/admin/receipt/test/print'),{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:state.receiptTestPreview,cache:'no-store'});const j=await readJsonResponse(r);state.lastDevice=(j.ok?'OK: ':'FEHLER: ')+(j.message||'')}catch(e){state.lastDevice='FEHLER: '+e.message}render()}
@@ -106,31 +106,3 @@ async function runDailyClose(){const date=$('#closeDate')?.value;if(!date)return
 function statistics(){return `<h1 class="sectionTitle">Statistik & Bonjournal</h1><div class="hint">Umsatz, Bons, Renner/Penner, Zahlarten und Kundenfrequenz.</div><div class="innerCard"><b>Verkaufsstatistik öffnen</b><p>Auswertung aus UC3_UMSATZ mit Filial- und Kassentrennung.</p><div class="deviceActions"><button onclick="location.href=apiUrl('/statistik/')">Statistik öffnen</button></div></div>`}
 
 load().then(()=>{if(state.tab==='closing')loadDailyCloses()});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-﻿unit SCO_CONFIG;
+unit SCO_CONFIG;
 interface
 uses
   System.SysUtils, System.Classes, System.IniFiles;
@@ -15,6 +15,7 @@ type
     Kunde: string;
     Subtitle: string;
     Telefon: string;
+    Adresse: string;
     Logo: string;
     FarbeHaupt: string;
     FarbeDunkel: string;
@@ -207,6 +208,7 @@ begin
     Kunde       := Ini.ReadString('Design', 'Kunde', 'Metzgerei Burgard');
     Subtitle    := Ini.ReadString('Design', 'Subtitle', 'Self-Checkout');
     Telefon     := Ini.ReadString('Design', 'Telefon', '');
+    Adresse     := DecodeIniText(Ini.ReadString('Design', 'Adresse', ''));
     Logo        := Ini.ReadString('Design', 'Logo', '');
     KundenNr    := Ini.ReadInteger('Einstellung', 'Kunde', 0);
     NLKey       := Ini.ReadInteger('Einstellung', 'NL_KEY', 10);
@@ -349,6 +351,7 @@ begin
       Ini.WriteString('Design', 'Kunde', JsonStr(Root, 'customer', Kunde));
       Ini.WriteString('Design', 'Subtitle', JsonStr(Root, 'subtitle', Subtitle));
       Ini.WriteString('Design', 'Telefon', JsonStr(Root, 'phone', Telefon));
+      Ini.WriteString('Design', 'Adresse', EncodeIniText(JsonStr(Root, 'address', Adresse)));
       Ini.WriteString('Design', 'Logo', JsonStr(Root, 'logo', Logo));
       Ini.WriteString('Design', 'Farbe_Haupt', JsonStr(Theme, 'green', FarbeHaupt));
       Ini.WriteString('Design', 'Farbe_Dunkel', JsonStr(Theme, 'dark', FarbeDunkel));
@@ -461,6 +464,7 @@ begin
       '"customer":"' + JS(Kunde) + '",' +
       '"subtitle":"' + JS(Subtitle) + '",' +
       '"phone":"' + JS(Telefon) + '",' +
+      '"address":"' + JS(Adresse) + '",' +
       '"logo":"' + JS(Logo) + '",' +
       '"description":"' + JS(Beschreibung) + '",' +
       '"kundenNr":' + IntToStr(KundenNr) + ',' +
@@ -596,29 +600,3 @@ initialization
 finalization
   SCOConfig.Free;
 end.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

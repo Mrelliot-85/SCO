@@ -319,6 +319,8 @@ begin
     Lines.Add(CenterText(TextValue(Root, 'shop', SCOConfig.Kunde)));
     if Trim(TextValue(Root, 'phone', '')) <> '' then
       Lines.Add(CenterText('Tel. ' + TextValue(Root, 'phone', '')));
+    if Trim(TextValue(Root, 'address', SCOConfig.Adresse)) <> '' then
+      Lines.Add(CenterText(TextValue(Root, 'address', SCOConfig.Adresse)));
     if Trim(TextValue(Root, 'bonNo', '')) <> '' then
       Lines.Add(CenterText('Bon Nr. ' + TextValue(Root, 'bonNo', '')));
     Lines.Add(CenterText(FormatDateTime('dd.mm.yyyy hh:nn:ss', Now)));
@@ -507,6 +509,8 @@ begin
     Lines.Add(CenterText(SCOConfig.Kunde));
     if Trim(SCOConfig.Telefon) <> '' then
       Lines.Add(CenterText('Tel. ' + SCOConfig.Telefon));
+    if Trim(SCOConfig.Adresse) <> '' then
+      Lines.Add(CenterText(SCOConfig.Adresse));
     Lines.Add(CenterText('Bon Nr. TEST'));
     Lines.Add(CenterText(FormatDateTime('dd.mm.yyyy hh:nn:ss', Now)));
     Lines.Add(LineOf('='));
@@ -684,12 +688,3 @@ begin
 end;
 
 end.
-
-
-
-
-
-
-
-
-

@@ -223,3 +223,33 @@ body,.shell,.startPage{background:#eef4f7!important;background-image:none!import
 .exitAlarmIcon{width:112px;height:112px;margin:0 auto 18px;border-radius:999px;background:#b91c1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:82px;font-weight:1000;line-height:1;box-shadow:0 12px 28px rgba(185,28,28,.28)}
 .exitAlarmKicker{text-transform:uppercase;letter-spacing:.14em;color:#b91c1c;font-weight:1000;font-size:16px;margin-bottom:8px}.exitAlarmBox h1{font-size:46px;line-height:1.05;margin:0 0 14px;color:#1b2d1f}.exitAlarmBox p{font-size:23px;line-height:1.35;margin:0 auto 24px;max-width:650px;color:#35453a}.exitAlarmBox ul{list-style:none;margin:0 auto 28px;padding:0;display:grid;gap:12px;max-width:620px}.exitAlarmBox li{display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;background:#fff1f1;border:2px solid #f2b3b3;border-radius:18px;padding:18px 22px}.exitAlarmBox li strong{font-size:25px;color:#111827}.exitAlarmBox li span{font-size:18px;font-weight:1000;color:#b91c1c;background:#fff;border:1px solid #f2b3b3;border-radius:999px;padding:8px 14px;white-space:nowrap}.exitAlarmOk{min-width:300px;min-height:70px;border-radius:18px;background:#b91c1c;color:#fff;font-size:24px;font-weight:1000;box-shadow:0 14px 28px rgba(185,28,28,.25)}
 @media(max-width:760px){.exitAlarmBox{padding:28px}.exitAlarmBox h1{font-size:34px}.exitAlarmBox p{font-size:19px}.exitAlarmBox li{flex-direction:column;align-items:flex-start}.exitAlarmIcon{width:86px;height:86px;font-size:62px}}
+
+/* Final checkout UX 20260710 */
+.receiptCard .plainBtn{
+  width:min(430px,100%)!important;
+  min-height:74px!important;
+  padding:0 28px!important;
+  border-radius:18px!important;
+  background:#fffef9!important;
+  border:2px solid #176b2a!important;
+  color:#0b3b1d!important;
+  font-size:22px!important;
+  box-shadow:0 14px 30px rgba(23,107,42,.18)!important;
+}
+.productModal{height:min(900px,94vh)!important;}
+.productModal aside{min-height:0!important;}
+.groupList{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  padding-right:8px;
+}
+.groupBtn{flex:0 0 auto;}
+.productGrid{
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+}

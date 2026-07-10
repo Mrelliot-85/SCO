@@ -36,6 +36,7 @@ const state = {
     customer: 'Herbst Hofladen',
     subtitle: 'Self-Checkout',
     phone: '06372 50940',
+    address: '',
     logo: 'assets/logo.png',
     description: 'Willkommen in unserem Hofladen. Regional, frisch und einfach selbst einkaufen.',
     green: '#107a2a',
@@ -202,6 +203,7 @@ async function loadConfig(){
     state.theme.customer = c.customer || c.kunde || c.Kunde || state.theme.customer;
     state.theme.subtitle = c.subtitle || c.Subtitle || state.theme.subtitle;
     state.theme.phone = c.phone || c.telefon || c.Telefon || state.theme.phone;
+    state.theme.address = c.address || c.adresse || c.Adresse || state.theme.address || '';
     state.theme.logo = c.logo || state.theme.logo;
     state.theme.description = c.description || c.beschreibung || c.about || state.theme.description;
 
@@ -340,7 +342,7 @@ function render(){
     else if(!state.paymentComplete || state.saleBonNo) ensureReceiptPreview();
     return;
   }
-  if(state.page === 'rating') return layout(ratingHtml(), 'workPage ratingPage');
+  if(state.page === 'rating'){ clearSuccessTimer(); return layout(ratingHtml(), 'workPage ratingPage'); }
 }
 
 function availablePaymentText(){
@@ -557,6 +559,7 @@ function bind(){
     state.page = wanted;
     if(fromStartToCart) startRFIDSession();
     if(state.page === 'start') resetOrder();
+    if(state.page === 'rating') clearSuccessTimer();
     if(state.page === 'payment') {
       state.selectedPayment = '';
       state.paymentMessage = '';
@@ -582,6 +585,7 @@ function bind(){
   });
   document.querySelectorAll('[data-product]').forEach(b => b.onclick = () => selectProduct(Number(b.dataset.product)));
   document.querySelectorAll('[data-rating]').forEach(b => b.onclick = () => {
+    clearSuccessTimer();
     const [i, n] = b.dataset.rating.split(':').map(Number);
     state.ratings[i] = n;
     render();
@@ -650,16 +654,21 @@ async function startPayment(){
   }
 }
 
-function startSuccessTimer(){
+function clearSuccessTimer(){
   if(state.paymentOkTimer) clearTimeout(state.paymentOkTimer);
-  state.paymentOkTimer = setTimeout(() => newStart(), 30000);
+  state.paymentOkTimer = null;
+}
+
+function startSuccessTimer(){
+  clearSuccessTimer();
+  state.paymentOkTimer = setTimeout(() => newStart(), 10000);
 }
 
 function resetOrder(){
   state.items = [];
   state.receiptPreview = '';
   state.receiptPreviewLoading = false;
-    state.receiptStatus = '';
+  state.receiptStatus = '';
   state.coupon = 0;
   state.customerActive = false;
   state.paymentMessage = '';
@@ -677,7 +686,7 @@ function resetOrder(){
 }
 
 function newStart(){
-  if(state.paymentOkTimer) clearTimeout(state.paymentOkTimer);
+  clearSuccessTimer();
   resetOrder();
   state.page = 'start';
   render();
@@ -688,6 +697,7 @@ function receiptPayload(){
   return {
     shop: state.theme.customer,
     phone: state.theme.phone,
+    address: state.theme.address || '',
     total: total(),
     payment: state.selectedPayment,
     bonNo: state.saleBonNo || 0,
@@ -1112,69 +1122,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   boot();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

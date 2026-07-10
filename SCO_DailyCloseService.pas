@@ -1,4 +1,4 @@
-﻿unit SCO_DailyCloseService;
+unit SCO_DailyCloseService;
 
 interface
 
@@ -249,9 +249,18 @@ begin
   end;
 end;
 
+function CloseWidth: Integer;
+begin
+  Result := SCOConfig.BonBreiteMM;
+  if Result <= 0 then Result := 80;
+  if Result <= 58 then Exit(26);
+  if Result >= 80 then Exit(42);
+  Result := 28 + Round((Result - 58) * 14 / 22);
+end;
+
 function CloseLine(const C: Char): string;
 begin
-  Result:=StringOfChar(C, 42);
+  Result:=StringOfChar(C, CloseWidth);
 end;
 
 function CloseMoney(V: Double): string;
@@ -262,7 +271,7 @@ end;
 function CloseTwoCol(const A,B: string): string;
 var W:Integer; L,R:string;
 begin
-  W:=42;
+  W:=CloseWidth;
   L:=A; R:=B;
   if Length(L)>W-12 then L:=Copy(L,1,W-12);
   if W-Length(L)-Length(R)>1 then
@@ -422,11 +431,3 @@ end;
 initialization CloseLock:=TCriticalSection.Create;
 finalization CloseLock.Free;
 end.
-
-
-
-
-
-
-
-
