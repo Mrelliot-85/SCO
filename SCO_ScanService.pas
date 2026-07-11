@@ -80,7 +80,7 @@ begin
       'SELECT ' +
       '  ID, NUMMER, BEZEICHNUNG, ME_BEZ, VK_BRUTTO, WG, MWST_1, MWSTSATZ1 ' +
       'FROM VARTIKEL ' +
-      'WHERE EAN = :EAN';
+      'WHERE trim(cast(EAN as varchar(30))) = :EAN';
 
     Q.ParamByName('EAN').AsString := EAN;
     Q.Open;
@@ -194,7 +194,7 @@ end;
 
 function TSCOScanService.ScanEAN(const EAN: string): string;
 var
-  Kenner, PLU, Preis: string;
+  Kenner, PLU, Preis, StammJson: string;
   Kennzahl: Integer;
   IstPreisEAN, HasConfiguredRule: Boolean;
   Gewicht, EP, GP: Double;
@@ -207,12 +207,19 @@ begin
     Exit;
   end;
 
+  StammJson := GetArtikelByEAN(EAN);
+  if Pos('"ok":true', StammJson) > 0 then
+  begin
+    Result := StammJson;
+    Exit;
+  end;
+
   Kenner := Copy(EAN, 1, 2);
   Kennzahl := StrToIntDef(Kenner, -1);
 
   if Length(EAN) < 13 then
   begin
-    Result := '{"ok":false,"message":"Waagen-EAN muss 13 Stellen haben","ean":"' + EAN + '"}';
+    Result := StammJson;
     Exit;
   end;
 
@@ -221,7 +228,7 @@ begin
   begin
     if (Kennzahl < 20) or (Kennzahl > 29) then
     begin
-      Result := GetArtikelByEAN(EAN);
+      Result := StammJson;
       Exit;
     end;
     IstPreisEAN := (Kennzahl mod 2) = 0;
