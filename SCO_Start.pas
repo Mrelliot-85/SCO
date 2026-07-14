@@ -227,7 +227,11 @@ begin
       end;
       FServer.Active := True;
       LogTransaction('WEB SERVER ACTIVE port=' + EditPort.Text);
-      StopRFIDTcpService;
+      SCOConfig.Load;
+      if SCOConfig.RFIDAktiv then
+        StartRFIDTcpService
+      else
+        StopRFIDTcpService;
     except
       on E: Exception do
       begin
