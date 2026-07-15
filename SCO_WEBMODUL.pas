@@ -827,6 +827,19 @@ begin
       SendJson(Response, RFIDTcpEventsJson(StrToIntDef(Request.QueryFields.Values['after'], 0)));
       Exit;
     end;
+    if SameText(Path, '/api/rfid/alarm/beep') then
+    begin
+      TThread.CreateAnonymousThread(
+        procedure
+        begin
+          Winapi.Windows.Beep(880, 220);
+          Sleep(90);
+          Winapi.Windows.Beep(660, 260);
+        end
+      ).Start;
+      SendJson(Response, '{"ok":true,"message":"RFID-Alarm-Beep gestartet."}');
+      Exit;
+    end;
     if SameText(Path, '/api/rfid/alarm/sound') then
     begin
       SCOConfig.Load;

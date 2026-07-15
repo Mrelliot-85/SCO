@@ -81,6 +81,7 @@ function playRfidAlarmPreviewSound(){
     }catch(e){state.lastDevice='Soundtest Fehler: '+e.message;render();}
   }
   if(useBeep){
+    fetch(apiUrl('/api/rfid/alarm/beep?t='+encodeURIComponent(Date.now())),{cache:'no-store'}).catch(()=>{});
     try{
       const ctx=new (window.AudioContext||window.webkitAudioContext)();
       const o=ctx.createOscillator();

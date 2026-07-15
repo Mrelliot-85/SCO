@@ -481,7 +481,7 @@ function playExitAlarmSound(options = {}){
   if(now - exitAlarmSoundStamp < 19000) return;
   exitAlarmSoundStamp = now;
   if(options.sound || state.config.rfid_exit_alarm_sound){ try{ new Audio('/api/rfid/alarm/sound?t=' + encodeURIComponent(now)).play().catch(()=>{}); }catch(e){} }
-  if(options.systemBeep || state.config.rfid_exit_alarm_system_beep){ try{ const ctx = new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.type='sine'; o.frequency.value=880; g.gain.value=.16; o.connect(g); g.connect(ctx.destination); o.start(); setTimeout(()=>{o.stop();ctx.close();},420); }catch(e){} }
+  if(options.systemBeep || state.config.rfid_exit_alarm_system_beep){ fetch('/api/rfid/alarm/beep?t=' + encodeURIComponent(now), { cache:'no-store' }).catch(()=>{}); try{ const ctx = new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.type='sine'; o.frequency.value=880; g.gain.value=.16; o.connect(g); g.connect(ctx.destination); o.start(); setTimeout(()=>{o.stop();ctx.close();},420); }catch(e){} }
 }
 function closeExitAlarm(){ if(state.exitAlarmTimer) clearTimeout(state.exitAlarmTimer); state.exitAlarmTimer = null; state.exitAlarm = null; render(); }
 function exitAlarmModal(){
