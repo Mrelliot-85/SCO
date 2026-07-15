@@ -126,7 +126,7 @@ var
   Item: string;
 begin
   Tick := GetTickCount;
-  if (Status = 1) and SameText(Tag, FLastTag) and (Tick - FLastTick < 5000) then
+  if (Status = 1) and SameText(Tag, FLastTag) and (Antenna = FLastAntenna) and (Tick - FLastTick < 5000) then
   begin
     Exit;
   end;
