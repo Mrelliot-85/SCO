@@ -563,7 +563,12 @@ begin
         on E: Exception do LogError('WEBUI STATUS RFID ERFASST ERROR ' + E.Message);
       end;
     end;
-    LogTransaction('RFID SCAN OK tag=' + ActualTag + ' plu=' + IntToStr(PLU) + ' name=' + Name);
+    LogTransaction('RFID SCAN OK tag=' + ActualTag + ' plu=' + IntToStr(PLU) + ' name=' + Name +
+      ' unit=' + UnitName +
+      ' weight=' + StringReplace(FormatFloat('0.000', Weight), ',', '.', [rfReplaceAll]) +
+      ' ep=' + StringReplace(FormatFloat('0.00', EP), ',', '.', [rfReplaceAll]) +
+      ' tagprice=' + StringReplace(FormatFloat('0.00', TagPrice), ',', '.', [rfReplaceAll]) +
+      ' gp=' + StringReplace(FormatFloat('0.00', GP), ',', '.', [rfReplaceAll]));
     Result :=
       '{"ok":true,' +
       '"type":"rfid",' +

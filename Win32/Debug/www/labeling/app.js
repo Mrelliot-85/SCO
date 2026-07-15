@@ -1291,7 +1291,7 @@ async function writeRfid(){
 
   const url =
     '/api/labeling/rfid/write?plu=' + encodeURIComponent(p.plu) +
-    '&weight=' + encodeURIComponent(Number(unitIsKg() ? (state.weight || 0) : 0).toFixed(3));
+    '&weight=' + encodeURIComponent(Number(unitIsKg() ? (netWeight() || 0) : 0).toFixed(3));
 
   try{
     state.message = 'RFID wird codiert...';

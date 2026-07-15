@@ -300,7 +300,7 @@ begin
   Result := Base12 + IntToStr(EAN13CheckDigit(Base12));
 end;
 
-procedure SaveNormalLabelInfo(PLU: Integer; Weight, Tara: Double; const MHD, LabelTag: string);
+procedure SaveNormalLabelInfo(PLU: Integer; Weight, Tara, TotalPrice: Double; const MHD, LabelTag: string);
 var
   Q: TFDQuery;
   ParsedMHD: TDateTime;
@@ -311,7 +311,9 @@ begin
     Exit;
   Tag := Trim(LabelTag);
   if Tag = '' then Tag := GenerateLabelTag13;
-  SavePrice := GetArtikelVKBrutto(PLU);
+  SavePrice := TotalPrice;
+  if SavePrice <= 0 then
+    SavePrice := GetArtikelVKBrutto(PLU);
   Q := TFDQuery.Create(nil);
   try
     Q.Connection := FB;
@@ -1349,8 +1351,15 @@ begin
       Zpl := StringReplace(Zpl, '$WRITE_RFID$', '', [rfReplaceAll, rfIgnoreCase]);
       Zpl := ApplyPrintQuantity(Zpl, Qty);
 
+      LogTransaction('LABEL PRICE BASIS PLU=' + IntToStr(PLU) +
+        ' UNIT=' + UnitText +
+        ' NETTO=' + LogNumber(Weight, '0.000') +
+        ' TARA=' + LogNumber(Tara, '0.000') +
+        ' UNITPRICE=' + LogNumber(UnitPrice, '0.00') +
+        ' TOTAL=' + LogNumber(Total, '0.00'));
+
       if (not SameText(TemplateName, 'rfid')) and SCOConfig.EANLabelWriteTagInfo then
-        SaveNormalLabelInfo(PLU, Weight, Tara, MHDText, LabelTag);
+        SaveNormalLabelInfo(PLU, Weight, Tara, Total, MHDText, LabelTag);
       if Trim(SCOConfig.LabelDruckerHost) <> '' then
       begin
         if not RawPrintZplTcp(SCOConfig.LabelDruckerHost, SCOConfig.LabelDruckerPort, Zpl, UsedPrinter) then
