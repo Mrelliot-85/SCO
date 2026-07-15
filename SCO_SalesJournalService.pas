@@ -492,6 +492,19 @@ begin
         if Info.IsEmpty then
         begin
           LogTransaction('RFID SCAN FAIL tag=' + CleanTag + ' reason=TAGINFO_NOT_FOUND antenna=' + IntToStr(Antenna));
+          if Alarm then
+          begin
+            try
+              AddWebUIStatus(4, 0, 0, 0, CleanTag, 'RFID-Tag', 'Ausgangskontrolle - Tag nicht zugeordnet', 0, 0, 0);
+            except
+              on E: Exception do LogError('WEBUI STATUS AUSGANGSKONTROLLE ERROR ' + E.Message);
+            end;
+            try
+              AddWebUIMeldung('Ausgangskontrolle', 'Nicht zugeordnetes RFID-Tag an Ausgangsantenne: ' + CleanTag);
+            except
+              on E: Exception do LogError('WEBUI MELDUNG AUSGANGSKONTROLLE ERROR ' + E.Message);
+            end;
+          end;
           Exit('{"ok":false,"message":"RFID-Tag nicht in TAGINFO gefunden.","alarm":' + BoolJson(Alarm) + '}');
         end;
         ActualTag := Info.FieldByName('TAG').AsString;
@@ -502,6 +515,19 @@ begin
         else
           FailMessage := 'RFID-Tag gefunden, aber Artikel ' + IntToStr(TagNummer) + ' fehlt in VARTIKEL.';
         LogTransaction('RFID SCAN FAIL tag=' + ActualTag + ' status=' + IntToStr(TagStatus) + ' plu=' + IntToStr(TagNummer) + ' reason=' + FailMessage);
+        if Alarm then
+        begin
+          try
+            AddWebUIStatus(4, 0, 0, TagNummer, ActualTag, 'PLU ' + IntToStr(TagNummer), 'Ausgangskontrolle - ' + FailMessage, 0, 0, 0);
+          except
+            on E: Exception do LogError('WEBUI STATUS AUSGANGSKONTROLLE ERROR ' + E.Message);
+          end;
+          try
+            AddWebUIMeldung('Ausgangskontrolle', 'RFID-Alarm: ' + FailMessage + ' / Tag ' + ActualTag);
+          except
+            on E: Exception do LogError('WEBUI MELDUNG AUSGANGSKONTROLLE ERROR ' + E.Message);
+          end;
+        end;
         Exit('{"ok":false,"message":"' + JS(FailMessage) + '","tag":"' + JS(ActualTag) + '","status":' + IntToStr(TagStatus) + ',"plu":' + IntToStr(TagNummer) + ',"alarm":' + BoolJson(Alarm) + '}');
       finally
         Info.Free;

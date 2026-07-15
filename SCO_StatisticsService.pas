@@ -198,9 +198,9 @@ begin
   Q.Free;
 end;
 function WebUIRows(FromDate, ToDate: TDateTime): string;
-var C:TFDConnection; Q:TFDQuery; Products,Messages:string; First:Boolean; Captured,Removed,Purchased,Missing:Integer;
+var C:TFDConnection; Q:TFDQuery; Products,Messages:string; First:Boolean; Captured,Removed,Purchased,ExitAlarms,Missing:Integer;
 begin
-  Result:='{"available":false,"captured":0,"removed":0,"purchased":0,"products":[],"messages":[]}';
+  Result:='{"available":false,"captured":0,"removed":0,"purchased":0,"exitAlarms":0,"products":[],"messages":[]}';
   SCOConfig.Load;
   if not SCOConfig.WebUIAktiv then Exit;
   if (Trim(SCOConfig.WebUIHost)='') or (Trim(SCOConfig.WebUIDatabase)='') then Exit;
@@ -212,18 +212,20 @@ begin
     C.Params.Values['Password']:=SCOConfig.WebUIPassword; C.ResourceOptions.AutoReconnect:=True; C.Connected:=True; Q.Connection:=C;
     Q.SQL.Text:='select STATUS,count(*) ANZAHL from Transaktionen where KUNDE=:KUNDE and DATUM between :FROMDATE and :TODATE and coalesce(TID,'''')<>'''' group by STATUS';
     Q.ParamByName('KUNDE').AsInteger:=SCOConfig.KundenNr; SetRange(Q,FromDate,ToDate); Q.Open;
-    Captured:=0; Removed:=0; Purchased:=0;
-    while not Q.Eof do begin case IField(Q,'STATUS') of 1:Captured:=IField(Q,'ANZAHL'); 2:Removed:=IField(Q,'ANZAHL'); 3:Purchased:=IField(Q,'ANZAHL'); end; Q.Next; end; Q.Close;
+    Captured:=0; Removed:=0; Purchased:=0; ExitAlarms:=0;
+    while not Q.Eof do begin case IField(Q,'STATUS') of 1:Captured:=IField(Q,'ANZAHL'); 2:Removed:=IField(Q,'ANZAHL'); 3:Purchased:=IField(Q,'ANZAHL'); 4:ExitAlarms:=IField(Q,'ANZAHL'); end; Q.Next; end; Q.Close;
     Q.SQL.Text:='select PLU,max(ARTIKEL) ARTIKEL,count(distinct case when STATUS=1 then TID end) ERFASST,'+
-      'count(distinct case when STATUS=2 then TID end) ENTFERNT,count(distinct case when STATUS=3 then TID end) GEKAUFT '+
-      'from Transaktionen where KUNDE=:KUNDE and DATUM between :FROMDATE and :TODATE and coalesce(TID,'''')<>'''' group by PLU order by ERFASST desc,GEKAUFT desc';
+      'count(distinct case when STATUS=2 then TID end) ENTFERNT,count(distinct case when STATUS=3 then TID end) GEKAUFT,'+
+      'count(distinct case when STATUS=4 then TID end) AUSGANG '+
+      'from Transaktionen where KUNDE=:KUNDE and DATUM between :FROMDATE and :TODATE and coalesce(TID,'''')<>'''' group by PLU order by AUSGANG desc,ERFASST desc,GEKAUFT desc';
     Q.ParamByName('KUNDE').AsInteger:=SCOConfig.KundenNr; SetRange(Q,FromDate,ToDate); Q.Open;
     Products:='['; First:=True;
     while not Q.Eof do begin
       if not First then Products:=Products+','; Missing:=IField(Q,'ERFASST')-IField(Q,'GEKAUFT'); if Missing<0 then Missing:=0;
       Products:=Products+'{"plu":'+IntToStr(IField(Q,'PLU'))+',"name":"'+J(SField(Q,'ARTIKEL'))+
         '","captured":'+IntToStr(IField(Q,'ERFASST'))+',"removed":'+IntToStr(IField(Q,'ENTFERNT'))+
-        ',"purchased":'+IntToStr(IField(Q,'GEKAUFT'))+',"notPurchased":'+IntToStr(Missing)+'}'; First:=False; Q.Next;
+        ',"purchased":'+IntToStr(IField(Q,'GEKAUFT'))+',"exitAlarms":'+IntToStr(IField(Q,'AUSGANG'))+
+        ',"notPurchased":'+IntToStr(Missing)+'}'; First:=False; Q.Next;
     end; Products:=Products+']'; Q.Close;
     Q.SQL.Text:='select ART,MELDUNG,DATUM,UHRZEIT from `Status` where KUNDE=:KUNDE and DATUM between :FROMDATE and :TODATE order by DATUM desc,UHRZEIT desc limit 200';
     Q.ParamByName('KUNDE').AsInteger:=SCOConfig.KundenNr; SetRange(Q,FromDate,ToDate); Q.Open;
@@ -235,8 +237,8 @@ begin
         '","type":"'+J(SField(Q,'ART'))+'","message":"'+J(SField(Q,'MELDUNG'))+'"}'; First:=False; Q.Next;
     end; Messages:=Messages+']';
     Result:='{"available":true,"captured":'+IntToStr(Captured)+',"removed":'+IntToStr(Removed)+
-      ',"purchased":'+IntToStr(Purchased)+',"products":'+Products+',"messages":'+Messages+'}';
-  except on E:Exception do begin LogError('STATISTICS WEBUI: '+E.Message); Result:='{"available":false,"message":"'+J(E.Message)+'","captured":0,"removed":0,"purchased":0,"products":[],"messages":[]}'; end; end;
+      ',"purchased":'+IntToStr(Purchased)+',"exitAlarms":'+IntToStr(ExitAlarms)+',"products":'+Products+',"messages":'+Messages+'}';
+  except on E:Exception do begin LogError('STATISTICS WEBUI: '+E.Message); Result:='{"available":false,"message":"'+J(E.Message)+'","captured":0,"removed":0,"purchased":0,"exitAlarms":0,"products":[],"messages":[]}'; end; end;
   Q.Free; C.Free;
 end;
 function RatingRows(FromDate, ToDate: TDateTime): string;
