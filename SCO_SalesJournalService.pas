@@ -472,7 +472,7 @@ var
   Q, Info: TFDQuery;
   CleanTag, ActualTag, Name, UnitName, FailMessage: string;
   PLU, WG, MWST, TagStatus, TagNummer: Integer;
-  Weight, EP, GP, TagPrice: Double;
+  Weight, EP, GP, TagPrice, ExpectedGP: Double;
   Alarm: Boolean;
 begin
   RfidScanLock.Enter;
@@ -561,8 +561,9 @@ begin
     if SameText(Trim(UnitName), 'kg') then
     begin
       if Weight <= 0 then Weight := 1;
-      GP := EP * Weight;
-      if TagPrice > 0 then
+      ExpectedGP := EP * Weight;
+      GP := ExpectedGP;
+      if (TagPrice > 0) and not ((Abs(TagPrice - EP) < 0.01) and (Abs(Weight - 1) > 0.001)) then
         GP := TagPrice;
     end
     else
