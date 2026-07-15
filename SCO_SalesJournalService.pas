@@ -41,7 +41,8 @@ uses
   FireDAC.Phys.MySQLDef,
   SCO_CONFIG,
   SCO_DB,
-  SCO_Logger;
+  SCO_Logger,
+  SCO_LocalEventService;
 
 var
   RfidScanLock: TCriticalSection;
@@ -312,6 +313,7 @@ var
   Items: TJSONArray;
   I, BonNo, PLU: Integer;
   Payment: string;
+  SaleTotal: Double;
   WriteJournal, WriteWebUI: Boolean;
 begin
   BonNo := 0;
@@ -349,6 +351,7 @@ begin
     end;
 
     Payment := TextValue(Root, 'payment', '');
+    SaleTotal := 0;
 
     for I := 0 to Items.Count - 1 do
     begin
@@ -361,6 +364,10 @@ begin
       if TextValue(Item, 'tag', '') <> '' then
         MarkRfidTagSold(TextValue(Item, 'tag', ''));
 
+      SaleTotal := SaleTotal + FloatValue(Item, 'gp', 0);
+      AddLocalEvent('ARTIKEL_GEKAUFT', 'success', 'Artikel gekauft', BonNo, I + 1, IntValue(Item, 'plu', 0),
+        TextValue(Item, 'name', ''), TextValue(Item, 'tag', ''), FloatValue(Item, 'qty', 1), FloatValue(Item, 'ep', 0), FloatValue(Item, 'gp', 0), 'sco', 0);
+
       if WriteWebUI then
       begin
         PLU := IntValue(Item, 'plu', 0);
@@ -371,6 +378,8 @@ begin
         end;
       end;
     end;
+
+    AddLocalEvent('ZAHLUNG', 'success', 'Zahlung erfolgreich: ' + Payment, BonNo, 0, 0, '', '', Items.Count, 0, SaleTotal, 'sco', 0);
 
     if WriteWebUI then
     begin
@@ -402,6 +411,12 @@ begin
   try
     if not (V is TJSONObject) then Exit;
     O := TJSONObject(V);
+    case IntValue(O, 'status', 1) of
+      2: AddLocalEvent('RFID_ENTFERNT', 'warning', TextValue(O, 'message', 'Artikel entfernt'), IntValue(O, 'bon', 0), IntValue(O, 'pos', 0), IntValue(O, 'plu', 0), TextValue(O, 'name', ''), TextValue(O, 'tag', ''), FloatValue(O, 'qty', 0), FloatValue(O, 'ep', 0), FloatValue(O, 'gp', 0), 'sco', 0);
+      4: AddLocalEvent('AUSGANGSKONTROLLE', 'error', TextValue(O, 'message', 'Ausgangskontrolle'), IntValue(O, 'bon', 0), IntValue(O, 'pos', 0), IntValue(O, 'plu', 0), TextValue(O, 'name', ''), TextValue(O, 'tag', ''), FloatValue(O, 'qty', 0), FloatValue(O, 'ep', 0), FloatValue(O, 'gp', 0), 'sco', IntValue(O, 'antenna', 0));
+    else
+      AddLocalEvent('MELDUNG', 'info', TextValue(O, 'message', 'Meldung'), IntValue(O, 'bon', 0), IntValue(O, 'pos', 0), IntValue(O, 'plu', 0), TextValue(O, 'name', ''), TextValue(O, 'tag', ''), FloatValue(O, 'qty', 0), FloatValue(O, 'ep', 0), FloatValue(O, 'gp', 0), 'sco', 0);
+    end;
     AddWebUIStatus(
       IntValue(O, 'status', 1),
       IntValue(O, 'bon', 0),
@@ -494,6 +509,7 @@ begin
           LogTransaction('RFID SCAN FAIL tag=' + CleanTag + ' reason=TAGINFO_NOT_FOUND antenna=' + IntToStr(Antenna));
           if Alarm then
           begin
+            AddLocalEvent('AUSGANGSKONTROLLE', 'error', 'Tag nicht zugeordnet', 0, 0, 0, 'RFID-Tag', CleanTag, 0, 0, 0, 'rfid', Antenna);
             try
               AddWebUIStatus(4, 0, 0, 0, CleanTag, 'RFID-Tag', 'Ausgangskontrolle - Tag nicht zugeordnet', 0, 0, 0);
             except
@@ -517,6 +533,7 @@ begin
         LogTransaction('RFID SCAN FAIL tag=' + ActualTag + ' status=' + IntToStr(TagStatus) + ' plu=' + IntToStr(TagNummer) + ' reason=' + FailMessage);
         if Alarm then
         begin
+          AddLocalEvent('AUSGANGSKONTROLLE', 'error', FailMessage, 0, 0, TagNummer, 'PLU ' + IntToStr(TagNummer), ActualTag, 0, 0, 0, 'rfid', Antenna);
           try
             AddWebUIStatus(4, 0, 0, TagNummer, ActualTag, 'PLU ' + IntToStr(TagNummer), 'Ausgangskontrolle - ' + FailMessage, 0, 0, 0);
           except
@@ -570,6 +587,7 @@ begin
     if Alarm then
     begin
       LogError('RFID AUSGANGSKONTROLLE TAG=' + CleanTag + ' ANTENNE=' + IntToStr(Antenna) + ' PLU=' + IntToStr(PLU) + ' ARTIKEL=' + Name);
+      AddLocalEvent('AUSGANGSKONTROLLE', 'error', 'Artikel nicht bezahlt', 0, 0, PLU, Name, ActualTag, Weight, EP, GP, 'rfid', Antenna);
       try
         AddWebUIStatus(4, 0, 0, PLU, ActualTag, Name, 'Ausgangskontrolle - Artikel nicht bezahlt', Weight, EP, GP);
       except
@@ -583,6 +601,7 @@ begin
     end
     else
     begin
+      AddLocalEvent('RFID_ERFASST', 'info', 'Artikel erfasst', 0, 0, PLU, Name, ActualTag, Weight, EP, GP, 'rfid', Antenna);
       try
         AddWebUIStatus(1, 0, 0, PLU, ActualTag, Name, 'Artikel erfasst', Weight, EP, GP);
       except

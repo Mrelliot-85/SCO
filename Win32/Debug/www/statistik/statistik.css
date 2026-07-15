@@ -35,3 +35,4 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px 8px
   body.printReport .reportTotal b{font-size:18px}
   body.printReport tr{break-inside:avoid}
 }
+.msg-error td{background:#fff1f1}.msg-warning td{background:#fff8e1}.msg-success td{background:#edf9ef}.pill.error{background:#ffe0e0;color:#9b1c1c}.pill.warning{background:#fff0cf;color:#855500}.pill.success{background:#dff3e5;color:#176b35}.pill.info{background:#e8f1ff;color:#1f5f9f}

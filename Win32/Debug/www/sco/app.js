@@ -91,6 +91,13 @@ function qtyText(x){ return String(x.unit).toLowerCase() === 'kg' ? Number(x.qty
 function payAmount(){ return Math.max(0, total() - state.coupon); }
 function paymentEnabled(){ return state.config.payment_cash || state.config.payment_ec || state.config.payment_customer || state.config.payment_coupon; }
 
+function logLocalEvent(payload){
+  fetch('/api/event/log', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(Object.assign({ source:'sco' }, payload || {}))
+  }).catch(e=>console.warn('lokale meldung nicht erreichbar', e));
+}
 function tagKey(tag){ return String(tag || '').trim().toUpperCase(); }
 function hasRfidTag(tag){
   const key = tagKey(tag);
@@ -556,7 +563,7 @@ function bind(){
     if(wanted === 'payment' && !state.items.length) return;
     if(wanted === 'payment') stopRFIDSession();
     state.page = wanted;
-    if(fromStartToCart) startRFIDSession();
+    if(fromStartToCart){ logLocalEvent({ art:'NEUER_KUNDE', level:'info', message:'Neuer Kunde' }); startRFIDSession(); }
     if(state.page === 'start') resetOrder();
     if(state.page === 'rating') clearSuccessTimer();
     if(state.page === 'payment') {

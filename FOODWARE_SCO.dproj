@@ -117,6 +117,7 @@
         <DCCReference Include="SCO_LabelingService.pas"/>
         <DCCReference Include="SCO_ScaleService.pas"/>
         <DCCReference Include="SCO_SalesJournalService.pas"/>
+        <DCCReference Include="SCO_LocalEventService.pas"/>
         <DCCReference Include="SCO_RatingService.pas"/>
         <DCCReference Include="URFIDReaderService.pas">
             <Form>/ URFIDConnect in &apos;URFIDConnect.pas&apos; {Form2};</Form>

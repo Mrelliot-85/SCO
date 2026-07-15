@@ -20,7 +20,8 @@ uses
   FireDAC.Phys.MySQLDef,
   SCO_DB,
   SCO_CONFIG,
-  SCO_Logger;
+  SCO_Logger,
+  SCO_LocalEventService;
 
 function J(const S: string): string;
 begin
@@ -293,7 +294,7 @@ function StatisticsJson(Days: Integer; const FromText, ToText: string): string;
 var
   Q: TFDQuery;
   FromDate, ToDate: TDateTime;
-  KPI, Payments, Hours, Weekdays, Daily, Journal, Taxes, SendState, Ratings: string;
+  KPI, Payments, Hours, Weekdays, Daily, Journal, Taxes, SendState, Ratings, Events: string;
   First: Boolean;
 begin
   ResolveRange(Days, FromText, ToText, FromDate, ToDate);
@@ -307,6 +308,7 @@ begin
   Taxes := '[]';
   SendState := '{"rows":0,"sent":0,"open":0}';
   Ratings := '{"count":0,"average":0,"items":[]}';
+  Events := '{"available":false,"captured":0,"removed":0,"purchased":0,"exitAlarms":0,"products":[],"messages":[]}';
 
   Q := TFDQuery.Create(nil);
   try
@@ -440,6 +442,7 @@ begin
 
     Journal := JournalRows(FromDate, ToDate);
     Ratings := RatingRows(FromDate, ToDate);
+    Events := LocalEventsJson(FromDate, ToDate);
 
     Result := '{"ok":true,"days":' + IntToStr(Days) +
       ',"from":"' + FormatDateTime('yyyy-mm-dd', FromDate) +
@@ -448,6 +451,7 @@ begin
       ',"top":' + ProductRows(FromDate, ToDate, True) +
       ',"bottom":' + ProductRows(FromDate, ToDate, False) +
       ',"sales":' + SalesRows(FromDate, ToDate) +
+      ',"events":' + Events +
       ',"webui":' + WebUIRows(FromDate, ToDate) +
       ',"payments":' + Payments +
       ',"taxes":' + Taxes +

@@ -39,6 +39,7 @@ uses
   SCO_LabelDesignerService in 'SCO_LabelDesignerService.pas',
   SCO_ScaleService in 'SCO_ScaleService.pas',
   SCO_SalesJournalService in 'SCO_SalesJournalService.pas',
+  SCO_LocalEventService in 'SCO_LocalEventService.pas',
   SCO_StatisticsService in 'SCO_StatisticsService.pas',
   SCO_DailyCloseService in 'SCO_DailyCloseService.pas',
   SCO_ESLService in 'SCO_ESLService.pas',

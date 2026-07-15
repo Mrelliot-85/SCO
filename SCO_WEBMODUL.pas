@@ -45,6 +45,7 @@ SCO_LabelingService,
   SCO_StatisticsService,
   SCO_DailyCloseService,
   SCO_RatingService,
+  SCO_LocalEventService,
   SCO_ESLService,
   SCO_Logger,
   Winapi.Windows, Winapi.ShellAPI, IdTCPClient;
@@ -344,6 +345,7 @@ begin
     SameText(Path, '/api/rfid/scan') or
     SameText(Path, '/api/rfid/release') or
     SameText(Path, '/api/rating/save') or
+    SameText(Path, '/api/event/log') or
     SameText(Path, '/api/sale/complete');
 end;
 
@@ -759,6 +761,13 @@ begin
     begin
       ConnectDB;
       SendJson(Response, RatingSaveJson(Request.Content));
+      Exit;
+    end;
+
+    if SameText(Path, '/api/event/log') then
+    begin
+      ConnectDB;
+      SendJson(Response, LocalEventFromJson(Request.Content));
       Exit;
     end;
 
