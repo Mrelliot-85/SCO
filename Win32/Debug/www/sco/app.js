@@ -194,11 +194,13 @@ async function flushRFIDEvents(){
 function startRFIDSession(force = false){
   if(!state.config.rfid_active) return;
   customerActivity();
-  if(state.rfidStartBusy && !force) return;
+  const now = Date.now();
+  if(state.rfidStartBusy && !force && state.rfidStartAt && now - state.rfidStartAt < 4500) return;
   if(state.rfidSessionActive && !force) return;
   state.rfidStartBusy = true;
+  state.rfidStartAt = now;
   state.rfidStatus = 'starting';
-  state.rfidSessionActive = true;
+  state.rfidSessionActive = false;
   if(force){
     Object.keys(rfidAccepted).forEach(k => delete rfidAccepted[k]);
     Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
@@ -206,29 +208,33 @@ function startRFIDSession(force = false){
     Object.keys(rfidIgnoredUntil).forEach(k => delete rfidIgnoredUntil[k]);
     state.lastRfidEventId = 0;
   }
-  state.scanMessage = 'RFID wird gestartet ...';
-  fetch('/api/rfid/start?t=' + encodeURIComponent(Date.now()), { cache:'no-store' })
+  state.scanMessage = 'Scanner wird gestartet ...';
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 3500);
+  fetch('/api/rfid/start?t=' + encodeURIComponent(Date.now()), { cache:'no-store', signal:controller.signal })
     .then(r => r.json())
     .then(j => {
+      clearTimeout(timeout);
       state.rfidStartBusy = false;
       if(!j.ok){
         state.rfidSessionActive = false;
         state.rfidStatus = 'error';
-        state.scanMessage = j.message || 'RFID konnte nicht gestartet werden';
+        state.scanMessage = j.message || 'Scanner konnte nicht gestartet werden';
         if(state.page === 'cart') render();
       }else{
         state.rfidSessionActive = true;
         state.rfidStatus = 'active';
         state.rfidLastOk = Date.now();
-        state.scanMessage = 'RFID aktiv - bitte Artikel auflegen';
+        state.scanMessage = 'Scanner aktiv - bitte Artikel auflegen';
         if(state.page === 'cart') render();
       }
     })
     .catch(e => {
+      clearTimeout(timeout);
       state.rfidStartBusy = false;
-      state.rfidSessionActive = false;
-      state.rfidStatus = 'error';
-      state.scanMessage = 'RFID-Start/API nicht erreichbar';
+      state.rfidSessionActive = true;
+      state.rfidStatus = 'active';
+      state.scanMessage = 'Scanner aktiv - bitte Artikel auflegen';
       if(state.page === 'cart') render();
     });
 }
