@@ -82,6 +82,7 @@ function rfidCustomerMessage(msg){
   return 'Artikel nicht lesbar. Bitte Artikel erneut auflegen oder manuell hinzufügen.';
 }
 const recentRfidScans = Object.create(null);
+const rfidIgnoredUntil = Object.create(null);
 const rfidInFlight = Object.create(null);
 const rfidAccepted = Object.create(null);
 
@@ -153,6 +154,7 @@ function forgetRfidTag(tag){
   delete rfidAccepted[key];
   delete rfidInFlight[key];
   delete recentRfidScans[key];
+  delete rfidIgnoredUntil[key];
 }
 function releaseRfidItems(items){
   (items || []).filter(x => x && x.source === 'rfid' && x.tag).forEach(x => {
@@ -191,6 +193,7 @@ function startRFIDSession(){
   Object.keys(rfidAccepted).forEach(k => delete rfidAccepted[k]);
   Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
   Object.keys(recentRfidScans).forEach(k => delete recentRfidScans[k]);
+  Object.keys(rfidIgnoredUntil).forEach(k => delete rfidIgnoredUntil[k]);
   state.lastRfidEventId = 0;
   state.scanMessage = 'RFID wird gestartet ...';
   fetch('/api/rfid/start?t=' + encodeURIComponent(Date.now()), { cache:'no-store' })
@@ -215,6 +218,15 @@ function stopRFIDSession(){
   state.rfidSessionActive = false;
   Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
   Object.keys(recentRfidScans).forEach(k => delete recentRfidScans[k]);
+  Object.keys(rfidIgnoredUntil).forEach(k => delete rfidIgnoredUntil[k]);
+}
+function resetRFIDSession(){
+  if(!state.config.rfid_active) return;
+  stopRFIDSession();
+  state.scanMessage = 'RFID wird neu gestartet ...';
+  startRFIDSession();
+  render();
+  focusScanner();
 }
 function applyTheme(){
   document.documentElement.style.setProperty('--green', state.theme.green);
@@ -407,7 +419,7 @@ function startHtml(){
 function cartHtml(){
   const manualEnabled = !!state.config.manual_products;
   const manualButton = manualEnabled ? `<button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufügen</b></button>` : '';
-  return `<section class="cartCard card"><div class="cartTools ${manualEnabled ? '' : 'noManual'}">${manualButton}<button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button><button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
+  return `<section class="cartCard card"><div class="cartTools ${manualEnabled ? '' : 'noManual'}">${manualButton}<button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button>${state.config.rfid_active ? '<button class="rfidReset" data-action="rfidReset"><span>RFID</span><b>Neu starten</b></button>' : ''}<button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
 }
 function emptyHtml(){
   return `<div class="empty"><i>SCAN</i><h2>Scanner bereit</h2><p>Bitte scannen Sie einen Artikel oder wählen Sie „Artikel“.</p></div>`;
@@ -859,6 +871,7 @@ function action(a){
     if(hadItems) showNotice('Alle Artikel entfernt', RFID_RETURN_ALL_MESSAGE); else render();
   }
   if(a === 'focus') focusScanner();
+  if(a === 'rfidReset') resetRFIDSession();
   if(a === 'products'){
     if(!state.config.manual_products) return;
     state.modal = 'products';
@@ -988,6 +1001,7 @@ async function scanRFID(tag, antenna = 0){
   if(!key) return;
   if(hasRfidTag(key) || rfidInFlight[key]) return;
   const now = Date.now();
+  if(rfidIgnoredUntil[key] && now < rfidIgnoredUntil[key]) return;
   if(recentRfidScans[key] && now - recentRfidScans[key] < 4500) return;
   recentRfidScans[key] = now;
   rfidInFlight[key] = true;
@@ -1017,6 +1031,13 @@ async function scanRFID(tag, antenna = 0){
         image: BLANK_IMAGE
       });
       return;
+    }
+    const msg = String(j.message || '');
+    const status = Number(j.status || 0);
+    if(status !== 0 || msg.toLowerCase().includes('verkauft') || msg.toLowerCase().includes('gesperrt') || msg.toLowerCase().includes('entwertet')){
+      rfidIgnoredUntil[key] = Date.now() + 30000;
+    }else{
+      rfidIgnoredUntil[key] = Date.now() + 10000;
     }
     state.scanMessage = rfidCustomerMessage(j.message);
     render();
@@ -1120,6 +1141,7 @@ async function pollRFIDEvents(){
         continue;
       }
       if(!shoppingActive) continue;
+      if(rfidIgnoredUntil[tagKey(ev.tag)] && Date.now() < rfidIgnoredUntil[tagKey(ev.tag)]) continue;
       await scanRFID(ev.tag, Number(ev.antenna || 0));
     }
   }catch(e){
