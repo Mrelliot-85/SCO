@@ -499,10 +499,16 @@ begin
   Q := TFDQuery.Create(nil);
   try
     Q.Connection := FB;
-    Q.SQL.Text :=
-      'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, r.GEWICHT, r.PREIS as TAGPREIS, a.VK_BRUTTO as PREIS, a.BEZEICHNUNG, a.ME_BEZ, a.WG, a.MWSTSATZ1, a.MWST_1 ' +
-      'FROM TAGINFO r INNER JOIN VARTIKEL a ON r.NUMMER = a.NUMMER ' +
-      'WHERE UPPER(TRIM(r.TAG)) = UPPER(TRIM(:TAG)) AND COALESCE(r.STATUS, 0) = 0';
+    if Alarm then
+      Q.SQL.Text :=
+        'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, r.GEWICHT, r.PREIS as TAGPREIS, a.VK_BRUTTO as PREIS, a.BEZEICHNUNG, a.ME_BEZ, a.WG, a.MWSTSATZ1, a.MWST_1 ' +
+        'FROM TAGINFO r INNER JOIN VARTIKEL a ON r.NUMMER = a.NUMMER ' +
+        'WHERE UPPER(TRIM(r.TAG)) = UPPER(TRIM(:TAG)) AND COALESCE(r.STATUS, 0) = 0'
+    else
+      Q.SQL.Text :=
+        'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, r.GEWICHT, r.PREIS as TAGPREIS, a.VK_BRUTTO as PREIS, a.BEZEICHNUNG, a.ME_BEZ, a.WG, a.MWSTSATZ1, a.MWST_1 ' +
+        'FROM TAGINFO r INNER JOIN VARTIKEL a ON r.NUMMER = a.NUMMER ' +
+        'WHERE UPPER(TRIM(r.TAG)) = UPPER(TRIM(:TAG)) AND COALESCE(r.STATUS, 0) IN (0, 1)';
     Q.ParamByName('TAG').AsString := CleanTag;
     Q.Open;
     if Q.IsEmpty then
@@ -564,8 +570,14 @@ begin
       end;
     end;
     ActualTag := Q.FieldByName('TAG').AsString;
+    TagStatus := StrToIntDef(Q.FieldByName('STATUS').AsString, 0);
     PLU := Q.FieldByName('NUMMER').AsInteger;
     Name := Q.FieldByName('BEZEICHNUNG').AsString;
+    if (TagStatus <> 0) and not Alarm then
+    begin
+      LogTransaction('RFID SCAN OVERRIDE tag=' + ActualTag + ' status=' + IntToStr(TagStatus) + ' plu=' + IntToStr(PLU) + ' name=' + Name + ' reason=STATUS_WIRD_IM_WARENKORB_AKZEPTIERT');
+      AddLocalEvent('RFID_STATUS_OVERRIDE', 'warning', 'RFID-Artikel trotz Status ' + IntToStr(TagStatus) + ' im Warenkorb erfasst', 0, 0, PLU, Name, ActualTag, 0, 0, 0, 'rfid', Antenna);
+    end;
     UnitName := Q.FieldByName('ME_BEZ').AsString;
     WG := Q.FieldByName('WG').AsInteger;
     Weight := Q.FieldByName('GEWICHT').AsFloat;
