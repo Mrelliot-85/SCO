@@ -18,6 +18,7 @@ var
 procedure ConnectDB;
 procedure EnterDBAccess;
 procedure LeaveDBAccess;
+function CreateDBConnection: TFDConnection;
 function TestDBJson: string;
 function GetGroupsJson: string;
 function GetProductsJson(WG: Integer): string;
@@ -349,6 +350,52 @@ begin
   end;
 end;
 
+function CreateDBConnection: TFDConnection;
+var
+  Host, DatabaseName, VendorLib: string;
+  Port: Integer;
+begin
+  SCOConfig.Load;
+  ResolveDatabaseParams(Host, DatabaseName, Port);
+  if DatabaseName = '' then
+    raise Exception.Create('Firebird-Datenbank ist nicht konfiguriert.');
+
+  EnterDBAccess;
+  try
+    if not Assigned(FBDriverLink) then
+    begin
+      FBDriverLink := TFDPhysFBDriverLink.Create(nil);
+      VendorLib := ExtractFilePath(ParamStr(0)) + 'fbclient.dll';
+      if FileExists(VendorLib) then FBDriverLink.VendorLib := VendorLib;
+    end;
+    if not Assigned(FDWaitCursor) then
+    begin
+      FDWaitCursor := TFDGUIxWaitCursor.Create(nil);
+      FDWaitCursor.Provider := 'Forms';
+    end;
+  finally
+    LeaveDBAccess;
+  end;
+
+  Result := TFDConnection.Create(nil);
+  try
+    Result.LoginPrompt := False;
+    Result.Params.Clear;
+    Result.Params.Add('DriverID=FB');
+    Result.Params.Add('Protocol=TCPIP');
+    Result.Params.Add('Server=' + Host);
+    Result.Params.Add('Port=' + IntToStr(Port));
+    Result.Params.Add('Database=' + DatabaseName);
+    Result.Params.Add('User_Name=' + SCOConfig.DBUser);
+    Result.Params.Add('Password=' + SCOConfig.DBPassword);
+    Result.Params.Add('CharacterSet=' + SCOConfig.DBCharset);
+    Result.Params.Add('SQLDialect=3');
+    Result.Connected := True;
+  except
+    Result.Free;
+    raise;
+  end;
+end;
 function TestDBJson: string;
 var Q: TFDQuery; Host, DatabaseName: string; Port: Integer;
 begin

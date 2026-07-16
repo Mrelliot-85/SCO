@@ -55,7 +55,7 @@ begin
   if Value then Result := 'true' else Result := 'false';
 end;
 
-procedure EnsureLocalEventGenerator;
+procedure EnsureLocalEventGenerator(Conn: TFDConnection);
 var
   Q: TFDQuery;
   Exists: Boolean;
@@ -63,7 +63,7 @@ var
 begin
   Q := TFDQuery.Create(nil);
   try
-    Q.Connection := FB;
+    Q.Connection := Conn;
     Q.SQL.Text := 'select count(*) C from rdb$generators where rdb$generator_name = ''SCO_MELDUNGEN_GEN''';
     Q.Open;
     Exists := IField(Q, 'C') > 0;
@@ -72,7 +72,7 @@ begin
     if not Exists then
     begin
       try
-        FB.ExecSQL('create sequence SCO_MELDUNGEN_GEN');
+        Conn.ExecSQL('create sequence SCO_MELDUNGEN_GEN');
       except
         // Another running terminal may have created it in the meantime.
       end;
@@ -89,20 +89,20 @@ begin
     Q.Close;
 
     if CurId < MaxId then
-      FB.ExecSQL('set generator SCO_MELDUNGEN_GEN to ' + IntToStr(MaxId));
+      Conn.ExecSQL('set generator SCO_MELDUNGEN_GEN to ' + IntToStr(MaxId));
   finally
     Q.Free;
   end;
 end;
 
-function NextLocalEventId: Integer;
+function NextLocalEventId(Conn: TFDConnection): Integer;
 var
   Q: TFDQuery;
 begin
   Result := 0;
   Q := TFDQuery.Create(nil);
   try
-    Q.Connection := FB;
+    Q.Connection := Conn;
     Q.SQL.Text := 'select gen_id(SCO_MELDUNGEN_GEN,1) ID from rdb$database';
     Q.Open;
     Result := IField(Q, 'ID');
@@ -137,26 +137,25 @@ begin
   Result := StrToFloatDef(S, Default);
 end;
 
-procedure EnsureLocalEventTable;
+procedure EnsureLocalEventTableOn(Conn: TFDConnection);
 var
   Q: TFDQuery;
   Exists: Boolean;
 begin
-  ConnectDB;
   Q := TFDQuery.Create(nil);
   try
-    Q.Connection := FB;
+    Q.Connection := Conn;
     Q.SQL.Text := 'select count(*) C from rdb$relations where rdb$relation_name = ''SCO_MELDUNGEN''';
     Q.Open;
     Exists := IField(Q, 'C') > 0;
     Q.Close;
     if Exists then
     begin
-      EnsureLocalEventGenerator;
+      EnsureLocalEventGenerator(Conn);
       Exit;
     end;
 
-    FB.ExecSQL(
+    Conn.ExecSQL(
       'create table SCO_MELDUNGEN (' +
       'ID integer not null primary key,' +
       'DATUHR timestamp,' +
@@ -177,57 +176,74 @@ begin
       'ANTENNE integer)'
     );
     try
-      FB.ExecSQL('create index IDX_SCO_MELDUNGEN_DATUM on SCO_MELDUNGEN (DATUM, ZEIT)');
+      Conn.ExecSQL('create index IDX_SCO_MELDUNGEN_DATUM on SCO_MELDUNGEN (DATUM, ZEIT)');
     except
     end;
     try
-      FB.ExecSQL('create index IDX_SCO_MELDUNGEN_ART on SCO_MELDUNGEN (ART, DATUM)');
+      Conn.ExecSQL('create index IDX_SCO_MELDUNGEN_ART on SCO_MELDUNGEN (ART, DATUM)');
     except
     end;
-    EnsureLocalEventGenerator;
+    EnsureLocalEventGenerator(Conn);
     LogTransaction('LOCAL EVENT TABLE CREATED SCO_MELDUNGEN');
   finally
     Q.Free;
   end;
 end;
 
+procedure EnsureLocalEventTable;
+var
+  Conn: TFDConnection;
+begin
+  Conn := CreateDBConnection;
+  try
+    EnsureLocalEventTableOn(Conn);
+  finally
+    Conn.Free;
+  end;
+end;
 procedure AddLocalEvent(const Art, EventLevel, Meldung: string; BonNo, PosNo, PLU: Integer;
   const Artikel, TID: string; Menge, EP, GP: Double; const Quelle: string; Antenne: Integer);
 var
   Q: TFDQuery;
+  Conn: TFDConnection;
   NewId: Integer;
 begin
   try
     LocalEventLock.Enter;
     try
-      EnsureLocalEventTable;
-      Q := TFDQuery.Create(nil);
+      Conn := CreateDBConnection;
       try
-        Q.Connection := FB;
-        NewId := NextLocalEventId;
+        EnsureLocalEventTableOn(Conn);
+        Q := TFDQuery.Create(nil);
+        try
+          Q.Connection := Conn;
+          NewId := NextLocalEventId(Conn);
 
-        Q.SQL.Text :=
-          'insert into SCO_MELDUNGEN (ID,DATUHR,DATUM,ZEIT,ART,EVENT_LEVEL,MELDUNG,BONNO,POSNO,PLU,ARTIKEL,TID,MENGE,EP,GP,QUELLE,ANTENNE) ' +
-          'values (:ID,current_timestamp,:DATUM,:ZEIT,:ART,:EVENT_LEVEL,:MELDUNG,:BONNO,:POSNO,:PLU,:ARTIKEL,:TID,:MENGE,:EP,:GP,:QUELLE,:ANTENNE)';
-        Q.ParamByName('ID').AsInteger := NewId;
-        Q.ParamByName('DATUM').AsDate := Date;
-        Q.ParamByName('ZEIT').AsTime := Time;
-        Q.ParamByName('ART').AsString := Copy(Art, 1, 40);
-        Q.ParamByName('EVENT_LEVEL').AsString := Copy(EventLevel, 1, 20);
-        Q.ParamByName('MELDUNG').AsString := Copy(Meldung, 1, 500);
-        Q.ParamByName('BONNO').AsInteger := BonNo;
-        Q.ParamByName('POSNO').AsInteger := PosNo;
-        Q.ParamByName('PLU').AsInteger := PLU;
-        Q.ParamByName('ARTIKEL').AsString := Copy(Artikel, 1, 160);
-        Q.ParamByName('TID').AsString := Copy(TID, 1, 80);
-        Q.ParamByName('MENGE').AsFloat := Menge;
-        Q.ParamByName('EP').AsFloat := EP;
-        Q.ParamByName('GP').AsFloat := GP;
-        Q.ParamByName('QUELLE').AsString := Copy(Quelle, 1, 40);
-        Q.ParamByName('ANTENNE').AsInteger := Antenne;
-        Q.ExecSQL;
+          Q.SQL.Text :=
+            'insert into SCO_MELDUNGEN (ID,DATUHR,DATUM,ZEIT,ART,EVENT_LEVEL,MELDUNG,BONNO,POSNO,PLU,ARTIKEL,TID,MENGE,EP,GP,QUELLE,ANTENNE) ' +
+            'values (:ID,current_timestamp,:DATUM,:ZEIT,:ART,:EVENT_LEVEL,:MELDUNG,:BONNO,:POSNO,:PLU,:ARTIKEL,:TID,:MENGE,:EP,:GP,:QUELLE,:ANTENNE)';
+          Q.ParamByName('ID').AsInteger := NewId;
+          Q.ParamByName('DATUM').AsDate := Date;
+          Q.ParamByName('ZEIT').AsTime := Time;
+          Q.ParamByName('ART').AsString := Copy(Art, 1, 40);
+          Q.ParamByName('EVENT_LEVEL').AsString := Copy(EventLevel, 1, 20);
+          Q.ParamByName('MELDUNG').AsString := Copy(Meldung, 1, 500);
+          Q.ParamByName('BONNO').AsInteger := BonNo;
+          Q.ParamByName('POSNO').AsInteger := PosNo;
+          Q.ParamByName('PLU').AsInteger := PLU;
+          Q.ParamByName('ARTIKEL').AsString := Copy(Artikel, 1, 160);
+          Q.ParamByName('TID').AsString := Copy(TID, 1, 80);
+          Q.ParamByName('MENGE').AsFloat := Menge;
+          Q.ParamByName('EP').AsFloat := EP;
+          Q.ParamByName('GP').AsFloat := GP;
+          Q.ParamByName('QUELLE').AsString := Copy(Quelle, 1, 40);
+          Q.ParamByName('ANTENNE').AsInteger := Antenne;
+          Q.ExecSQL;
+        finally
+          Q.Free;
+        end;
       finally
-        Q.Free;
+        Conn.Free;
       end;
     finally
       LocalEventLock.Leave;
@@ -237,7 +253,6 @@ begin
       LogError('LOCAL EVENT WRITE ERROR ' + E.ClassName + ': ' + E.Message);
   end;
 end;
-
 function LocalEventFromJson(const JsonText: string): string;
 var
   V: TJSONValue;
@@ -274,83 +289,89 @@ end;
 function LocalEventsJson(FromDate, ToDate: TDateTime): string;
 var
   Q: TFDQuery;
+  Conn: TFDConnection;
   Messages, Products: string;
   First: Boolean;
   Captured, Removed, Purchased, ExitAlarms, Missing: Integer;
 begin
   Result := '{"available":false,"captured":0,"removed":0,"purchased":0,"exitAlarms":0,"products":[],"messages":[]}';
   try
-    EnsureLocalEventTable;
-    Q := TFDQuery.Create(nil);
+    Conn := CreateDBConnection;
     try
-      Q.Connection := FB;
-      Captured := 0; Removed := 0; Purchased := 0; ExitAlarms := 0;
-      Q.SQL.Text := 'select ART,count(*) ANZAHL from SCO_MELDUNGEN where DATUM between :FROMDATE and :TODATE group by ART';
-      Q.ParamByName('FROMDATE').AsDate := FromDate;
-      Q.ParamByName('TODATE').AsDate := ToDate;
-      Q.Open;
-      while not Q.Eof do
-      begin
-        if SameText(SField(Q,'ART'), 'RFID_ERFASST') then Captured := IField(Q,'ANZAHL')
-        else if SameText(SField(Q,'ART'), 'RFID_ENTFERNT') then Removed := IField(Q,'ANZAHL')
-        else if SameText(SField(Q,'ART'), 'ARTIKEL_GEKAUFT') then Purchased := IField(Q,'ANZAHL')
-        else if SameText(SField(Q,'ART'), 'AUSGANGSKONTROLLE') then ExitAlarms := IField(Q,'ANZAHL');
-        Q.Next;
-      end;
-      Q.Close;
+      EnsureLocalEventTableOn(Conn);
+      Q := TFDQuery.Create(nil);
+      try
+        Q.Connection := Conn;
+        Captured := 0; Removed := 0; Purchased := 0; ExitAlarms := 0;
+        Q.SQL.Text := 'select ART,count(*) ANZAHL from SCO_MELDUNGEN where DATUM between :FROMDATE and :TODATE group by ART';
+        Q.ParamByName('FROMDATE').AsDate := FromDate;
+        Q.ParamByName('TODATE').AsDate := ToDate;
+        Q.Open;
+        while not Q.Eof do
+        begin
+          if SameText(SField(Q,'ART'), 'RFID_ERFASST') then Captured := IField(Q,'ANZAHL')
+          else if SameText(SField(Q,'ART'), 'RFID_ENTFERNT') then Removed := IField(Q,'ANZAHL')
+          else if SameText(SField(Q,'ART'), 'ARTIKEL_GEKAUFT') then Purchased := IField(Q,'ANZAHL')
+          else if SameText(SField(Q,'ART'), 'AUSGANGSKONTROLLE') then ExitAlarms := IField(Q,'ANZAHL');
+          Q.Next;
+        end;
+        Q.Close;
 
-      Q.SQL.Text := 'select PLU,max(ARTIKEL) ARTIKEL,' +
-        'sum(case when ART=''RFID_ERFASST'' then 1 else 0 end) ERFASST,' +
-        'sum(case when ART=''RFID_ENTFERNT'' then 1 else 0 end) ENTFERNT,' +
-        'sum(case when ART=''ARTIKEL_GEKAUFT'' then 1 else 0 end) GEKAUFT,' +
-        'sum(case when ART=''AUSGANGSKONTROLLE'' then 1 else 0 end) AUSGANG ' +
-        'from SCO_MELDUNGEN where DATUM between :FROMDATE and :TODATE and coalesce(PLU,0)<>0 ' +
-        'group by PLU order by AUSGANG desc, ERFASST desc, GEKAUFT desc';
-      Q.ParamByName('FROMDATE').AsDate := FromDate;
-      Q.ParamByName('TODATE').AsDate := ToDate;
-      Q.Open;
-      Products := '['; First := True;
-      while not Q.Eof do
-      begin
-        if not First then Products := Products + ',';
-        Missing := IField(Q,'ERFASST') - IField(Q,'GEKAUFT') - IField(Q,'ENTFERNT');
-        if Missing < 0 then Missing := 0;
-        Products := Products + '{"plu":' + IntToStr(IField(Q,'PLU')) + ',"name":"' + J(SField(Q,'ARTIKEL')) +
-          '","captured":' + IntToStr(IField(Q,'ERFASST')) + ',"removed":' + IntToStr(IField(Q,'ENTFERNT')) +
-          ',"purchased":' + IntToStr(IField(Q,'GEKAUFT')) + ',"exitAlarms":' + IntToStr(IField(Q,'AUSGANG')) +
-          ',"notPurchased":' + IntToStr(Missing) + '}';
-        First := False;
-        Q.Next;
-      end;
-      Products := Products + ']';
-      Q.Close;
+        Q.SQL.Text := 'select PLU,max(ARTIKEL) ARTIKEL,' +
+          'sum(case when ART=''RFID_ERFASST'' then 1 else 0 end) ERFASST,' +
+          'sum(case when ART=''RFID_ENTFERNT'' then 1 else 0 end) ENTFERNT,' +
+          'sum(case when ART=''ARTIKEL_GEKAUFT'' then 1 else 0 end) GEKAUFT,' +
+          'sum(case when ART=''AUSGANGSKONTROLLE'' then 1 else 0 end) AUSGANG ' +
+          'from SCO_MELDUNGEN where DATUM between :FROMDATE and :TODATE and coalesce(PLU,0)<>0 ' +
+          'group by PLU order by AUSGANG desc, ERFASST desc, GEKAUFT desc';
+        Q.ParamByName('FROMDATE').AsDate := FromDate;
+        Q.ParamByName('TODATE').AsDate := ToDate;
+        Q.Open;
+        Products := '['; First := True;
+        while not Q.Eof do
+        begin
+          if not First then Products := Products + ',';
+          Missing := IField(Q,'ERFASST') - IField(Q,'GEKAUFT') - IField(Q,'ENTFERNT');
+          if Missing < 0 then Missing := 0;
+          Products := Products + '{"plu":' + IntToStr(IField(Q,'PLU')) + ',"name":"' + J(SField(Q,'ARTIKEL')) +
+            '","captured":' + IntToStr(IField(Q,'ERFASST')) + ',"removed":' + IntToStr(IField(Q,'ENTFERNT')) +
+            ',"purchased":' + IntToStr(IField(Q,'GEKAUFT')) + ',"exitAlarms":' + IntToStr(IField(Q,'AUSGANG')) +
+            ',"notPurchased":' + IntToStr(Missing) + '}';
+          First := False;
+          Q.Next;
+        end;
+        Products := Products + ']';
+        Q.Close;
 
-      Q.SQL.Text := 'select first 500 DATUM,ZEIT,ART,EVENT_LEVEL,MELDUNG,BONNO,PLU,ARTIKEL,TID,QUELLE,ANTENNE ' +
-        'from SCO_MELDUNGEN where DATUM between :FROMDATE and :TODATE order by DATUHR desc, ID desc';
-      Q.ParamByName('FROMDATE').AsDate := FromDate;
-      Q.ParamByName('TODATE').AsDate := ToDate;
-      Q.Open;
-      Messages := '['; First := True;
-      while not Q.Eof do
-      begin
-        if not First then Messages := Messages + ',';
-        Messages := Messages + '{"date":"' + FormatDateTime('dd.mm.yyyy', Q.FieldByName('DATUM').AsDateTime) +
-          '","time":"' + FormatDateTime('hh:nn:ss', Q.FieldByName('ZEIT').AsDateTime) +
-          '","type":"' + J(SField(Q,'ART')) + '","level":"' + J(SField(Q,'EVENT_LEVEL')) +
-          '","message":"' + J(SField(Q,'MELDUNG')) + '","bon":' + IntToStr(IField(Q,'BONNO')) +
-          ',"plu":' + IntToStr(IField(Q,'PLU')) + ',"name":"' + J(SField(Q,'ARTIKEL')) +
-          '","tag":"' + J(SField(Q,'TID')) + '","source":"' + J(SField(Q,'QUELLE')) +
-          '","antenna":' + IntToStr(IField(Q,'ANTENNE')) + '}';
-        First := False;
-        Q.Next;
-      end;
-      Messages := Messages + ']';
+        Q.SQL.Text := 'select first 500 DATUM,ZEIT,ART,EVENT_LEVEL,MELDUNG,BONNO,PLU,ARTIKEL,TID,QUELLE,ANTENNE ' +
+          'from SCO_MELDUNGEN where DATUM between :FROMDATE and :TODATE order by DATUHR desc, ID desc';
+        Q.ParamByName('FROMDATE').AsDate := FromDate;
+        Q.ParamByName('TODATE').AsDate := ToDate;
+        Q.Open;
+        Messages := '['; First := True;
+        while not Q.Eof do
+        begin
+          if not First then Messages := Messages + ',';
+          Messages := Messages + '{"date":"' + FormatDateTime('dd.mm.yyyy', Q.FieldByName('DATUM').AsDateTime) +
+            '","time":"' + FormatDateTime('hh:nn:ss', Q.FieldByName('ZEIT').AsDateTime) +
+            '","type":"' + J(SField(Q,'ART')) + '","level":"' + J(SField(Q,'EVENT_LEVEL')) +
+            '","message":"' + J(SField(Q,'MELDUNG')) + '","bon":' + IntToStr(IField(Q,'BONNO')) +
+            ',"plu":' + IntToStr(IField(Q,'PLU')) + ',"name":"' + J(SField(Q,'ARTIKEL')) +
+            '","tag":"' + J(SField(Q,'TID')) + '","source":"' + J(SField(Q,'QUELLE')) +
+            '","antenna":' + IntToStr(IField(Q,'ANTENNE')) + '}';
+          First := False;
+          Q.Next;
+        end;
+        Messages := Messages + ']';
 
-      Result := '{"available":true,"captured":' + IntToStr(Captured) + ',"removed":' + IntToStr(Removed) +
-        ',"purchased":' + IntToStr(Purchased) + ',"exitAlarms":' + IntToStr(ExitAlarms) +
-        ',"products":' + Products + ',"messages":' + Messages + '}';
+        Result := '{"available":true,"captured":' + IntToStr(Captured) + ',"removed":' + IntToStr(Removed) +
+          ',"purchased":' + IntToStr(Purchased) + ',"exitAlarms":' + IntToStr(ExitAlarms) +
+          ',"products":' + Products + ',"messages":' + Messages + '}';
+      finally
+        Q.Free;
+      end;
     finally
-      Q.Free;
+      Conn.Free;
     end;
   except
     on E: Exception do
@@ -360,7 +381,6 @@ begin
     end;
   end;
 end;
-
 initialization
   LocalEventLock := TCriticalSection.Create;
 
