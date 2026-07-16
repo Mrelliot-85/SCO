@@ -912,7 +912,7 @@ function action(a){
     state.items = [];
     resetRFIDSession();
     state.scanMessage = 'Scanner wird neu gestartet. Bitte legen Sie die Artikel erneut auf.';
-    showNotice('Bitte Artikel neu auflegen', hadItems ? 'Wir starten die Artikelerfassung neu. Bitte legen Sie alle Artikel noch einmal auf die gekennzeichnete Fl&auml;che.' : 'Wir starten die Artikelerfassung neu. Bitte legen Sie Ihre Artikel auf die gekennzeichnete Fl&auml;che.');
+    showNotice('Bitte Artikel neu auflegen', hadItems ? 'Wir starten die Artikelerfassung neu. Bitte legen Sie alle Artikel noch einmal auf die gekennzeichnete Fläche.' : 'Wir starten die Artikelerfassung neu. Bitte legen Sie Ihre Artikel auf die gekennzeichnete Fläche.');
   }
   if(a === 'products'){
     if(!state.config.manual_products) return;
