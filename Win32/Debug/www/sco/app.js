@@ -13,6 +13,8 @@ const state = {
   paymentBusy: false,
   paymentMessage: '',
   paymentOkTimer: null,
+  idleTimer: null,
+  idleSeconds: 120,
   saleBooked: false,
   saleBonNo: 0,
   receiptPreview: '',
@@ -92,6 +94,38 @@ function qtyText(x){ return String(x.unit).toLowerCase() === 'kg' ? Number(x.qty
 function payAmount(){ return Math.max(0, total() - state.coupon); }
 function paymentEnabled(){ return state.config.payment_cash || state.config.payment_ec || state.config.payment_customer || state.config.payment_coupon; }
 
+function clearIdleTimer(){
+  if(state.idleTimer) clearTimeout(state.idleTimer);
+  state.idleTimer = null;
+}
+
+function shouldRunIdleTimer(){
+  if(state.paymentBusy || state.paymentComplete) return false;
+  return state.page === 'cart' || state.page === 'payment';
+}
+
+function scheduleIdleReset(){
+  clearIdleTimer();
+  if(!shouldRunIdleTimer()) return;
+  const seconds = Math.max(30, Math.min(600, Number(state.idleSeconds || 120)));
+  state.idleTimer = setTimeout(() => {
+    if(!shouldRunIdleTimer()) return;
+    const count = state.items.length;
+    if(count > 0){
+      logLocalEvent({ art:'ABBRUCH_TIMEOUT', level:'info', message:'Einkauf wegen Inaktivitaet automatisch abgebrochen', qty:count });
+      releaseRfidItems(state.items);
+    }
+    stopRFIDSession();
+    resetOrder();
+    state.page = 'start';
+    render();
+    focusScanner();
+  }, seconds * 1000);
+}
+
+function customerActivity(){
+  if(shouldRunIdleTimer()) scheduleIdleReset();
+}
 function logLocalEvent(payload){
   fetch('/api/event/log', {
     method:'POST',
@@ -152,6 +186,7 @@ async function flushRFIDEvents(){
   }
 }
 function startRFIDSession(){
+  customerActivity();
   state.rfidSessionActive = true;
   Object.keys(rfidAccepted).forEach(k => delete rfidAccepted[k]);
   Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
@@ -340,6 +375,7 @@ function layout(content, cls = 'workPage'){
   $('app').innerHTML = `<div class="shell">${topBar()}${header}<main class="${cls}">${content}</main>${modalHtml()}</div>`;
   updateClock();
   bind();
+  scheduleIdleReset();
 }
 
 function render(){
@@ -560,6 +596,7 @@ function adminHotspotClick(e){
 }
 function bind(){
   document.querySelectorAll('[data-page]').forEach(b => b.onclick = async () => {
+    customerActivity();
     const wanted = b.dataset.page;
     const fromStartToCart = state.page === 'start' && wanted === 'cart';
     const cartToPayment = wanted === 'payment' && state.page === 'cart' && state.items.length > 0;
@@ -594,6 +631,7 @@ function bind(){
     setTimeout(startPayment, 120);
   });
   document.querySelectorAll('[data-group]').forEach(b => b.onclick = () => {
+    customerActivity();
     state.selectedGroup = Number(b.dataset.group);
     render();
     focusScanner();
@@ -626,6 +664,7 @@ function paymentApiType(){
 }
 
 async function startPayment(){
+  clearIdleTimer();
   if(state.paymentBusy || !state.selectedPayment) return;
   stopRFIDSession();
 
@@ -680,6 +719,7 @@ function startSuccessTimer(){
 }
 
 function resetOrder(){
+  clearIdleTimer();
   state.items = [];
   state.receiptPreview = '';
   state.receiptPreviewLoading = false;
@@ -702,6 +742,7 @@ function resetOrder(){
 
 function newStart(){
   clearSuccessTimer();
+  clearIdleTimer();
   resetOrder();
   state.page = 'start';
   render();
@@ -799,6 +840,7 @@ async function printReceipt(){
 }
 
 function action(a){
+  customerActivity();
   if(a === 'noticeOk'){ state.notice = null; render(); focusScanner(); }
   if(a === 'exitAlarmOk'){ closeExitAlarm(); focusScanner(); }
   if(a === 'adminCancel'){ state.adminPopup = false; state.adminPin = ''; state.paymentMessage = ''; render(); focusScanner(); }
@@ -883,6 +925,7 @@ function addManualWeight(){
 }
 
 function addItem(item){
+  customerActivity();
   if(item && (item.source === 'rfid' || item.source === 'ean') && state.page !== 'cart') return;
   if(item && item.source === 'rfid' && !state.rfidSessionActive) return;
   if(item && item.source === 'rfid') item.tag = tagKey(item.tag);
@@ -904,6 +947,7 @@ function addItem(item){
 }
 
 function removeItem(id){
+  customerActivity();
   const row = Array.from(document.querySelectorAll('[data-row-id]')).find(el => el.dataset.rowId === String(id));
   if(row){
     row.classList.add('slideOut');
@@ -933,6 +977,7 @@ function looksLikeRfidTag(value){
 }
 
 async function scanRFID(tag, antenna = 0){
+  customerActivity();
   if(!state.rfidSessionActive || state.page !== 'cart') return;
   const key = tagKey(tag);
   if(!key) return;
@@ -981,6 +1026,7 @@ let eanScanBusy = false;
 let queuedEan = '';
 
 async function scanEAN(ean){
+  customerActivity();
   const code = String(ean || '').replace(/\D/g, '');
   if(!/^\d{8}$|^\d{13}$/.test(code)) return;
   if(state.page === 'start' && !state.config.rfid_active){
@@ -1119,6 +1165,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inp = $('scannerInput');
 
   inp.addEventListener('keydown', e => {
+    customerActivity();
     if(e.key === 'Enter' || e.key === 'Tab'){
       e.preventDefault();
       e.stopPropagation();
@@ -1127,6 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   inp.addEventListener('input', () => {
+    customerActivity();
     inp.value = submitScannerValue(inp.value, false);
     if(inp.value) scheduleScannerCommit(inp);
   });
@@ -1134,6 +1182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handscanner senden wie eine sehr schnelle Tastatur. Dieser Fallback arbeitet
   // auch dann, wenn nach einer Touch-Eingabe gerade ein Button den Fokus besitzt.
   document.addEventListener('keydown', e => {
+    customerActivity();
     if(e.target === inp || e.ctrlKey || e.altKey || e.metaKey) return;
     const tag = String(e.target?.tagName || '').toLowerCase();
     if(tag === 'input' || tag === 'textarea' || tag === 'select') return;
@@ -1159,6 +1208,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, true);
 
   document.body.addEventListener('click', e => {
+    customerActivity();
     const r = e.target.closest('[data-remove]');
     if(r){ e.preventDefault(); e.stopPropagation(); removeItem(r.dataset.remove); return; }
     focusScanner();
