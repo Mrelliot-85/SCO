@@ -253,3 +253,49 @@ body,.shell,.startPage{background:#eef4f7!important;background-image:none!import
   -webkit-overflow-scrolling:touch;
   touch-action:pan-y;
 }
+
+/* Manual article modal scroll/focus fix */
+.productModal{
+  height:min(860px,92vh)!important;
+  max-height:92vh!important;
+  min-height:0!important;
+}
+.productModal aside,
+.productModal section{
+  min-height:0!important;
+  overflow:hidden!important;
+}
+.groupList,
+.productGrid,
+.touchScroll{
+  min-height:0!important;
+  max-height:100%!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+  touch-action:pan-y!important;
+  scrollbar-gutter:stable!important;
+}
+.productGrid{
+  flex:1 1 auto!important;
+  align-content:start!important;
+  padding-bottom:18px!important;
+}
+.groupList{
+  flex:1 1 auto!important;
+  padding-right:4px!important;
+}
+.productBtn{
+  min-height:178px!important;
+}
+.prodImg{
+  height:66px!important;
+}
+
+.cartTools.noManual{
+  grid-template-columns:1fr 220px!important;
+}
+.cartTools.noManual [data-action="focus"]{
+  justify-content:center!important;
+}

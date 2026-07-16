@@ -205,6 +205,8 @@ async function loadConfig(){
     const c = await r.json();
     if(!c) return;
 
+    state.config.manual_products = c.manualProducts !== false ? 1 : 0;
+
     state.theme.customer = c.customer || c.kunde || c.Kunde || state.theme.customer;
     state.theme.subtitle = c.subtitle || c.Subtitle || state.theme.subtitle;
     state.theme.phone = c.phone || c.telefon || c.Telefon || state.theme.phone;
@@ -367,10 +369,10 @@ function startHtml(){
 }
 
 function cartHtml(){
-  const manualButton = state.config.manual_products ? `<button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufügen</b></button>` : '';
-  return `<section class="cartCard card"><div class="cartTools">${manualButton}<button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button><button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
+  const manualEnabled = !!state.config.manual_products;
+  const manualButton = manualEnabled ? `<button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufügen</b></button>` : '';
+  return `<section class="cartCard card"><div class="cartTools ${manualEnabled ? '' : 'noManual'}">${manualButton}<button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button><button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
 }
-
 function emptyHtml(){
   return `<div class="empty"><i>SCAN</i><h2>Scanner bereit</h2><p>Bitte scannen Sie einen Artikel oder wählen Sie „Artikel“.</p></div>`;
 }
@@ -504,9 +506,8 @@ function paymentWaitModal(){
 
 function productModal(){
   const list = state.products.filter(p => Number(p.group) === Number(state.selectedGroup));
-  return `<div class="modal"><div class="productModal card"><aside><h2>Warengruppen</h2><div class="groupList">${state.groups.map(g => `<button class="groupBtn ${g.id === state.selectedGroup ? 'active' : ''}" data-group="${g.id}">${esc(g.name)}</button>`).join('')}</div></aside><section><div class="modalTop"><div><h2>Artikel ohne EAN</h2><p>Warengruppe wählen und Artikel übernehmen.</p></div><button data-action="closeModal">&larr; Zurück</button></div><div class="productGrid">${list.length ? list.map(p => `<button class="productBtn" data-product="${p.plu}"><div class="prodImg"><img src="${esc(p.image || BLANK_IMAGE)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="articleIcon" style="display:none">ART</span></div><b>${esc(p.name)}</b><span>PLU ${p.plu} · ${esc(p.note || '')}</span><strong>${money(p.ep)} / ${esc(p.unit)}</strong></button>`).join('') : '<p>Keine Artikel in dieser Warengruppe gefunden.</p>'}</div></section></div></div>`;
+  return `<div class="modal"><div class="productModal card"><aside><h2>Warengruppen</h2><div class="groupList touchScroll">${state.groups.map(g => `<button class="groupBtn ${g.id === state.selectedGroup ? 'active' : ''}" data-group="${g.id}">${esc(g.name)}</button>`).join('')}</div></aside><section><div class="modalTop"><div><h2>Artikel ohne EAN</h2><p>Warengruppe wählen und Artikel übernehmen.</p></div><button data-action="closeModal">&larr; Zurück</button></div><div class="productGrid touchScroll">${list.length ? list.map(p => `<button class="productBtn" data-product="${p.plu}"><div class="prodImg"><img src="${esc(p.image || BLANK_IMAGE)}" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><span class="articleIcon" style="display:none">ART</span></div><b>${esc(p.name)}</b><span>PLU ${p.plu} · ${esc(p.note || '')}</span><strong>${money(p.ep)} / ${esc(p.unit)}</strong></button>`).join('') : '<p>Keine Artikel in dieser Warengruppe gefunden.</p>'}</div></section></div></div>`;
 }
-
 function qtyModal(){
   const p = state.selectedProduct;
   if(!p) return '';
@@ -579,6 +580,10 @@ function bind(){
   });
 
   document.querySelectorAll('[data-action]').forEach(b => b.onclick = () => action(b.dataset.action));
+  document.querySelectorAll('.productModal').forEach(m => {
+    m.addEventListener('touchstart', e => e.stopPropagation(), { passive:true });
+    m.addEventListener('wheel', e => e.stopPropagation(), { passive:true });
+  });
   document.querySelector('.headRight')?.addEventListener('click', adminHotspotClick);
   document.querySelectorAll('[data-remove]').forEach(b => b.onclick = e => { e.preventDefault(); e.stopPropagation(); removeItem(b.dataset.remove); });
   document.querySelectorAll('[data-pin]').forEach(b => b.onclick = e => { e.preventDefault(); e.stopPropagation(); if(state.adminPin.length < 8) state.adminPin += b.dataset.pin; render(); });
@@ -591,6 +596,7 @@ function bind(){
   document.querySelectorAll('[data-group]').forEach(b => b.onclick = () => {
     state.selectedGroup = Number(b.dataset.group);
     render();
+    focusScanner();
   });
   document.querySelectorAll('[data-product]').forEach(b => b.onclick = () => selectProduct(Number(b.dataset.product)));
   document.querySelectorAll('[data-rating]').forEach(b => b.onclick = () => {
@@ -807,13 +813,16 @@ function action(a){
   }
   if(a === 'focus') focusScanner();
   if(a === 'products'){
+    if(!state.config.manual_products) return;
     state.modal = 'products';
     render();
+    focusScanner();
   }
   if(a === 'closeModal'){
     state.modal = null;
     state.selectedProduct = null;
     render();
+    focusScanner();
   }
   if(a === 'cancel'){
     const hadItems = state.items.length > 0;
@@ -850,6 +859,7 @@ function action(a){
 }
 
 function selectProduct(plu){
+  if(!state.config.manual_products) return;
   const p = state.products.find(x => Number(x.plu) === Number(plu));
   if(!p) return;
   state.selectedProduct = p;
