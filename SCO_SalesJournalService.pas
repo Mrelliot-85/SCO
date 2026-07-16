@@ -206,6 +206,7 @@ procedure TSCOSalesJournalService.MarkRfidTagSold(const Tag: string);
 var
   Q: TFDQuery;
   CleanTag: string;
+  Affected: Integer;
 begin
   CleanTag := Trim(Tag);
   if CleanTag = '' then
@@ -214,9 +215,15 @@ begin
   Q := TFDQuery.Create(nil);
   try
     Q.Connection := FB;
-    Q.SQL.Text := 'UPDATE TAGINFO SET STATUS = 1 WHERE TAG STARTING WITH :TAG';
+    Q.SQL.Text :=
+      'UPDATE TAGINFO SET STATUS = 1, CHANGEDATE = CURRENT_TIMESTAMP ' +
+      'WHERE UPPER(TRIM(TAG)) = UPPER(TRIM(:TAG)) AND COALESCE(STATUS, 0) = 0';
     Q.ParamByName('TAG').AsString := CleanTag;
     Q.ExecSQL;
+    Affected := Q.RowsAffected;
+    LogTransaction('RFID TAG SOLD tag=' + CleanTag + ' rows=' + IntToStr(Affected));
+    if Affected <> 1 then
+      LogError('RFID TAG SOLD WARN tag=' + CleanTag + ' rows=' + IntToStr(Affected));
   finally
     Q.Free;
   end;
@@ -451,7 +458,9 @@ begin
     Q := TFDQuery.Create(nil);
     try
       Q.Connection := FB;
-      Q.SQL.Text := 'UPDATE TAGINFO SET STATUS = 0 WHERE TAG STARTING WITH :TAG';
+      Q.SQL.Text :=
+        'UPDATE TAGINFO SET STATUS = 0, CHANGEDATE = CURRENT_TIMESTAMP ' +
+        'WHERE UPPER(TRIM(TAG)) = UPPER(TRIM(:TAG)) AND COALESCE(STATUS, 0) = 0';
       Q.ParamByName('TAG').AsString := CleanTag;
       Q.ExecSQL;
       Affected := Q.RowsAffected;
@@ -493,7 +502,7 @@ begin
     Q.SQL.Text :=
       'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, r.GEWICHT, r.PREIS as TAGPREIS, a.VK_BRUTTO as PREIS, a.BEZEICHNUNG, a.ME_BEZ, a.WG, a.MWSTSATZ1, a.MWST_1 ' +
       'FROM TAGINFO r INNER JOIN VARTIKEL a ON r.NUMMER = a.NUMMER ' +
-      'WHERE r.TAG STARTING WITH :TAG AND COALESCE(r.STATUS, 0) = 0';
+      'WHERE UPPER(TRIM(r.TAG)) = UPPER(TRIM(:TAG)) AND COALESCE(r.STATUS, 0) = 0';
     Q.ParamByName('TAG').AsString := CleanTag;
     Q.Open;
     if Q.IsEmpty then
@@ -501,7 +510,7 @@ begin
       Info := TFDQuery.Create(nil);
       try
         Info.Connection := FB;
-        Info.SQL.Text := 'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, a.BEZEICHNUNG FROM TAGINFO r LEFT JOIN VARTIKEL a ON a.NUMMER = r.NUMMER WHERE r.TAG STARTING WITH :TAG';
+        Info.SQL.Text := 'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, a.BEZEICHNUNG FROM TAGINFO r LEFT JOIN VARTIKEL a ON a.NUMMER = r.NUMMER WHERE UPPER(TRIM(r.TAG)) = UPPER(TRIM(:TAG))';
         Info.ParamByName('TAG').AsString := CleanTag;
         Info.Open;
         if Info.IsEmpty then
