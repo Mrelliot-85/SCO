@@ -7,6 +7,7 @@ uses
 
 procedure StartRFIDTcpService;
 procedure StopRFIDTcpService;
+procedure RestartRFIDTcpService;
 procedure ClearRFIDTcpEvents;
 function RFIDTcpEventsJson(AfterId: Integer): string;
 
@@ -355,6 +356,15 @@ procedure StopRFIDTcpService;
 begin
   if Assigned(RFIDService) then
     RFIDService.Stop;
+end;
+
+procedure RestartRFIDTcpService;
+begin
+  if not Assigned(RFIDService) then
+    RFIDService := TRFIDTcpService.Create;
+  RFIDService.Stop;
+  RFIDService.ClearEvents;
+  RFIDService.Start;
 end;
 
 procedure ClearRFIDTcpEvents;

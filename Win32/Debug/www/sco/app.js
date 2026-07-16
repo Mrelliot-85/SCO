@@ -211,7 +211,7 @@ function startRFIDSession(force = false){
   state.scanMessage = 'Scanner wird gestartet ...';
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 3500);
-  fetch('/api/rfid/start?t=' + encodeURIComponent(Date.now()), { cache:'no-store', signal:controller.signal })
+  fetch('/api/rfid/start?t=' + encodeURIComponent(Date.now()) + (force ? '&force=1' : ''), { cache:'no-store', signal:controller.signal })
     .then(r => r.json())
     .then(j => {
       clearTimeout(timeout);

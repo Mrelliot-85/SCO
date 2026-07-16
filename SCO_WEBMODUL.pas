@@ -801,8 +801,16 @@ begin
         SendJson(Response, '{"ok":false,"message":"RFID ist in der Config deaktiviert.","active":false}');
         Exit;
       end;
-      StartRFIDTcpService;
-      SendJson(Response, '{"ok":true,"message":"RFID gestartet.","active":true,"host":"' + SCOConfig.RFIDHost + '","port":' + IntToStr(SCOConfig.RFIDTCPPort) + '}');
+      if SameText(Request.QueryFields.Values['force'], '1') or SameText(Request.QueryFields.Values['restart'], '1') then
+      begin
+        RestartRFIDTcpService;
+        SendJson(Response, '{"ok":true,"message":"RFID neu gestartet.","active":true,"restart":true,"host":"' + SCOConfig.RFIDHost + '","port":' + IntToStr(SCOConfig.RFIDTCPPort) + '}');
+      end
+      else
+      begin
+        StartRFIDTcpService;
+        SendJson(Response, '{"ok":true,"message":"RFID gestartet.","active":true,"host":"' + SCOConfig.RFIDHost + '","port":' + IntToStr(SCOConfig.RFIDTCPPort) + '}');
+      end;
       Exit;
     end;
     if SameText(Path, '/api/rfid/stop') then
