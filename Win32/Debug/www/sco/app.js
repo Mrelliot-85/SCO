@@ -267,7 +267,7 @@ async function boot(){
   updateClock();
   setInterval(updateClock, 1000);
   focusScanner();
-  setInterval(pollRFIDEvents, 700);
+  setInterval(pollRFIDEvents, 350);
   setInterval(ensureRFIDForCart, 2000);
 }
 
@@ -444,15 +444,16 @@ function startHtml(){
 function rfidIndicatorHtml(){
   if(!state.config.rfid_active) return '';
   const cls = state.rfidStatus === 'error' ? 'error' : (state.rfidStartBusy || state.rfidStatus === 'starting' ? 'starting' : (state.rfidSessionActive ? 'active' : 'idle'));
-  const text = cls === 'active' ? 'RFID aktiv' : (cls === 'starting' ? 'RFID startet' : (cls === 'error' ? 'RFID Fehler' : 'RFID bereit'));
-  const sub = cls === 'active' ? 'Antennen werden ausgelesen' : (cls === 'starting' ? 'Verbindung wird aufgebaut' : 'Neu starten');
+  const text = cls === 'active' ? 'Scanner aktiv' : (cls === 'starting' ? 'Scanner startet' : (cls === 'error' ? 'Scannerhilfe' : 'Scanner bereit'));
+  const sub = cls === 'active' ? 'Artikel werden automatisch gelesen' : (cls === 'starting' ? 'Verbindung wird aufgebaut' : 'Bei Problemen Hilfe tippen');
   return `<div class="rfidIndicator ${cls}"><i></i><strong>${text}</strong><span>${sub}</span></div>`;
 }
 
 function cartHtml(){
   const manualEnabled = !!state.config.manual_products;
-  const manualButton = manualEnabled ? `<button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufügen</b></button>` : '';
-  return `<section class="cartCard card"><div class="cartTools ${manualEnabled ? '' : 'noManual'}">${manualButton}<button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button>${rfidIndicatorHtml()}${state.config.rfid_active ? '<button class="rfidReset" data-action="rfidReset"><span>RFID</span><b>Neu starten</b></button>' : ''}<button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
+  const manualButton = manualEnabled ? `<button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzuf&uuml;gen</b></button>` : '';
+  const helpButton = state.config.rfid_active ? '<button class="cartHelp" data-action="rfidHelp"><span>?</span><b>Artikel nicht gelesen?<small>Hier tippen</small></b></button>' : '<button class="clear" data-action="clear"><span>&times;</span><b>Alle entfernen</b></button>';
+  return `<section class="cartCard card"><div class="cartTools ${manualEnabled ? '' : 'noManual'}">${manualButton}<button class="scanInfo" data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button>${rfidIndicatorHtml()}${helpButton}</div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>&times;</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
 }
 function emptyHtml(){
   return `<div class="empty"><i>SCAN</i><h2>Scanner bereit</h2><p>Bitte scannen Sie einen Artikel oder wählen Sie „Artikel“.</p></div>`;
@@ -905,6 +906,14 @@ function action(a){
   }
   if(a === 'focus') focusScanner();
   if(a === 'rfidReset') resetRFIDSession();
+  if(a === 'rfidHelp'){
+    const hadItems = state.items.length > 0;
+    releaseRfidItems(state.items);
+    state.items = [];
+    resetRFIDSession();
+    state.scanMessage = 'Scanner wird neu gestartet. Bitte legen Sie die Artikel erneut auf.';
+    showNotice('Bitte Artikel neu auflegen', hadItems ? 'Wir starten die Artikelerfassung neu. Bitte legen Sie alle Artikel noch einmal auf die gekennzeichnete Fl&auml;che.' : 'Wir starten die Artikelerfassung neu. Bitte legen Sie Ihre Artikel auf die gekennzeichnete Fl&auml;che.');
+  }
   if(a === 'products'){
     if(!state.config.manual_products) return;
     state.modal = 'products';
@@ -1168,17 +1177,19 @@ async function pollRFIDEvents(){
     state.rfidLastPollOk = Date.now();
     if(state.page === 'cart' && state.rfidSessionActive && state.rfidStatus !== 'active') state.rfidStatus = 'active';
     const shoppingActive = state.rfidSessionActive && state.page === 'cart';
+    const jobs = [];
     for(const ev of j.events){
       state.lastRfidEventId = Math.max(Number(state.lastRfidEventId || 0), Number(ev.id || 0));
       if(Number(ev.status || 0) !== 1 || !ev.tag) continue;
       if(isExitAlarmEvent(ev)){
-        await scanRFIDExitAlarm(ev.tag, Number(ev.antenna || 0));
+        jobs.push(scanRFIDExitAlarm(ev.tag, Number(ev.antenna || 0)));
         continue;
       }
       if(!shoppingActive) continue;
       if(rfidIgnoredUntil[tagKey(ev.tag)] && Date.now() < rfidIgnoredUntil[tagKey(ev.tag)]) continue;
-      await scanRFID(ev.tag, Number(ev.antenna || 0));
+      jobs.push(scanRFID(ev.tag, Number(ev.antenna || 0)));
     }
+    if(jobs.length) await Promise.allSettled(jobs);
   }catch(e){
     console.warn('rfid events nicht erreichbar', e);
   }

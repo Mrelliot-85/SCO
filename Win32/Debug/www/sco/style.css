@@ -310,3 +310,80 @@ body,.shell,.startPage{background:#eef4f7!important;background-image:none!import
 .rfidIndicator.error i{background:#dc2626}.rfidIndicator.error{background:#fff0f1;border-color:#f0c7cb;color:#991b1b}
 @keyframes rfidPulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,.45)}70%{box-shadow:0 0 0 10px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
 @keyframes rfidPulseAmber{0%{box-shadow:0 0 0 0 rgba(245,158,11,.45)}70%{box-shadow:0 0 0 10px rgba(245,158,11,0)}100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}}
+/* RFID cart toolbar customer help 20260716 */
+.cartTools{
+  height:104px!important;
+  grid-template-columns:240px minmax(340px,1fr) 220px 230px!important;
+  gap:12px!important;
+  padding:16px 22px!important;
+}
+.cartTools.noManual{
+  grid-template-columns:minmax(430px,1fr) 230px 250px!important;
+}
+.cartTools button{
+  min-height:70px!important;
+  height:70px!important;
+  border-radius:16px!important;
+}
+.cartTools .scanInfo{
+  justify-content:flex-start!important;
+  padding:8px 14px!important;
+  overflow:hidden!important;
+}
+.cartTools .scanInfo span{
+  flex:0 0 auto!important;
+  font-size:28px!important;
+  letter-spacing:.5px!important;
+}
+.cartTools .scanInfo b{
+  flex:1 1 auto!important;
+  min-width:0!important;
+  font-size:18px!important;
+  line-height:1.18!important;
+  text-align:center!important;
+  white-space:normal!important;
+}
+.rfidIndicator{
+  height:70px!important;
+  border-radius:16px!important;
+  grid-template-columns:20px 1fr!important;
+  padding:10px 14px!important;
+}
+.rfidIndicator strong{font-size:17px!important;line-height:1.1!important;}
+.rfidIndicator span{font-size:12px!important;white-space:normal!important;line-height:1.15!important;}
+.cartTools .cartHelp{
+  background:#fff8e8!important;
+  color:#6b4500!important;
+  border:2px solid #f0d28a!important;
+  box-shadow:0 8px 18px rgba(120,80,0,.10)!important;
+}
+.cartTools .cartHelp span{
+  width:34px!important;
+  height:34px!important;
+  border-radius:50%!important;
+  background:#f4c04c!important;
+  color:#1f2933!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:24px!important;
+  font-weight:1000!important;
+}
+.cartTools .cartHelp b{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:2px!important;
+  font-size:17px!important;
+  line-height:1.05!important;
+  text-align:left!important;
+}
+.cartTools .cartHelp small{
+  font-size:13px!important;
+  font-weight:900!important;
+  color:#805500!important;
+}
+@media(max-width:980px){
+  .cartTools,.cartTools.noManual{grid-template-columns:1fr!important;height:auto!important;}
+  .cartTools button,.rfidIndicator{height:70px!important;}
+}
