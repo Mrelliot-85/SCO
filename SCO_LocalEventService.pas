@@ -55,6 +55,62 @@ begin
   if Value then Result := 'true' else Result := 'false';
 end;
 
+procedure EnsureLocalEventGenerator;
+var
+  Q: TFDQuery;
+  Exists: Boolean;
+  MaxId, CurId: Integer;
+begin
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FB;
+    Q.SQL.Text := 'select count(*) C from rdb$generators where rdb$generator_name = ''SCO_MELDUNGEN_GEN''';
+    Q.Open;
+    Exists := IField(Q, 'C') > 0;
+    Q.Close;
+
+    if not Exists then
+    begin
+      try
+        FB.ExecSQL('create sequence SCO_MELDUNGEN_GEN');
+      except
+        // Another running terminal may have created it in the meantime.
+      end;
+    end;
+
+    Q.SQL.Text := 'select coalesce(max(ID),0) MAXID from SCO_MELDUNGEN';
+    Q.Open;
+    MaxId := IField(Q, 'MAXID');
+    Q.Close;
+
+    Q.SQL.Text := 'select gen_id(SCO_MELDUNGEN_GEN,0) CURID from rdb$database';
+    Q.Open;
+    CurId := IField(Q, 'CURID');
+    Q.Close;
+
+    if CurId < MaxId then
+      FB.ExecSQL('set generator SCO_MELDUNGEN_GEN to ' + IntToStr(MaxId));
+  finally
+    Q.Free;
+  end;
+end;
+
+function NextLocalEventId: Integer;
+var
+  Q: TFDQuery;
+begin
+  Result := 0;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FB;
+    Q.SQL.Text := 'select gen_id(SCO_MELDUNGEN_GEN,1) ID from rdb$database';
+    Q.Open;
+    Result := IField(Q, 'ID');
+  finally
+    Q.Free;
+  end;
+end;
+
 function TextValue(O: TJSONObject; const Name, Default: string): string;
 var
   V: TJSONValue;
@@ -94,7 +150,11 @@ begin
     Q.Open;
     Exists := IField(Q, 'C') > 0;
     Q.Close;
-    if Exists then Exit;
+    if Exists then
+    begin
+      EnsureLocalEventGenerator;
+      Exit;
+    end;
 
     FB.ExecSQL(
       'create table SCO_MELDUNGEN (' +
@@ -124,6 +184,7 @@ begin
       FB.ExecSQL('create index IDX_SCO_MELDUNGEN_ART on SCO_MELDUNGEN (ART, DATUM)');
     except
     end;
+    EnsureLocalEventGenerator;
     LogTransaction('LOCAL EVENT TABLE CREATED SCO_MELDUNGEN');
   finally
     Q.Free;
@@ -143,10 +204,7 @@ begin
       Q := TFDQuery.Create(nil);
       try
         Q.Connection := FB;
-        Q.SQL.Text := 'select coalesce(max(ID),0)+1 ID from SCO_MELDUNGEN';
-        Q.Open;
-        NewId := IField(Q, 'ID');
-        Q.Close;
+        NewId := NextLocalEventId;
 
         Q.SQL.Text :=
           'insert into SCO_MELDUNGEN (ID,DATUHR,DATUM,ZEIT,ART,EVENT_LEVEL,MELDUNG,BONNO,POSNO,PLU,ARTIKEL,TID,MENGE,EP,GP,QUELLE,ANTENNE) ' +
