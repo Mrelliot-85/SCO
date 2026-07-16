@@ -604,7 +604,12 @@ function bind(){
     if(wanted === 'payment' && !state.items.length) return;
     if(wanted === 'payment') stopRFIDSession();
     state.page = wanted;
-    if(fromStartToCart){ logLocalEvent({ art:'NEUER_KUNDE', level:'info', message:'Neuer Kunde' }); startRFIDSession(); }
+    if(fromStartToCart){
+      logLocalEvent({ art:'NEUER_KUNDE', level:'info', message:'Neuer Kunde' });
+      startRFIDSession();
+    }else if(wanted === 'cart' && state.config.rfid_active){
+      startRFIDSession();
+    }
     if(state.page === 'start') resetOrder();
     if(state.page === 'rating') clearSuccessTimer();
     if(state.page === 'payment') {
