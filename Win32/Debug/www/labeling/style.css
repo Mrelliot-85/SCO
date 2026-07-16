@@ -469,3 +469,57 @@ button{border:0;cursor:pointer;}
   font-weight:900;
   padding:0 22px;
 }
+.bottom.rfidwrite{
+  grid-template-columns:1fr 1.2fr 1.8fr 1fr!important;
+}
+
+.checkBox{
+  grid-template-columns:1fr;
+  border-color:#b8d8ee;
+  background:#f0f8ff;
+}
+
+.checkModal h2{
+  color:#153d58;
+}
+
+.rfidCheckResult{
+  margin-top:14px;
+  border-radius:12px;
+  border:1px solid var(--fw-line);
+  padding:14px;
+  text-align:left;
+}
+
+.rfidCheckResult.ok{
+  background:#eef8e7;
+  border-color:#cce9b7;
+}
+
+.rfidCheckResult.bad{
+  background:#fdeeee;
+  border-color:#f4c7c7;
+}
+
+.rfidCheckResult h3{
+  margin:0 0 10px;
+  font-size:22px;
+  color:#153d58;
+}
+
+.rfidCheckGrid{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:7px 12px;
+  align-items:start;
+}
+
+.rfidCheckGrid span{
+  color:var(--fw-muted);
+  font-weight:900;
+}
+
+.rfidCheckGrid b{
+  color:#102033;
+  overflow-wrap:anywhere;
+}

@@ -54,6 +54,7 @@ const state = {
   rfidDuplicateTag: '',
   rfidDuplicateId: 0,
   rfidDuplicateStatus: null,
+  rfidCheckResult: null,
   encodeCounter: Number(sessionStorage.getItem('labelingEncodeCounter') || 0),
 
   modal: null,
@@ -748,7 +749,7 @@ function bottomHtml(){
   }
 
   if(state.mode === 'rfidwrite'){
-    return `<footer class="bottom rfidwrite"><button data-action="protocol">Gesamtprotokoll</button><button class="mainAction rfid" data-action="rfidPopup" ${disabled}>RFID codieren</button><button data-action="reset">Neu</button></footer>`;
+    return `<footer class="bottom rfidwrite"><button data-action="protocol">Gesamtprotokoll</button><button data-action="rfidCheckPopup">Artikel prüfen</button><button class="mainAction rfid" data-action="rfidPopup" ${disabled}>RFID codieren</button><button data-action="reset">Neu</button></footer>`;
   }
 
   return `<footer class="bottom rfidprint"><button data-action="protocol">Gesamtprotokoll</button><button class="mainAction" data-action="rfidPrintFlow" ${disabled}>Gewicht holen, Tag drucken & codieren</button><button data-action="reset">Neu</button></footer>`;
@@ -793,21 +794,30 @@ function rfidPopupHtml(){
 
   const p = state.selectedProduct;
   const invalidate = state.rfidAction === 'invalidate';
-  const title = invalidate ? 'Artikel entwerten' : 'RFID codieren';
-  const waitText = invalidate
-    ? 'Legen Sie das RFID-Tag auf die gekennzeichnete Fläche. Der Tag wird in TAGINFO auf Status 9 gesetzt und ist damit entwertet.'
-    : `Legen Sie das RFID-Tag / den Artikel auf die gekennzeichnete Fläche.
-       Gespeichert wird erst bei vollständigem RFID-Code
-       (${Number(state.labelingConfig.rfidTagLength || 24)} Zeichen).
-       Für den gleichen Artikel legen Sie einfach ein weiteres Tag auf.
-       Für einen anderen Artikel gehen Sie auf Abbrechen.`;
+  const check = state.rfidAction === 'check';
+  const title = check ? 'Artikel prüfen' : (invalidate ? 'Artikel entwerten' : 'RFID codieren');
+  const waitText = check
+    ? 'Scannen oder legen Sie ein RFID-Tag auf. Es wird nur geprüft und nichts verändert.'
+    : (invalidate
+      ? 'Legen Sie das RFID-Tag auf die gekennzeichnete Fläche. Der Tag wird in TAGINFO auf Status 9 gesetzt und ist damit entwertet.'
+      : `Legen Sie das RFID-Tag / den Artikel auf die gekennzeichnete Fläche.
+         Gespeichert wird erst bei vollständigem RFID-Code
+         (${Number(state.labelingConfig.rfidTagLength || 24)} Zeichen).
+         Für den gleichen Artikel legen Sie einfach ein weiteres Tag auf.
+         Für einen anderen Artikel gehen Sie auf Abbrechen.`);
 
   return `
     <div class="modalBack">
-      <div class="smallModal rfidModalBig ${invalidate ? 'invalidateModal' : ''}">
+      <div class="smallModal rfidModalBig ${invalidate ? 'invalidateModal' : ''} ${check ? 'checkModal' : ''}">
         <h2>${title}</h2>
 
-        ${invalidate ? `
+        ${check ? `
+          <div class="rfidArticleBox checkBox">
+            <div>
+              <h3>Prüfung</h3>
+              <p>Zeigt Artikel, Status, Menge/Gewicht und Preis des gelesenen Tags.</p>
+            </div>
+          </div>` : (invalidate ? `
           <div class="rfidArticleBox invalidateBox">
             <div>
               <h3>Entwertung</h3>
@@ -824,19 +834,21 @@ function rfidPopupHtml(){
                 <span>MHD: <b>${esc(state.mhd || '-')}</b></span>
               </div>
             </div>
-          </div>`}
+          </div>`)}
 
         <div class="rfidWaitText">
-          <b>${esc(state.rfidMessage || (invalidate ? 'Warte auf RFID-Tag zur Entwertung...' : 'Warte auf RFID-Tag...'))}</b>
+          <b>${esc(state.rfidMessage || (check ? 'Warte auf RFID-Tag zur Prüfung...' : (invalidate ? 'Warte auf RFID-Tag zur Entwertung...' : 'Warte auf RFID-Tag...')))}</b>
           <span>${waitText}</span>
         </div>
 
-        <div class="rfidModeLine">
+        ${state.rfidCheckResult ? rfidCheckResultHtml(state.rfidCheckResult) : ''}
+
+        ${check ? '' : `<div class="rfidModeLine">
           <button class="${state.afterSaveMode === 'next' ? 'active' : ''}" data-action="rfidSingle">${invalidate ? 'Einzelentwertung' : 'Einzelcodierung'}</button>
           <button class="${state.afterSaveMode === 'same' ? 'active' : ''}" data-action="rfidMulti">${invalidate ? 'Mehrfachentwertung' : 'Mehrfachcodierung'}</button>
-        </div>
+        </div>`}
 
-        ${(!invalidate && state.rfidDuplicateTag) ? `<div class="rfidOverwriteLine"><button class="danger" data-action="rfidOverwrite">RFID-Tag ueberschreiben und freigeben</button></div>` : ''}
+        ${(!invalidate && !check && state.rfidDuplicateTag) ? `<div class="rfidOverwriteLine"><button class="danger" data-action="rfidOverwrite">RFID-Tag ueberschreiben und freigeben</button></div>` : ''}
 
         <div class="modalButtons">
           <button data-action="cancelRfid">Abbrechen</button>
@@ -846,6 +858,23 @@ function rfidPopupHtml(){
   `;
 }
 
+function rfidCheckResultHtml(r){
+  const ok = !!(r && r.ok && r.found !== false);
+  return `<div class="rfidCheckResult ${ok ? 'ok' : 'bad'}">
+    <h3>${ok ? 'Tag gefunden' : 'Tag nicht lesbar / nicht gefunden'}</h3>
+    <div class="rfidCheckGrid">
+      <span>Tag</span><b>${esc(r?.tag || '-')}</b>
+      <span>Status</span><b>${esc(r?.statusText || r?.message || '-')}</b>
+      <span>Artikel</span><b>PLU ${esc(r?.plu || '-')} · ${esc(r?.name || '-')}</b>
+      <span>Menge/Gewicht</span><b>${num(r?.weight || 0, 3)} ${esc(r?.unit || 'kg')}</b>
+      <span>Tara</span><b>${num(r?.tara || 0, 3)} kg</b>
+      <span>Preis</span><b>${money(r?.price || 0)}</b>
+      <span>Preis/Stamm</span><b>${money(r?.unitPrice || 0)} / ${esc(r?.unit || '')}</b>
+      <span>MHD</span><b>${esc(r?.mhd || '-')}</b>
+      <span>Charge</span><b>${esc(r?.charge || '-')}</b>
+    </div>
+  </div>`;
+}
 function protocolModalHtml(){
   return `
     <div class="modalBack">
@@ -1183,6 +1212,7 @@ async function action(a){
 
   if(a === 'rfidPrintFlow'){ await rfidPrintFlow(); return; }
   if(a === 'rfidPopup'){ startRfidWait(state.afterSaveMode || 'next'); return; }
+  if(a === 'rfidCheckPopup'){ startRfidCheckWait(); return; }
   if(a === 'invalidatePopup'){ startRfidInvalidateWait(state.afterSaveMode || 'next'); return; }
   if(a === 'resetEncodeCounter'){ state.encodeCounter = 0; sessionStorage.setItem('labelingEncodeCounter','0'); state.message = 'Codierungszähler zurückgesetzt.'; render(); return; }
   if(a === 'reset'){ resetSelection(); return; }
@@ -1349,6 +1379,20 @@ function startRfidWait(mode){
   setTimeout(() => $('rfidInput')?.focus(), 100);
 }
 
+function startRfidCheckWait(){
+  state.rfidAction = 'check';
+  state.waitingForRfid = true;
+  state.rfidTag = '';
+  state.rfidDuplicateTag = '';
+  state.rfidDuplicateId = 0;
+  state.rfidDuplicateStatus = null;
+  state.rfidCheckResult = null;
+  state.rfidMessage = 'Prüfmodus aktiv. Warte auf RFID-Tag...';
+  debugLog('rfid check wait start', { needLen: state.labelingConfig.rfidTagLength });
+  render();
+  setTimeout(() => $('rfidInput')?.focus(), 100);
+}
+
 function startRfidInvalidateWait(mode){
   if(mode === 'same' || mode === 'next')
     state.afterSaveMode = mode;
@@ -1370,9 +1414,44 @@ function startRfidInvalidateWait(mode){
 }
 
 async function handleRfidTag(tag){
+  if(state.rfidAction === 'check')
+    return checkRfidTag(tag);
   if(state.rfidAction === 'invalidate')
     return invalidateRfidTag(tag);
   return saveRfidTag(tag);
+}
+
+async function checkRfidTag(tag){
+  const needLen = Number(state.labelingConfig.rfidTagLength || 24);
+  let cleanTag = String(tag || '').trim();
+  if(needLen > 0 && cleanTag.length > needLen)
+    cleanTag = cleanTag.substring(0, needLen);
+  if(cleanTag === ''){
+    state.rfidMessage = 'Kein RFID-Tag gelesen.';
+    render();
+    return;
+  }
+  if(needLen > 0 && cleanTag.length < needLen){
+    state.rfidMessage = 'RFID-Tag unvollständig: ' + cleanTag.length + ' / ' + needLen + ' Zeichen';
+    render();
+    setTimeout(() => $('rfidInput')?.focus(), 100);
+    return;
+  }
+  state.rfidMessage = 'RFID-Tag wird geprüft...';
+  state.rfidCheckResult = null;
+  render();
+  try{
+    const j = await fetchJsonDebug('/api/labeling/rfid/check?tag=' + encodeURIComponent(cleanTag), 'rfid check', 15000);
+    state.rfidCheckResult = Object.assign({ tag: cleanTag }, j);
+    state.rfidMessage = j.ok ? 'RFID-Tag gefunden.' : (j.message || 'RFID-Tag nicht gefunden.');
+    state.message = state.rfidMessage;
+    render();
+    setTimeout(() => $('rfidInput')?.focus(), 100);
+  }catch(e){
+    state.rfidMessage = 'RFID/API nicht erreichbar';
+    state.rfidCheckResult = { ok:false, tag: cleanTag, message: state.rfidMessage };
+    render();
+  }
 }
 
 async function invalidateRfidTag(tag){

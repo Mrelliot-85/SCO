@@ -1185,6 +1185,18 @@ begin
           SendJson(Response, LabelingInvalidateRfidJson(Request.QueryFields.Values['tag']));
           Exit;
         end;
+
+        if SameText(Path, '/api/labeling/rfid/check') then
+        begin
+          LogTransaction(
+            'API RFID CHECK HIT TAG=' + Request.QueryFields.Values['tag'] +
+            ' TAGLEN=' + IntToStr(Length(Request.QueryFields.Values['tag']))
+          );
+          ConnectDB;
+          SendJson(Response, LabelingCheckRfidJson(Request.QueryFields.Values['tag']));
+          Exit;
+        end;
+
         if SameText(Path, '/api/labeling/protocol') then
         begin
           ConnectDB;

@@ -7,6 +7,7 @@ function LabelingProductsJson(WG: Integer): string;
 function LabelingSearchJson(const SearchText: string): string;
 function LabelingTarasJson: string;
 function LabelingScanJson(const EAN: string): string;
+
 function LabelingReadWeightJson: string;
 function LabelPrinterTestJson(const Host: string; Port: Integer; const WindowsPrinter: string): string;
 function LabelingPrintJson(PLU: Integer; Weight: Double; Tara: Double; Qty: Integer;
@@ -14,6 +15,7 @@ function LabelingPrintJson(PLU: Integer; Weight: Double; Tara: Double; Qty: Inte
 function LabelingWriteRfidJson(PLU: Integer; Weight: Double): string;
 function LabelingSaveRfidJson(PLU: Integer; const Tag, MHD, Source: string; Weight: Double; Tara: Double; Price: Double; Overwrite: Boolean = False): string;
 function LabelingInvalidateRfidJson(const Tag: string): string;
+function LabelingCheckRfidJson(const Tag: string): string;
 function LabelingProtocolJson(Limit: Integer): string;
 function LabelingProtocolDeleteJson(ID: Integer): string;
 function LabelingProtocolStatusJson(ID, Status: Integer): string;
@@ -608,6 +610,110 @@ begin
   LabelingDBLock.Acquire;
   try
     Result := LabelingInvalidateRfidJsonInternal(Tag);
+  finally
+    LabelingDBLock.Release;
+  end;
+end;
+function LabelingCheckRfidJsonInternal(const Tag: string): string;
+var
+  Q: TFDQuery;
+  CleanTag, StatusText, ArticleName, UnitName, MHDText, CreatedText, ChangedText: string;
+  NeedLen, ID, PLU, Status: Integer;
+  Weight, Tara, Price, UnitPrice: Double;
+begin
+  SCOConfig.Load;
+  CleanTag := Trim(Tag);
+  NeedLen := SCOConfig.LabelingTagLength;
+  LogTransaction('RFID CHECK START TAG=' + CleanTag + ' TAGLEN=' + IntToStr(Length(CleanTag)));
+
+  if CleanTag = '' then
+    Exit('{"ok":false,"message":"Kein RFID-Tag gelesen."}');
+
+  if (NeedLen > 0) and (Length(CleanTag) <> NeedLen) then
+    Exit('{"ok":false,"message":"RFID-Tag hat falsche Laenge: ' + IntToStr(Length(CleanTag)) + ' / ' + IntToStr(NeedLen) + '.","tag":"' + JS(CleanTag) + '"}');
+
+  Q := TFDQuery.Create(nil);
+  try
+    try
+      Q.Connection := FB;
+      Q.SQL.Text :=
+        'select first 1 r.ID, r.TAG, r.MHD, r.TYP, r.GEWICHT, r.TARA, r.PREIS, r.NUMMER, r.STATUS, r.CREATEDATE, r.CHANGEDATE, r.CHARGE, ' +
+        'a.BEZEICHNUNG, a.BEZEICHNUNG2, a.ME_BEZ, a.VK_BRUTTO ' +
+        'from TAGINFO r left join VARTIKEL a on a.NUMMER = r.NUMMER ' +
+        'where r.TAG = :TAG order by r.CREATEDATE desc';
+      Q.ParamByName('TAG').AsString := CleanTag;
+      Q.Open;
+
+      if Q.IsEmpty then
+      begin
+        LogTransaction('RFID CHECK NOT FOUND TAG=' + CleanTag);
+        Exit('{"ok":false,"message":"RFID-Tag wurde in TAGINFO nicht gefunden.","tag":"' + JS(CleanTag) + '","found":false}');
+      end;
+
+      ID := StrToIntDef(FieldStrDef(Q, 'ID', '0'), 0);
+      PLU := StrToIntDef(FieldStrDef(Q, 'NUMMER', '0'), 0);
+      Status := StrToIntDef(FieldStrDef(Q, 'STATUS', '0'), 0);
+      Weight := FieldFloatDef(Q, 'GEWICHT', 0);
+      Tara := FieldFloatDef(Q, 'TARA', 0);
+      Price := FieldFloatDef(Q, 'PREIS', 0);
+      UnitPrice := FieldFloatDef(Q, 'VK_BRUTTO', 0);
+      ArticleName := FieldStrDef(Q, 'BEZEICHNUNG', '');
+      if ArticleName = '' then
+        ArticleName := FieldStrDef(Q, 'BEZEICHNUNG2', '');
+      UnitName := FieldStrDef(Q, 'ME_BEZ', '');
+      MHDText := FieldDateInputDef(Q, 'MHD');
+      CreatedText := FieldDateInputDef(Q, 'CREATEDATE');
+      ChangedText := FieldDateInputDef(Q, 'CHANGEDATE');
+
+      case Status of
+        0: StatusText := 'offen / verkaufbar';
+        1: StatusText := 'verkauft';
+        9: StatusText := 'entwertet';
+      else
+        StatusText := 'Status ' + IntToStr(Status);
+      end;
+
+      LogTransaction('RFID CHECK OK tag=' + CleanTag + ' id=' + IntToStr(ID) + ' plu=' + IntToStr(PLU) + ' name=' + ArticleName + ' status=' + IntToStr(Status) + ' weight=' + LogNumber(Weight, '0.000') + ' price=' + LogNumber(Price, '0.00'));
+
+      Result :=
+        '{' +
+        '"ok":true,' +
+        '"found":true,' +
+        '"message":"RFID-Tag gefunden.",' +
+        '"id":' + IntToStr(ID) + ',' +
+        '"tag":"' + JS(CleanTag) + '",' +
+        '"plu":' + IntToStr(PLU) + ',' +
+        '"name":"' + JS(ArticleName) + '",' +
+        '"unit":"' + JS(UnitName) + '",' +
+        '"status":' + IntToStr(Status) + ',' +
+        '"statusText":"' + JS(StatusText) + '",' +
+        '"typ":' + SafeJsonNumber(FieldStrDef(Q, 'TYP', '0'), '0') + ',' +
+        '"weight":' + FloatJson(Weight) + ',' +
+        '"tara":' + FloatJson(Tara) + ',' +
+        '"price":' + PriceJson(Price) + ',' +
+        '"unitPrice":' + PriceJson(UnitPrice) + ',' +
+        '"mhd":"' + JS(MHDText) + '",' +
+        '"charge":"' + JS(Trim(FieldStrDef(Q, 'CHARGE', ''))) + '",' +
+        '"created":"' + JS(CreatedText) + '",' +
+        '"changed":"' + JS(ChangedText) + '"' +
+        '}';
+    except
+      on E: Exception do
+      begin
+        LogError('RFID CHECK ERROR: ' + E.Message);
+        Result := '{"ok":false,"message":"' + JS(E.Message) + '"}';
+      end;
+    end;
+  finally
+    Q.Free;
+  end;
+end;
+
+function LabelingCheckRfidJson(const Tag: string): string;
+begin
+  LabelingDBLock.Acquire;
+  try
+    Result := LabelingCheckRfidJsonInternal(Tag);
   finally
     LabelingDBLock.Release;
   end;
