@@ -12,6 +12,7 @@ type
     DemoModus: Boolean;
     DemoBonjournalSchreiben: Boolean;
     DemoWebUISchreiben: Boolean;
+    ManuelleArtikel: Boolean;
     Kunde: string;
     Subtitle: string;
     Telefon: string;
@@ -215,6 +216,7 @@ begin
     DemoModus   := Ini.ReadInteger('Einstellung', 'Demomodus', 0) = 1;
     DemoBonjournalSchreiben := Ini.ReadInteger('Demo', 'BonjournalSchreiben', 1) = 1;
     DemoWebUISchreiben := Ini.ReadInteger('Demo', 'WebUISchreiben', 0) = 1;
+    ManuelleArtikel := Ini.ReadInteger('SCO', 'ManuelleArtikel', 1) = 1;
     FarbeHaupt  := Ini.ReadString('Design', 'Farbe_Haupt', '#107a2a');
     FarbeDunkel := Ini.ReadString('Design', 'Farbe_Dunkel', '#101c29');
     FarbeAkzent := Ini.ReadString('Design', 'Farbe_Akzent', '#f2b01e');
@@ -359,6 +361,7 @@ begin
       Ini.WriteInteger('Einstellung', 'Demomodus', Ord(JsonBool(Root, 'demoMode', DemoModus)));
       Ini.WriteInteger('Demo', 'BonjournalSchreiben', Ord(JsonBool(Root, 'demoWriteJournal', DemoBonjournalSchreiben)));
       Ini.WriteInteger('Demo', 'WebUISchreiben', Ord(JsonBool(Root, 'demoWriteWebUI', DemoWebUISchreiben)));
+      Ini.WriteInteger('SCO', 'ManuelleArtikel', Ord(JsonBool(Root, 'manualProducts', ManuelleArtikel)));
       Ini.WriteInteger('Zahlung', 'Bar', Ord(JsonBool(Payment, 'cash', PaymentBar)));
       Ini.WriteInteger('Zahlung', 'EC', Ord(JsonBool(Payment, 'ec', PaymentEC)));
       Ini.WriteInteger('Zahlung', 'Kundenkarte', Ord(JsonBool(Payment, 'customer', PaymentKundenkarte)));
@@ -472,6 +475,7 @@ begin
       '"demoMode":' + BoolJson(DemoModus) + ',' +
       '"demoWriteJournal":' + BoolJson(DemoBonjournalSchreiben) + ',' +
       '"demoWriteWebUI":' + BoolJson(DemoWebUISchreiben) + ',' +
+      '"manualProducts":' + BoolJson(ManuelleArtikel) + ',' +
       '"theme":{' +
         '"green":"' + JS(FarbeHaupt) + '",' +
         '"dark":"' + JS(FarbeDunkel) + '",' +

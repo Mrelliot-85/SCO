@@ -470,7 +470,7 @@ end;
 function TSCOSalesJournalService.RfidScanJson(const Tag: string; Antenna: Integer): string;
 var
   Q, Info: TFDQuery;
-  CleanTag, ActualTag, Name, UnitName, FailMessage: string;
+  CleanTag, ActualTag, Name, UnitName, FailMessage, InfoName: string;
   PLU, WG, MWST, TagStatus, TagNummer: Integer;
   Weight, EP, GP, TagPrice, ExpectedGP: Double;
   Alarm: Boolean;
@@ -501,12 +501,12 @@ begin
       Info := TFDQuery.Create(nil);
       try
         Info.Connection := FB;
-        Info.SQL.Text := 'SELECT FIRST 1 TAG, STATUS, NUMMER FROM TAGINFO WHERE TAG STARTING WITH :TAG';
+        Info.SQL.Text := 'SELECT FIRST 1 r.TAG, r.STATUS, r.NUMMER, a.BEZEICHNUNG FROM TAGINFO r LEFT JOIN VARTIKEL a ON a.NUMMER = r.NUMMER WHERE r.TAG STARTING WITH :TAG';
         Info.ParamByName('TAG').AsString := CleanTag;
         Info.Open;
         if Info.IsEmpty then
         begin
-          LogTransaction('RFID SCAN FAIL tag=' + CleanTag + ' reason=TAGINFO_NOT_FOUND antenna=' + IntToStr(Antenna));
+          LogTransaction('RFID SCAN FAIL tag=' + CleanTag + ' plu=0 name=Unbekannt reason=TAGINFO_NOT_FOUND antenna=' + IntToStr(Antenna));
           if Alarm then
           begin
             AddLocalEvent('AUSGANGSKONTROLLE', 'error', 'Tag nicht zugeordnet', 0, 0, 0, 'RFID-Tag', CleanTag, 0, 0, 0, 'rfid', Antenna);
@@ -526,16 +526,20 @@ begin
         ActualTag := Info.FieldByName('TAG').AsString;
         TagStatus := Info.FieldByName('STATUS').AsInteger;
         TagNummer := Info.FieldByName('NUMMER').AsInteger;
+        InfoName := '';
+        if (Info.FindField('BEZEICHNUNG') <> nil) and not Info.FieldByName('BEZEICHNUNG').IsNull then
+          InfoName := Info.FieldByName('BEZEICHNUNG').AsString;
+        if InfoName = '' then InfoName := 'PLU ' + IntToStr(TagNummer);
         if TagStatus <> 0 then
           FailMessage := 'RFID-Tag ist bereits verkauft oder gesperrt. Status=' + IntToStr(TagStatus)
         else
           FailMessage := 'RFID-Tag gefunden, aber Artikel ' + IntToStr(TagNummer) + ' fehlt in VARTIKEL.';
-        LogTransaction('RFID SCAN FAIL tag=' + ActualTag + ' status=' + IntToStr(TagStatus) + ' plu=' + IntToStr(TagNummer) + ' reason=' + FailMessage);
+        LogTransaction('RFID SCAN FAIL tag=' + ActualTag + ' status=' + IntToStr(TagStatus) + ' plu=' + IntToStr(TagNummer) + ' name=' + InfoName + ' reason=' + FailMessage);
         if Alarm then
         begin
-          AddLocalEvent('AUSGANGSKONTROLLE', 'error', FailMessage, 0, 0, TagNummer, 'PLU ' + IntToStr(TagNummer), ActualTag, 0, 0, 0, 'rfid', Antenna);
+          AddLocalEvent('AUSGANGSKONTROLLE', 'error', FailMessage, 0, 0, TagNummer, InfoName, ActualTag, 0, 0, 0, 'rfid', Antenna);
           try
-            AddWebUIStatus(4, 0, 0, TagNummer, ActualTag, 'PLU ' + IntToStr(TagNummer), 'Ausgangskontrolle - ' + FailMessage, 0, 0, 0);
+            AddWebUIStatus(4, 0, 0, TagNummer, ActualTag, InfoName, 'Ausgangskontrolle - ' + FailMessage, 0, 0, 0);
           except
             on E: Exception do LogError('WEBUI STATUS AUSGANGSKONTROLLE ERROR ' + E.Message);
           end;

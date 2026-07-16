@@ -14,7 +14,10 @@ function LocalEventsJson(FromDate, ToDate: TDateTime): string;
 implementation
 
 uses
-  SCO_DB, SCO_CONFIG, SCO_Logger;
+  SCO_DB, SCO_CONFIG, SCO_Logger, System.SyncObjs;
+
+var
+  LocalEventLock: TCriticalSection;
 
 function J(const S: string): string;
 begin
@@ -134,37 +137,42 @@ var
   NewId: Integer;
 begin
   try
-    EnsureLocalEventTable;
-    Q := TFDQuery.Create(nil);
+    LocalEventLock.Enter;
     try
-      Q.Connection := FB;
-      Q.SQL.Text := 'select coalesce(max(ID),0)+1 ID from SCO_MELDUNGEN';
-      Q.Open;
-      NewId := IField(Q, 'ID');
-      Q.Close;
+      EnsureLocalEventTable;
+      Q := TFDQuery.Create(nil);
+      try
+        Q.Connection := FB;
+        Q.SQL.Text := 'select coalesce(max(ID),0)+1 ID from SCO_MELDUNGEN';
+        Q.Open;
+        NewId := IField(Q, 'ID');
+        Q.Close;
 
-      Q.SQL.Text :=
-        'insert into SCO_MELDUNGEN (ID,DATUHR,DATUM,ZEIT,ART,EVENT_LEVEL,MELDUNG,BONNO,POSNO,PLU,ARTIKEL,TID,MENGE,EP,GP,QUELLE,ANTENNE) ' +
-        'values (:ID,current_timestamp,:DATUM,:ZEIT,:ART,:EVENT_LEVEL,:MELDUNG,:BONNO,:POSNO,:PLU,:ARTIKEL,:TID,:MENGE,:EP,:GP,:QUELLE,:ANTENNE)';
-      Q.ParamByName('ID').AsInteger := NewId;
-      Q.ParamByName('DATUM').AsDate := Date;
-      Q.ParamByName('ZEIT').AsTime := Time;
-      Q.ParamByName('ART').AsString := Copy(Art, 1, 40);
-      Q.ParamByName('EVENT_LEVEL').AsString := Copy(EventLevel, 1, 20);
-      Q.ParamByName('MELDUNG').AsString := Copy(Meldung, 1, 500);
-      Q.ParamByName('BONNO').AsInteger := BonNo;
-      Q.ParamByName('POSNO').AsInteger := PosNo;
-      Q.ParamByName('PLU').AsInteger := PLU;
-      Q.ParamByName('ARTIKEL').AsString := Copy(Artikel, 1, 160);
-      Q.ParamByName('TID').AsString := Copy(TID, 1, 80);
-      Q.ParamByName('MENGE').AsFloat := Menge;
-      Q.ParamByName('EP').AsFloat := EP;
-      Q.ParamByName('GP').AsFloat := GP;
-      Q.ParamByName('QUELLE').AsString := Copy(Quelle, 1, 40);
-      Q.ParamByName('ANTENNE').AsInteger := Antenne;
-      Q.ExecSQL;
+        Q.SQL.Text :=
+          'insert into SCO_MELDUNGEN (ID,DATUHR,DATUM,ZEIT,ART,EVENT_LEVEL,MELDUNG,BONNO,POSNO,PLU,ARTIKEL,TID,MENGE,EP,GP,QUELLE,ANTENNE) ' +
+          'values (:ID,current_timestamp,:DATUM,:ZEIT,:ART,:EVENT_LEVEL,:MELDUNG,:BONNO,:POSNO,:PLU,:ARTIKEL,:TID,:MENGE,:EP,:GP,:QUELLE,:ANTENNE)';
+        Q.ParamByName('ID').AsInteger := NewId;
+        Q.ParamByName('DATUM').AsDate := Date;
+        Q.ParamByName('ZEIT').AsTime := Time;
+        Q.ParamByName('ART').AsString := Copy(Art, 1, 40);
+        Q.ParamByName('EVENT_LEVEL').AsString := Copy(EventLevel, 1, 20);
+        Q.ParamByName('MELDUNG').AsString := Copy(Meldung, 1, 500);
+        Q.ParamByName('BONNO').AsInteger := BonNo;
+        Q.ParamByName('POSNO').AsInteger := PosNo;
+        Q.ParamByName('PLU').AsInteger := PLU;
+        Q.ParamByName('ARTIKEL').AsString := Copy(Artikel, 1, 160);
+        Q.ParamByName('TID').AsString := Copy(TID, 1, 80);
+        Q.ParamByName('MENGE').AsFloat := Menge;
+        Q.ParamByName('EP').AsFloat := EP;
+        Q.ParamByName('GP').AsFloat := GP;
+        Q.ParamByName('QUELLE').AsString := Copy(Quelle, 1, 40);
+        Q.ParamByName('ANTENNE').AsInteger := Antenne;
+        Q.ExecSQL;
+      finally
+        Q.Free;
+      end;
     finally
-      Q.Free;
+      LocalEventLock.Leave;
     end;
   except
     on E: Exception do
@@ -294,5 +302,11 @@ begin
     end;
   end;
 end;
+
+initialization
+  LocalEventLock := TCriticalSection.Create;
+
+finalization
+  LocalEventLock.Free;
 
 end.

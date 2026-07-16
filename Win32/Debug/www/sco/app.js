@@ -53,6 +53,7 @@ const state = {
     receipt_width_mm: 80,
     rating_active: 1,
     demo_mode: 0,
+    manual_products: 1,
     rfid_active: 0,
     rfid_tag_length: 24,
     rfid_exit_alarm_active: 1,
@@ -225,6 +226,7 @@ async function loadConfig(){
     }
 
     state.config.demo_mode = c.demoMode ? 1 : 0;
+    state.config.manual_products = c.manualProducts !== false ? 1 : 0;
     if(c.rfid){
       state.config.rfid_active = c.rfid.active ? 1 : 0;
       state.config.rfid_tag_length = Number(c.rfid.tagLength || 24);
@@ -365,7 +367,8 @@ function startHtml(){
 }
 
 function cartHtml(){
-  return `<section class="cartCard card"><div class="cartTools"><button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufügen</b></button><button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button><button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
+  const manualButton = state.config.manual_products ? `<button class="manualAdd" data-action="products"><span>+</span><b>Artikel manuell hinzufügen</b></button>` : '';
+  return `<section class="cartCard card"><div class="cartTools">${manualButton}<button data-action="focus"><span>SCAN</span><b>${esc(state.scanMessage)}</b></button><button class="clear" data-action="clear"><span>×</span><b>Alle entfernen</b></button></div><div class="cartHeader"><div>Artikel</div><div>Preis</div><div>Menge</div><div>Gesamt</div><div></div></div><div class="cartRows cartRowsModern">${state.items.length ? state.items.map(cartRowHtml).join('') : emptyHtml()}</div><div class="summary"><div><span>Artikel</span><b>${state.items.length}</b></div><div><span>Gewicht</span><b>${kgTotal().toLocaleString('de-DE', { minimumFractionDigits:2, maximumFractionDigits:2 })} kg</b></div><div><span>Status</span><b>${esc(state.scanMessage)}</b></div><div><span>Gesamt</span><b class="green">${money(total())}</b></div></div></section><div class="bottomActions"><button class="secondary" data-action="cancel"><span>×</span><b>Einkauf abbrechen</b></button><button class="payWide" data-page="payment" ${state.items.length ? '' : 'disabled'}>Weiter zur Zahlung &rarr;</button></div>`;
 }
 
 function emptyHtml(){
