@@ -194,7 +194,6 @@ async function flushRFIDEvents(){
 }
 function startRFIDSession(force = false){
   if(!state.config.rfid_active) return;
-  customerActivity();
   const now = Date.now();
   if(state.rfidStartBusy && !force && state.rfidStartAt && now - state.rfidStartAt < 4500) return;
   if(state.rfidSessionActive && !force) return;
@@ -239,9 +238,15 @@ function startRFIDSession(force = false){
       if(state.page === 'cart') render();
     });
 }
-function ensureRFIDForCart(){
-  if(state.page !== 'cart' || !state.config.rfid_active || state.paymentBusy || state.paymentComplete) return;
+function shouldKeepRFIDReaderActive(){
+  return !!state.config.rfid_active && !state.paymentBusy && !state.paymentComplete && (state.page === 'cart' || state.page === 'start');
+}
+function ensureRFIDReaderActive(){
+  if(!shouldKeepRFIDReaderActive()) return;
   if(!state.rfidSessionActive && !state.rfidStartBusy) startRFIDSession(false);
+}
+function ensureRFIDForCart(){
+  ensureRFIDReaderActive();
 }
 function stopRFIDSession(){
   state.rfidSessionActive = false;
@@ -805,6 +810,7 @@ function newStart(){
   resetOrder();
   state.page = 'start';
   render();
+  ensureRFIDReaderActive();
   focusScanner();
 }
 
@@ -1178,6 +1184,7 @@ async function scanRFIDExitAlarm(tag, antenna){
 }
 async function pollRFIDEvents(){
   if(!state.config.rfid_active) return;
+  ensureRFIDReaderActive();
   try{
     const r = await fetch('/api/rfid/events?after=' + encodeURIComponent(state.lastRfidEventId || 0), { cache:'no-store' });
     const j = await r.json();

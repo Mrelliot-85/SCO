@@ -348,7 +348,6 @@ procedure StartRFIDTcpService;
 begin
   if not Assigned(RFIDService) then
     RFIDService := TRFIDTcpService.Create;
-  RFIDService.ClearEvents;
   RFIDService.Start;
 end;
 
