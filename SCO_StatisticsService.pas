@@ -5,6 +5,8 @@ interface
 uses
   System.SysUtils;
 
+
+
 function StatisticsJson(Days: Integer; const FromText, ToText: string): string;
 function StatisticsMarkSentJson(const FromText, ToText: string): string;
 
@@ -290,11 +292,101 @@ begin
   end;
   Q.Free;
 end;
+function InventoryJson: string;
+var
+  Q: TFDQuery;
+  First: Boolean;
+  TotalTags, ExpiringTags: Integer;
+  TotalValue, TotalKg: Double;
+  MHDText: string;
+begin
+  Result := '{"available":false,"items":[],"expiring":[]}';
+  TotalTags := 0;
+  ExpiringTags := 0;
+  TotalValue := 0;
+  TotalKg := 0;
+  Q := TFDQuery.Create(nil);
+  try
+    Q.Connection := FB;
+    Q.SQL.Text :=
+      'select r.NUMMER, max(a.BEZEICHNUNG) as NAME, max(a.ME_BEZ) as ME, ' +
+      'count(*) as TAGS, ' +
+      'sum(case when upper(coalesce(a.ME_BEZ,''''))=''KG'' then coalesce(r.GEWICHT,0) else 0 end) as KG, ' +
+      'sum(coalesce(r.PREIS, coalesce(a.VK_BRUTTO,0))) as WERT, min(r.MHD) as NAECHSTES_MHD ' +
+      'from TAGINFO r left join VARTIKEL a on a.NUMMER = r.NUMMER and a.NL_KEY = :NLKEY ' +
+      'where coalesce(r.STATUS,0)=0 group by r.NUMMER order by 2';
+    Q.ParamByName('NLKEY').AsInteger := SCOConfig.NLKey;
+    Q.Open;
+    Result := '{"available":true,"items":[';
+    First := True;
+    while not Q.Eof do
+    begin
+      if not First then Result := Result + ',';
+      MHDText := '';
+      if (Q.FindField('NAECHSTES_MHD') <> nil) and not Q.FieldByName('NAECHSTES_MHD').IsNull then
+        MHDText := FormatDateTime('yyyy-mm-dd', Q.FieldByName('NAECHSTES_MHD').AsDateTime);
+      Result := Result + '{"plu":' + IntToStr(IField(Q,'NUMMER')) +
+        ',"name":"' + J(SField(Q,'NAME')) + '"' +
+        ',"unit":"' + J(SField(Q,'ME')) + '"' +
+        ',"tags":' + IntToStr(IField(Q,'TAGS')) +
+        ',"kg":' + N(FField(Q,'KG')) +
+        ',"value":' + N(FField(Q,'WERT')) +
+        ',"nextMhd":"' + J(MHDText) + '"}';
+      Inc(TotalTags, IField(Q,'TAGS'));
+      TotalKg := TotalKg + FField(Q,'KG');
+      TotalValue := TotalValue + FField(Q,'WERT');
+      First := False;
+      Q.Next;
+    end;
+    Result := Result + ']';
+    Q.Close;
+
+    Q.SQL.Text :=
+      'select first 250 r.TAG, r.NUMMER, a.BEZEICHNUNG as NAME, a.ME_BEZ as ME, ' +
+      'r.GEWICHT, r.PREIS, r.MHD ' +
+      'from TAGINFO r left join VARTIKEL a on a.NUMMER = r.NUMMER and a.NL_KEY = :NLKEY ' +
+      'where coalesce(r.STATUS,0)=0 and r.MHD is not null and r.MHD <= current_date + 14 ' +
+      'order by r.MHD, a.BEZEICHNUNG';
+    Q.ParamByName('NLKEY').AsInteger := SCOConfig.NLKey;
+    Q.Open;
+    Result := Result + ',"expiring":[';
+    First := True;
+    while not Q.Eof do
+    begin
+      if not First then Result := Result + ',';
+      MHDText := '';
+      if (Q.FindField('MHD') <> nil) and not Q.FieldByName('MHD').IsNull then
+        MHDText := FormatDateTime('yyyy-mm-dd', Q.FieldByName('MHD').AsDateTime);
+      Result := Result + '{"tag":"' + J(SField(Q,'TAG')) + '"' +
+        ',"plu":' + IntToStr(IField(Q,'NUMMER')) +
+        ',"name":"' + J(SField(Q,'NAME')) + '"' +
+        ',"unit":"' + J(SField(Q,'ME')) + '"' +
+        ',"kg":' + N(FField(Q,'GEWICHT')) +
+        ',"value":' + N(FField(Q,'PREIS')) +
+        ',"mhd":"' + J(MHDText) + '"}';
+      Inc(ExpiringTags);
+      First := False;
+      Q.Next;
+    end;
+    Result := Result + '],"totalTags":' + IntToStr(TotalTags) +
+      ',"totalKg":' + N(TotalKg) +
+      ',"totalValue":' + N(TotalValue) +
+      ',"expiringTags":' + IntToStr(ExpiringTags) + '}';
+  except
+    on E: Exception do
+    begin
+      LogError('STATISTICS INVENTORY: ' + E.Message);
+      Result := '{"available":false,"message":"' + J(E.Message) + '","items":[],"expiring":[]}';
+    end;
+  end;
+  Q.Free;
+end;
+
 function StatisticsJson(Days: Integer; const FromText, ToText: string): string;
 var
   Q: TFDQuery;
   FromDate, ToDate: TDateTime;
-  KPI, Payments, Hours, Weekdays, Daily, Journal, Taxes, SendState, Ratings, Events: string;
+  KPI, Payments, Hours, Weekdays, Daily, Journal, Taxes, SendState, Ratings, Events, Inventory: string;
   First: Boolean;
 begin
   ResolveRange(Days, FromText, ToText, FromDate, ToDate);
@@ -309,6 +401,7 @@ begin
   SendState := '{"rows":0,"sent":0,"open":0}';
   Ratings := '{"count":0,"average":0,"items":[]}';
   Events := '{"available":false,"captured":0,"removed":0,"purchased":0,"exitAlarms":0,"products":[],"messages":[]}';
+  Inventory := '{"available":false,"items":[],"expiring":[]}';
 
   Q := TFDQuery.Create(nil);
   try
@@ -443,6 +536,7 @@ begin
     Journal := JournalRows(FromDate, ToDate);
     Ratings := RatingRows(FromDate, ToDate);
     Events := LocalEventsJson(FromDate, ToDate);
+    Inventory := InventoryJson;
 
     Result := '{"ok":true,"days":' + IntToStr(Days) +
       ',"from":"' + FormatDateTime('yyyy-mm-dd', FromDate) +
@@ -460,6 +554,7 @@ begin
       ',"weekdays":' + Weekdays +
       ',"daily":' + Daily +
       ',"journal":' + Journal +
+      ',"inventory":' + Inventory +
       ',"ratings":' + Ratings + '}';
   except
     on E: Exception do
