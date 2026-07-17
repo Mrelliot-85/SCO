@@ -67,6 +67,7 @@ const state = {
     rfid_exit_alarm_seconds: 20,
     rfid_exit_alarm_system_beep: 1,
     rfid_exit_alarm_sound: '',
+    rfid_start_on_scan: 0,
     rating_questions: [
       'Wie zufrieden sind Sie mit unserem Sortiment?',
       'Wie zufrieden sind Sie mit der Abwicklung des Zahlvorgangs?',
@@ -315,6 +316,7 @@ async function loadConfig(){
       state.config.rfid_exit_alarm_seconds = Number(c.rfid.exitAlarmSeconds || 20);
       state.config.rfid_exit_alarm_system_beep = c.rfid.exitAlarmSystemBeep !== false ? 1 : 0;
       state.config.rfid_exit_alarm_sound = c.rfid.exitAlarmSound || '';
+      state.config.rfid_start_on_scan = c.rfid.startOnScan ? 1 : 0;
     }
     if(c.receipt){
       state.config.bon_auto_print = c.receipt.autoPrint ? 1 : 0;
@@ -1182,7 +1184,8 @@ async function pollRFIDEvents(){
     if(!j.ok || !Array.isArray(j.events)) return;
     state.rfidLastPollOk = Date.now();
     if(state.page === 'cart' && state.rfidSessionActive && state.rfidStatus !== 'active') state.rfidStatus = 'active';
-    const shoppingActive = state.rfidSessionActive && state.page === 'cart';
+    const autoStartByRfid = !!state.config.rfid_start_on_scan;
+    const shoppingActive = state.rfidSessionActive && (state.page === 'cart' || (state.page === 'start' && autoStartByRfid));
     const jobs = [];
     for(const ev of j.events){
       state.lastRfidEventId = Math.max(Number(state.lastRfidEventId || 0), Number(ev.id || 0));
@@ -1192,6 +1195,11 @@ async function pollRFIDEvents(){
         continue;
       }
       if(!shoppingActive) continue;
+      if(state.page === 'start' && autoStartByRfid){
+        state.page = 'cart';
+        state.scanMessage = 'Artikel wird gelesen ...';
+        render();
+      }
       if(rfidIgnoredUntil[tagKey(ev.tag)] && Date.now() < rfidIgnoredUntil[tagKey(ev.tag)]) continue;
       jobs.push(scanRFID(ev.tag, Number(ev.antenna || 0)));
     }

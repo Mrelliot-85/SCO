@@ -65,6 +65,7 @@ type
     RFIDExitAlarmSeconds: Integer;
     RFIDExitAlarmSystemBeep: Boolean;
     RFIDExitAlarmSound: string;
+    RFIDStartOnScan: Boolean;
     ScaleActive: Boolean;
     ScaleVendor: string;
     ScaleMode: string;
@@ -299,6 +300,7 @@ begin
     RFIDExitAlarmSeconds := Ini.ReadInteger('RFID', 'AlarmSekunden', 20);
     RFIDExitAlarmSystemBeep := Ini.ReadInteger('RFID', 'AlarmSystemBeep', 1) = 1;
     RFIDExitAlarmSound := Ini.ReadString('RFID', 'AlarmSound', '');
+    RFIDStartOnScan := Ini.ReadInteger('RFID', 'StartBeiErfassung', 0) = 1;
     ScaleActive := Ini.ReadInteger('Waage', 'Aktiv', 0) = 1;
     ScaleVendor := Ini.ReadString('Waage', 'Hersteller', 'soehnle3820');
     ScaleMode := LowerCase(Ini.ReadString('Waage', 'Modus', 'serial'));
@@ -438,6 +440,7 @@ begin
       Ini.WriteInteger('RFID', 'AlarmSekunden', StrToIntDef(JsonStr(RFID, 'exitAlarmSeconds', IntToStr(RFIDExitAlarmSeconds)), RFIDExitAlarmSeconds));
       Ini.WriteInteger('RFID', 'AlarmSystemBeep', Ord(JsonBool(RFID, 'exitAlarmSystemBeep', RFIDExitAlarmSystemBeep)));
       Ini.WriteString('RFID', 'AlarmSound', JsonStr(RFID, 'exitAlarmSound', RFIDExitAlarmSound));
+      Ini.WriteInteger('RFID', 'StartBeiErfassung', Ord(JsonBool(RFID, 'startOnScan', RFIDStartOnScan)));
       Ini.WriteInteger('Waage', 'Aktiv', Ord(JsonBool(Scale, 'active', ScaleActive)));
       Ini.WriteString('Waage', 'Hersteller', JsonStr(Scale, 'vendor', ScaleVendor));
       Ini.WriteString('Waage', 'Modus', JsonStr(Scale, 'mode', ScaleMode));
@@ -532,7 +535,8 @@ begin
         '"exitAlarmAntenna":' + IntToStr(RFIDExitAlarmAntenna) + ',' +
         '"exitAlarmSeconds":' + IntToStr(RFIDExitAlarmSeconds) + ',' +
         '"exitAlarmSystemBeep":' + BoolJson(RFIDExitAlarmSystemBeep) + ',' +
-        '"exitAlarmSound":"' + JS(RFIDExitAlarmSound) + '"' +
+        '"exitAlarmSound":"' + JS(RFIDExitAlarmSound) + '",' +
+        '"startOnScan":' + BoolJson(RFIDStartOnScan) +
       '},' +
       '"scale":{' +
         '"active":' + BoolJson(ScaleActive) + ',' +
