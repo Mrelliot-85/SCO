@@ -451,7 +451,11 @@ function layout(content, cls = 'workPage'){
 }
 
 function render(){
-  if(state.page === 'start') return layout(startHtml(), 'startPage');
+  if(state.page === 'start'){
+    layout(startHtml(), 'startPage');
+    recoverStartImage();
+    return;
+  }
   if(state.page === 'cart'){ layout(cartHtml(), 'workPage cartPage'); ensureRFIDForCart(); return; }
   if(state.page === 'payment') return layout(paymentHtml(), 'workPage paymentPage');
   if(state.page === 'receipt'){
@@ -473,9 +477,30 @@ function availablePaymentText(){
 }
 
 function startHtml(){
-  return `<section class="startImagePage"><img src="assets/startscreen.png" alt="${esc(state.theme.customer)} Self-Checkout" onerror="this.style.display='none';this.parentElement.classList.add('imageMissing')"><button class="startImageButton" data-page="cart" aria-label="Einkauf starten"></button><div class="startImageFallback"><h1>${esc(state.theme.customer)}</h1><p>${esc(state.theme.description)}</p><button class="startBtn" data-page="cart">Einkauf starten &rarr;</button></div></section>`;
+  return `<section class="startImagePage imageLoading"><img id="startscreenImg" src="assets/startscreen.png" alt="${esc(state.theme.customer)} Self-Checkout" onload="this.parentElement.classList.remove('imageLoading');this.parentElement.classList.add('imageLoaded')" onerror="retryStartImage(this)"><button class="startImageButton" data-page="cart" aria-label="Einkauf starten"></button><div class="startImageFallback"><h1>${esc(state.theme.customer)}</h1><p>${esc(state.theme.description)}</p><button class="startBtn" data-page="cart">Einkauf starten &rarr;</button></div></section>`;
 }
 
+function retryStartImage(img){
+  if(!img) return;
+  const box = img.closest('.startImagePage');
+  const retries = Number(img.dataset.retry || 0);
+  if(retries < 2){
+    img.dataset.retry = String(retries + 1);
+    setTimeout(() => { img.src = 'assets/startscreen.png?t=' + encodeURIComponent(Date.now()); }, 250);
+    return;
+  }
+  img.style.display = 'none';
+  if(box) box.classList.add('imageMissing');
+}
+
+function recoverStartImage(){
+  setTimeout(() => {
+    const img = document.getElementById('startscreenImg');
+    if(!img || state.page !== 'start') return;
+    if(img.complete && img.naturalWidth > 0) return;
+    retryStartImage(img);
+  }, 1500);
+}
 function rfidIndicatorHtml(){
   if(!state.config.rfid_active) return '';
   const cls = state.rfidStatus === 'error' ? 'error' : (state.rfidStartBusy || state.rfidStatus === 'starting' ? 'starting' : (state.rfidSessionActive ? 'active' : 'idle'));
