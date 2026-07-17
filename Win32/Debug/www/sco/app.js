@@ -11,6 +11,7 @@ const state = {
   selectedPayment: '',
   paymentComplete: false,
   paymentBusy: false,
+  checkoutLocked: false,
   paymentMessage: '',
   paymentOkTimer: null,
   idleTimer: null,
@@ -785,10 +786,12 @@ function paymentApiType(){
 async function startPayment(){
   clearIdleTimer();
   if(state.paymentBusy || !state.selectedPayment) return;
+  state.checkoutLocked = true;
   stopRFIDSession();
 
   const amount = payAmount();
   if(amount <= 0){
+    state.checkoutLocked = false;
     state.paymentMessage = 'Zahlung nicht möglich: Der offene Betrag ist 0,00 EUR. Bitte Artikel/Preise pruefen.';
     render();
     return;
@@ -819,11 +822,13 @@ async function startPayment(){
       startSuccessTimer();
       if(state.config.bon_auto_print) setTimeout(printReceipt, 500);
     }else{
+      state.checkoutLocked = false;
       state.paymentMessage = j.message || j.text || 'Zahlung fehlgeschlagen';
       render();
     }
   }catch(e){
     state.paymentBusy = false;
+    state.checkoutLocked = false;
     state.paymentMessage = 'Zahlung/API nicht erreichbar: ' + e.message;
     render();
   }
@@ -857,6 +862,7 @@ function resetOrder(){
   state.customerActive = false;
   state.paymentMessage = '';
   state.paymentBusy = false;
+  state.checkoutLocked = false;
   state.paymentComplete = false;
   state.saleBooked = false;
   state.saleCompletePromise = null;
@@ -929,12 +935,15 @@ async function completeSale(){
   if(state.saleBooked && state.saleBonNo) return true;
   if(!state.paymentComplete || !state.items.length) return false;
   state.saleBooked = true;
+  const payload = receiptPayload();
+  const soldTags = state.items.filter(x => x && x.source === 'rfid' && x.tag).map(x => tagKey(x.tag)).filter(Boolean);
   state.saleCompletePromise = (async () => {
     try{
-      const r = await fetch('/api/sale/complete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(receiptPayload()), cache:'no-store' });
+      const r = await fetch('/api/sale/complete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload), cache:'no-store' });
       const j = await r.json();
       if(j.ok){
         state.saleBonNo = Number(j.bonNo || 0);
+        soldTags.forEach(tag => { rfidIgnoredUntil[tag] = Date.now() + 10 * 60 * 1000; });
         if(state.receiptPreview) state.receiptPreview = '';
         if(state.config.bon_auto_preview) ensureReceiptPreview(true);
         return true;
@@ -1086,6 +1095,7 @@ function addManualWeight(){
 
 function addItem(item){
   customerActivity();
+  if(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked) return;
   const backgroundRfidStart = item && item.source === 'rfid' && state.page === 'start' && !!state.config.rfid_start_on_scan;
   if(item && (item.source === 'rfid' || item.source === 'ean') && state.page !== 'cart' && !backgroundRfidStart) return;
   if(item && item.source === 'rfid' && !state.rfidSessionActive) return;
@@ -1143,6 +1153,7 @@ function looksLikeRfidTag(value){
 
 async function scanRFID(tag, antenna = 0){
   customerActivity();
+  if(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked) return;
   if(!state.rfidSessionActive || (state.page !== 'cart' && !(state.page === 'start' && state.config.rfid_start_on_scan))) return;
   const key = tagKey(tag);
   if(!key) return;
@@ -1157,6 +1168,7 @@ async function scanRFID(tag, antenna = 0){
   try{
     const r = await fetch('/api/rfid/scan?tag=' + encodeURIComponent(key) + '&antenna=' + encodeURIComponent(antenna), { cache:'no-store' });
     const j = await r.json();
+    if(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked || !state.rfidSessionActive) return;
     if(j.ok){
       const acceptedKey = tagKey(j.tag || key);
       if(j.alarm){
@@ -1275,6 +1287,7 @@ async function scanRFIDExitAlarm(tag, antenna){
 }
 async function pollRFIDEvents(){
   if(!state.config.rfid_active) return;
+  if(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked) return;
   ensureRFIDReaderActive();
   try{
     const r = await fetch('/api/rfid/events?after=' + encodeURIComponent(state.lastRfidEventId || 0), { cache:'no-store' });
