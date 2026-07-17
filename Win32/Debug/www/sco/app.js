@@ -199,6 +199,9 @@ async function flushRFIDEvents(){
     console.warn('rfid flush nicht erreichbar', e);
   }
 }
+function isRFIDCheckoutBlocked(){
+  return !!(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked);
+}
 function startRFIDSession(force = false){
   if(!state.config.rfid_active) return;
   const now = Date.now();
@@ -246,7 +249,7 @@ function startRFIDSession(force = false){
     });
 }
 function shouldKeepRFIDReaderActive(){
-  return !!state.config.rfid_active && !state.paymentBusy && !state.paymentComplete && (state.page === 'cart' || state.page === 'start');
+  return !!state.config.rfid_active && !isRFIDCheckoutBlocked() && (state.page === 'cart' || state.page === 'start');
 }
 function ensureRFIDReaderActive(){
   if(!shouldKeepRFIDReaderActive()) return;
@@ -788,6 +791,7 @@ async function startPayment(){
   if(state.paymentBusy || !state.selectedPayment) return;
   state.checkoutLocked = true;
   stopRFIDSession();
+  flushRFIDEvents();
 
   const amount = payAmount();
   if(amount <= 0){
@@ -882,7 +886,7 @@ function newStart(){
   resetOrder();
   state.page = 'start';
   render();
-  ensureRFIDReaderActive();
+  flushRFIDEvents().finally(() => ensureRFIDReaderActive());
   focusScanner();
 }
 
@@ -944,6 +948,7 @@ async function completeSale(){
       if(j.ok){
         state.saleBonNo = Number(j.bonNo || 0);
         soldTags.forEach(tag => { rfidIgnoredUntil[tag] = Date.now() + 10 * 60 * 1000; });
+        flushRFIDEvents();
         if(state.receiptPreview) state.receiptPreview = '';
         if(state.config.bon_auto_preview) ensureReceiptPreview(true);
         return true;
@@ -1095,7 +1100,7 @@ function addManualWeight(){
 
 function addItem(item){
   customerActivity();
-  if(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked) return;
+  if(isRFIDCheckoutBlocked()) return;
   const backgroundRfidStart = item && item.source === 'rfid' && state.page === 'start' && !!state.config.rfid_start_on_scan;
   if(item && (item.source === 'rfid' || item.source === 'ean') && state.page !== 'cart' && !backgroundRfidStart) return;
   if(item && item.source === 'rfid' && !state.rfidSessionActive) return;
@@ -1153,7 +1158,7 @@ function looksLikeRfidTag(value){
 
 async function scanRFID(tag, antenna = 0){
   customerActivity();
-  if(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked) return;
+  if(isRFIDCheckoutBlocked()) return;
   if(!state.rfidSessionActive || (state.page !== 'cart' && !(state.page === 'start' && state.config.rfid_start_on_scan))) return;
   const key = tagKey(tag);
   if(!key) return;
@@ -1287,8 +1292,8 @@ async function scanRFIDExitAlarm(tag, antenna){
 }
 async function pollRFIDEvents(){
   if(!state.config.rfid_active) return;
-  if(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked) return;
-  ensureRFIDReaderActive();
+  const blocked = isRFIDCheckoutBlocked();
+  if(!blocked) ensureRFIDReaderActive();
   try{
     const r = await fetch('/api/rfid/events?after=' + encodeURIComponent(state.lastRfidEventId || 0), { cache:'no-store' });
     const j = await r.json();
@@ -1296,10 +1301,11 @@ async function pollRFIDEvents(){
     state.rfidLastPollOk = Date.now();
     if(state.page === 'cart' && state.rfidSessionActive && state.rfidStatus !== 'active') state.rfidStatus = 'active';
     const autoStartByRfid = !!state.config.rfid_start_on_scan;
-    const shoppingActive = state.rfidSessionActive && (state.page === 'cart' || (state.page === 'start' && autoStartByRfid));
+    const shoppingActive = !blocked && state.rfidSessionActive && (state.page === 'cart' || (state.page === 'start' && autoStartByRfid));
     const jobs = [];
     for(const ev of j.events){
       state.lastRfidEventId = Math.max(Number(state.lastRfidEventId || 0), Number(ev.id || 0));
+      if(blocked) continue;
       if(Number(ev.status || 0) !== 1 || !ev.tag) continue;
       if(isExitAlarmEvent(ev)){
         jobs.push(scanRFIDExitAlarm(ev.tag, Number(ev.antenna || 0)));
