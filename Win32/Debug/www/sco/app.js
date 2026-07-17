@@ -38,6 +38,7 @@ const state = {
   rfidStatus: 'idle',
   rfidLastOk: 0,
   rfidLastPollOk: 0,
+  rfidAutoCartTimer: null,
   theme: {
     customer: 'Herbst Hofladen',
     subtitle: 'Self-Checkout',
@@ -68,6 +69,7 @@ const state = {
     rfid_exit_alarm_system_beep: 1,
     rfid_exit_alarm_sound: '',
     rfid_start_on_scan: 0,
+    rfid_start_delay_seconds: 5,
     rating_questions: [
       'Wie zufrieden sind Sie mit unserem Sortiment?',
       'Wie zufrieden sind Sie mit der Abwicklung des Zahlvorgangs?',
@@ -248,7 +250,26 @@ function ensureRFIDReaderActive(){
 function ensureRFIDForCart(){
   ensureRFIDReaderActive();
 }
+function clearRFIDAutoCartTimer(){
+  if(state.rfidAutoCartTimer) clearTimeout(state.rfidAutoCartTimer);
+  state.rfidAutoCartTimer = null;
+}
+function startRFIDAutoCartTimer(){
+  if(!state.config.rfid_start_on_scan || state.page !== 'start' || !state.items.length) return;
+  clearRFIDAutoCartTimer();
+  const seconds = Math.max(0, Number(state.config.rfid_start_delay_seconds || 5));
+  state.rfidAutoCartTimer = setTimeout(() => {
+    state.rfidAutoCartTimer = null;
+    if(state.page === 'start' && state.items.length){
+      state.page = 'cart';
+      state.scanMessage = state.items.length + ' Artikel wurden erkannt';
+      render();
+      focusScanner();
+    }
+  }, seconds * 1000);
+}
 function stopRFIDSession(){
+  clearRFIDAutoCartTimer();
   state.rfidSessionActive = false;
   state.rfidStartBusy = false;
   state.rfidStatus = 'idle';
@@ -322,6 +343,7 @@ async function loadConfig(){
       state.config.rfid_exit_alarm_system_beep = c.rfid.exitAlarmSystemBeep !== false ? 1 : 0;
       state.config.rfid_exit_alarm_sound = c.rfid.exitAlarmSound || '';
       state.config.rfid_start_on_scan = c.rfid.startOnScan ? 1 : 0;
+      state.config.rfid_start_delay_seconds = Math.max(0, Number(c.rfid.startDelaySeconds || 5));
     }
     if(c.receipt){
       state.config.bon_auto_print = c.receipt.autoPrint ? 1 : 0;
@@ -664,8 +686,9 @@ function bind(){
     if(wanted === 'payment') stopRFIDSession();
     state.page = wanted;
     if(fromStartToCart){
+      clearRFIDAutoCartTimer();
       logLocalEvent({ art:'NEUER_KUNDE', level:'info', message:'Neuer Kunde' });
-      startRFIDSession(true);
+      if(state.items.length) startRFIDSession(false); else startRFIDSession(true);
     }else if(wanted === 'cart' && state.config.rfid_active){
       startRFIDSession(false);
     }
@@ -1000,7 +1023,8 @@ function addManualWeight(){
 
 function addItem(item){
   customerActivity();
-  if(item && (item.source === 'rfid' || item.source === 'ean') && state.page !== 'cart') return;
+  const backgroundRfidStart = item && item.source === 'rfid' && state.page === 'start' && !!state.config.rfid_start_on_scan;
+  if(item && (item.source === 'rfid' || item.source === 'ean') && state.page !== 'cart' && !backgroundRfidStart) return;
   if(item && item.source === 'rfid' && !state.rfidSessionActive) return;
   if(item && item.source === 'rfid') item.tag = tagKey(item.tag);
   if(item && item.source === 'rfid' && hasRfidTag(item.tag)){
@@ -1015,6 +1039,10 @@ function addItem(item){
   state.modal = null;
   state.selectedProduct = null;
   state.scanMessage = item.name + ' wurde hinzugefügt';
+  if(backgroundRfidStart){
+    startRFIDAutoCartTimer();
+    return;
+  }
   state.page = 'cart';
   render();
   focusScanner();
@@ -1052,7 +1080,7 @@ function looksLikeRfidTag(value){
 
 async function scanRFID(tag, antenna = 0){
   customerActivity();
-  if(!state.rfidSessionActive || state.page !== 'cart') return;
+  if(!state.rfidSessionActive || (state.page !== 'cart' && !(state.page === 'start' && state.config.rfid_start_on_scan))) return;
   const key = tagKey(tag);
   if(!key) return;
   if(hasRfidTag(key) || rfidInFlight[key]) return;
@@ -1202,11 +1230,6 @@ async function pollRFIDEvents(){
         continue;
       }
       if(!shoppingActive) continue;
-      if(state.page === 'start' && autoStartByRfid){
-        state.page = 'cart';
-        state.scanMessage = 'Artikel wird gelesen ...';
-        render();
-      }
       if(rfidIgnoredUntil[tagKey(ev.tag)] && Date.now() < rfidIgnoredUntil[tagKey(ev.tag)]) continue;
       jobs.push(scanRFID(ev.tag, Number(ev.antenna || 0)));
     }
