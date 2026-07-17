@@ -1,7 +1,7 @@
 unit SCO_SalesJournalService;
 interface
 uses
-  System.SysUtils, System.JSON, FireDAC.Comp.Client;
+  System.SysUtils, System.JSON, System.Classes, FireDAC.Comp.Client;
 type
   TSCOSalesJournalService = class
   private
@@ -16,7 +16,7 @@ type
     procedure SetFloatIfExists(Q: TFDQuery; const FieldName: string; Value: Double);
     procedure SetDateTimeIfExists(Q: TFDQuery; const FieldName: string; Value: TDateTime);
     procedure WriteUmsatzPosition(BonNo, PosNo: Integer; Item: TJSONObject; const Payment: string);
-    function MarkRfidTagSold(const Tag: string): Integer;
+    function MarkRfidTagsSold(Tags: TStrings): Integer;
     function ShouldWriteBonjournal: Boolean;
     function ShouldWriteWebUI: Boolean;
     function ConnectWebUI: TFDConnection;
@@ -31,7 +31,6 @@ type
   end;
 implementation
 uses
-  System.Classes,
   System.DateUtils,
   System.SyncObjs,
   FireDAC.Stan.Def,
@@ -202,32 +201,57 @@ begin
     Q.Free;
   end;
 end;
-function TSCOSalesJournalService.MarkRfidTagSold(const Tag: string): Integer;
+function TSCOSalesJournalService.MarkRfidTagsSold(Tags: TStrings): Integer;
 var
   Q: TFDQuery;
+  I: Integer;
+  CleanTags: TStringList;
+  ParamList: string;
   CleanTag: string;
-  Affected: Integer;
 begin
-  CleanTag := Trim(Tag);
   Result := 0;
-  if CleanTag = '' then
+  if (Tags = nil) or (Tags.Count = 0) then
     Exit;
-  ConnectDB;
+
+  CleanTags := TStringList.Create;
   Q := TFDQuery.Create(nil);
   try
+    CleanTags.Sorted := True;
+    CleanTags.Duplicates := dupIgnore;
+    for I := 0 to Tags.Count - 1 do
+    begin
+      CleanTag := Trim(Tags[I]);
+      if CleanTag <> '' then
+        CleanTags.Add(CleanTag);
+    end;
+    if CleanTags.Count = 0 then
+      Exit;
+
+    ParamList := '';
+    for I := 0 to CleanTags.Count - 1 do
+    begin
+      if ParamList <> '' then
+        ParamList := ParamList + ',';
+      ParamList := ParamList + ':TAG' + IntToStr(I);
+    end;
+
+    ConnectDB;
     Q.Connection := FB;
     Q.SQL.Text :=
       'UPDATE TAGINFO SET STATUS = 1, CHANGEDATE = CURRENT_TIMESTAMP ' +
-      'WHERE UPPER(TRIM(TAG)) = UPPER(TRIM(:TAG)) AND COALESCE(STATUS, 0) = 0';
-    Q.ParamByName('TAG').AsString := CleanTag;
+      'WHERE COALESCE(STATUS, 0) = 0 AND UPPER(TRIM(TAG)) IN (' + ParamList + ')';
+
+    for I := 0 to CleanTags.Count - 1 do
+      Q.ParamByName('TAG' + IntToStr(I)).AsString := CleanTags[I];
+
     Q.ExecSQL;
-    Affected := Q.RowsAffected;
-    Result := Affected;
-    LogTransaction('RFID TAG SOLD tag=' + CleanTag + ' rows=' + IntToStr(Affected));
-    if Affected <> 1 then
-      LogError('RFID TAG SOLD WARN tag=' + CleanTag + ' rows=' + IntToStr(Affected));
+    Result := Q.RowsAffected;
+    LogTransaction('RFID TAG SOLD BATCH total=' + IntToStr(CleanTags.Count) + ' rows=' + IntToStr(Result));
+    if Result <> CleanTags.Count then
+      LogError('RFID TAG SOLD BATCH WARN total=' + IntToStr(CleanTags.Count) + ' rows=' + IntToStr(Result));
   finally
     Q.Free;
+    CleanTags.Free;
   end;
 end;
 function TSCOSalesJournalService.ConnectWebUI: TFDConnection;
@@ -321,6 +345,7 @@ var
   Root, Item: TJSONObject;
   Items: TJSONArray;
   I, BonNo, PLU, RfidTagsTotal, RfidTagsSold: Integer;
+  RfidTags: TStringList;
   Payment: string;
   SaleTotal: Double;
   WriteJournal, WriteWebUI: Boolean;
@@ -360,9 +385,11 @@ begin
     end;
 
     Payment := TextValue(Root, 'payment', '');
-    SaleTotal := 0;
-    RfidTagsTotal := 0;
-    RfidTagsSold := 0;
+    RfidTags := TStringList.Create;
+    RfidTags.Sorted := True;
+    RfidTags.Duplicates := dupIgnore;
+    try
+      SaleTotal := 0;
 
     for I := 0 to Items.Count - 1 do
     begin
@@ -373,10 +400,7 @@ begin
         WriteUmsatzPosition(BonNo, I + 1, Item, Payment);
 
       if TextValue(Item, 'tag', '') <> '' then
-      begin
-        Inc(RfidTagsTotal);
-        Inc(RfidTagsSold, MarkRfidTagSold(TextValue(Item, 'tag', '')));
-      end;
+        RfidTags.Add(TextValue(Item, 'tag', ''));
 
       SaleTotal := SaleTotal + FloatValue(Item, 'gp', 0);
       AddLocalEvent('ARTIKEL_GEKAUFT', 'success', 'Artikel gekauft', BonNo, I + 1, IntValue(Item, 'plu', 0),
@@ -404,11 +428,16 @@ begin
       end;
     end;
 
+    RfidTagsTotal := RfidTags.Count;
+    RfidTagsSold := MarkRfidTagsSold(RfidTags);
     LogTransaction('RFID TAG SOLD SUMMARY BonNo=' + IntToStr(BonNo) + ' total=' + IntToStr(RfidTagsTotal) + ' updated=' + IntToStr(RfidTagsSold));
     if RfidTagsSold <> RfidTagsTotal then
       LogError('RFID TAG SOLD SUMMARY WARN BonNo=' + IntToStr(BonNo) + ' total=' + IntToStr(RfidTagsTotal) + ' updated=' + IntToStr(RfidTagsSold));
     LogTransaction('SALE COMPLETE END BonNo=' + IntToStr(BonNo) + ' Items=' + IntToStr(Items.Count));
     Result := JsonResult(True, 'Verkauf verbucht.', BonNo);
+    finally
+      RfidTags.Free;
+    end;
   except
     on E: Exception do
     begin
@@ -682,6 +711,7 @@ finalization
   RfidScanLock.Free;
 
 end.
+
 
 
 

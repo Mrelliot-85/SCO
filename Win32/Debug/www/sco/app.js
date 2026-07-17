@@ -16,6 +16,7 @@ const state = {
   idleTimer: null,
   idleSeconds: 120,
   saleBooked: false,
+  saleCompletePromise: null,
   saleBonNo: 0,
   receiptPreview: '',
   receiptPreviewLoading: false,
@@ -461,7 +462,7 @@ function render(){
   if(state.page === 'receipt'){
     layout(receiptHtml(), 'workPage receiptPage');
     if(state.paymentComplete && !state.saleBooked) completeSale();
-    else if(!state.paymentComplete || state.saleBonNo) ensureReceiptPreview();
+    if(!state.paymentComplete || state.saleBonNo) ensureReceiptPreview();
     return;
   }
   if(state.page === 'rating'){ clearSuccessTimer(); return layout(ratingHtml(), 'workPage ratingPage'); }
@@ -789,6 +790,7 @@ async function startPayment(){
 
   state.paymentComplete = false;
   state.saleBooked = false;
+  state.saleCompletePromise = null;
   state.saleBonNo = 0;
   state.receiptPreview = '';
   state.receiptStatus = '';
@@ -842,6 +844,7 @@ function resetOrder(){
   state.paymentBusy = false;
   state.paymentComplete = false;
   state.saleBooked = false;
+  state.saleCompletePromise = null;
   state.saleBonNo = 0;
   state.selectedPayment = '';
   state.rfidSessionActive = false;
@@ -907,26 +910,36 @@ async function ensureReceiptPreview(force = false){
 }
 
 async function completeSale(){
-  if(state.saleBooked || !state.paymentComplete || !state.items.length) return;
+  if(state.saleCompletePromise) return state.saleCompletePromise;
+  if(state.saleBooked && state.saleBonNo) return true;
+  if(!state.paymentComplete || !state.items.length) return false;
   state.saleBooked = true;
-  try{
-    const r = await fetch('/api/sale/complete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(receiptPayload()), cache:'no-store' });
-    const j = await r.json();
-    if(j.ok){
-      state.saleBonNo = Number(j.bonNo || 0);
-      if(state.receiptPreview) state.receiptPreview = '';
-      ensureReceiptPreview(true);
-    }else{
+  state.saleCompletePromise = (async () => {
+    try{
+      const r = await fetch('/api/sale/complete', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(receiptPayload()), cache:'no-store' });
+      const j = await r.json();
+      if(j.ok){
+        state.saleBonNo = Number(j.bonNo || 0);
+        if(state.receiptPreview) state.receiptPreview = '';
+        ensureReceiptPreview(true);
+        return true;
+      }
       state.saleBooked = false;
       state.scanMessage = j.message || 'Verkauf konnte nicht verbucht werden';
       console.warn('sale complete failed', j);
+      return false;
+    }catch(e){
+      state.saleBooked = false;
+      state.scanMessage = 'Verkaufsbuchung/API nicht erreichbar';
+      console.warn('sale complete error', e);
+      return false;
+    }finally{
+      state.saleCompletePromise = null;
     }
-  }catch(e){
-    state.saleBooked = false;
-    state.scanMessage = 'Verkaufsbuchung/API nicht erreichbar';
-    console.warn('sale complete error', e);
-  }
+  })();
+  return state.saleCompletePromise;
 }
+
 async function saveRating(){
   const payload = { bonNo: Number(state.saleBonNo || 0), ratings: state.ratings || [5,5,5,5] };
   try{
@@ -939,6 +952,16 @@ async function saveRating(){
   newStart();
 }
 async function printReceipt(){
+  if(state.paymentComplete && (!state.saleBonNo || state.saleCompletePromise)){
+    state.receiptStatus = 'Verkauf wird abgeschlossen ...';
+    render();
+    const booked = await completeSale();
+    if(!booked || !state.saleBonNo){
+      state.receiptStatus = 'FEHLER: Verkauf konnte noch nicht verbucht werden.';
+      render();
+      return;
+    }
+  }
   const payload = receiptPayload();
   state.receiptStatus = 'Bondruck wird gestartet ...';
   render();
