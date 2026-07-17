@@ -58,6 +58,9 @@ const state = {
     payment_customer: 0,
     payment_coupon: 0,
     bon_auto_print: 0,
+    bon_success_timer_seconds: 15,
+    bon_success_sound: '',
+    bon_auto_preview: 0,
     receipt_width_mm: 80,
     rating_active: 1,
     demo_mode: 0,
@@ -348,6 +351,9 @@ async function loadConfig(){
     }
     if(c.receipt){
       state.config.bon_auto_print = c.receipt.autoPrint ? 1 : 0;
+      state.config.bon_success_timer_seconds = Math.max(3, Number(c.receipt.successTimerSeconds || 15));
+      state.config.bon_success_sound = c.receipt.successSound || '';
+      state.config.bon_auto_preview = c.receipt.autoPreview ? 1 : 0;
       state.config.receipt_width_mm = Number(c.receipt.widthMm || 80);
       state.config.receipt_left_margin_mm = Number(c.receipt.leftMarginMm || 0);
     }
@@ -462,7 +468,7 @@ function render(){
   if(state.page === 'receipt'){
     layout(receiptHtml(), 'workPage receiptPage');
     if(state.paymentComplete && !state.saleBooked) completeSale();
-    if(!state.paymentComplete || state.saleBonNo) ensureReceiptPreview();
+    if(!state.paymentComplete || (state.saleBonNo && state.config.bon_auto_preview)) ensureReceiptPreview();
     return;
   }
   if(state.page === 'rating'){ clearSuccessTimer(); return layout(ratingHtml(), 'workPage ratingPage'); }
@@ -807,6 +813,7 @@ async function startPayment(){
     if(j.ok === true){
       state.paymentMessage = j.message || j.text || 'Zahlung erfolgreich';
       state.paymentComplete = true;
+      playSuccessSound();
       state.page = 'receipt';
       render();
       startSuccessTimer();
@@ -827,9 +834,17 @@ function clearSuccessTimer(){
   state.paymentOkTimer = null;
 }
 
+function playSuccessSound(){
+  if(!state.config.bon_success_sound) return;
+  try{
+    new Audio('/api/receipt/success/sound?t=' + encodeURIComponent(Date.now())).play().catch(()=>{});
+  }catch(e){}
+}
+
 function startSuccessTimer(){
   clearSuccessTimer();
-  state.paymentOkTimer = setTimeout(() => newStart(), 10000);
+  const seconds = Math.max(3, Number(state.config.bon_success_timer_seconds || 15));
+  state.paymentOkTimer = setTimeout(() => newStart(), seconds * 1000);
 }
 
 function resetOrder(){
@@ -921,7 +936,7 @@ async function completeSale(){
       if(j.ok){
         state.saleBonNo = Number(j.bonNo || 0);
         if(state.receiptPreview) state.receiptPreview = '';
-        ensureReceiptPreview(true);
+        if(state.config.bon_auto_preview) ensureReceiptPreview(true);
         return true;
       }
       state.saleBooked = false;

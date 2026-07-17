@@ -30,6 +30,9 @@ type
     BonDrucker: string;
     BonBreiteMM: Integer;
     BonRandLinksMM: Double;
+    BonErfolgTimerSekunden: Integer;
+    BonErfolgSound: string;
+    BonVorschauAutoLaden: Boolean;
     TSEAktiv: Boolean;
     TSEProvider: string;
     TSEDevicePath: string;
@@ -243,6 +246,10 @@ begin
     BonDrucker      := Ini.ReadString('Bon', 'Drucker', '');
     BonBreiteMM     := Ini.ReadInteger('Bon', 'BreiteMM', 80);
     BonRandLinksMM  := Ini.ReadFloat('Bon', 'RandLinksMM', 0);
+    BonErfolgTimerSekunden := Ini.ReadInteger('Bon', 'ErfolgTimerSekunden', 15);
+    if BonErfolgTimerSekunden < 3 then BonErfolgTimerSekunden := 3;
+    BonErfolgSound := Ini.ReadString('Bon', 'ErfolgSound', '');
+    BonVorschauAutoLaden := Ini.ReadInteger('Bon', 'VorschauAutoLaden', 0) = 1;
     if BonRandLinksMM <= 0 then
       if BonBreiteMM <= 58 then BonRandLinksMM := 8 else BonRandLinksMM := 3;
     TSEAktiv       := Ini.ReadInteger('TSE', 'Aktiv', 0) = 1;
@@ -374,6 +381,9 @@ begin
       Ini.WriteString('Bon', 'Drucker', JsonStr(Receipt, 'printer', BonDrucker));
       Ini.WriteInteger('Bon', 'BreiteMM', StrToIntDef(JsonStr(Receipt, 'widthMm', IntToStr(BonBreiteMM)), BonBreiteMM));
       Ini.WriteFloat('Bon', 'RandLinksMM', JsonFloat(Receipt, 'leftMarginMm', BonRandLinksMM));
+      Ini.WriteInteger('Bon', 'ErfolgTimerSekunden', StrToIntDef(JsonStr(Receipt, 'successTimerSeconds', IntToStr(BonErfolgTimerSekunden)), BonErfolgTimerSekunden));
+      Ini.WriteString('Bon', 'ErfolgSound', JsonStr(Receipt, 'successSound', BonErfolgSound));
+      Ini.WriteInteger('Bon', 'VorschauAutoLaden', Ord(JsonBool(Receipt, 'autoPreview', BonVorschauAutoLaden)));
       Ini.WriteString('EAN', 'Regeln', JsonStr(Root, 'eanRules', EANRules));
       Ini.WriteInteger('TSE', 'Aktiv', Ord(JsonBool(TSE, 'active', TSEAktiv)));
       Ini.WriteString('TSE', 'Provider', JsonStr(TSE, 'provider', TSEProvider));
@@ -498,7 +508,10 @@ begin
         '"autoPrint":' + BoolJson(BonAutoDruck) + ',' +
         '"printer":"' + JS(BonDrucker) + '",' +
         '"widthMm":' + IntToStr(BonBreiteMM) + ',' +
-        '"leftMarginMm":' + StringReplace(FormatFloat('0.0', BonRandLinksMM), ',', '.', [rfReplaceAll]) +
+        '"leftMarginMm":' + StringReplace(FormatFloat('0.0', BonRandLinksMM), ',', '.', [rfReplaceAll]) + ',' +
+        '"successTimerSeconds":' + IntToStr(BonErfolgTimerSekunden) + ',' +
+        '"successSound":"' + JS(BonErfolgSound) + '",' +
+        '"autoPreview":' + BoolJson(BonVorschauAutoLaden) +
       '},' +
       '"tse":{' +
         '"active":' + BoolJson(TSEAktiv) + ',' +

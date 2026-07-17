@@ -860,6 +860,18 @@ begin
       SendJson(Response, '{"ok":false,"message":"RFID-Alarm-Sound nicht gefunden."}');
       Exit;
     end;
+    if SameText(Path, '/api/receipt/success/sound') then
+    begin
+      SCOConfig.Load;
+      if (Trim(SCOConfig.BonErfolgSound) <> '') and FileExists(SCOConfig.BonErfolgSound) then
+      begin
+        ServeFile(Response, SCOConfig.BonErfolgSound);
+        Exit;
+      end;
+      Response.StatusCode := 404;
+      SendJson(Response, '{"ok":false,"message":"Bon-Erfolg-Sound nicht gefunden."}');
+      Exit;
+    end;
     if SameText(Path, '/api/rfid/release') then
     begin
       Sales := TSCOSalesJournalService.Create;
