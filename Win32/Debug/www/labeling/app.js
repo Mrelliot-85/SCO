@@ -858,6 +858,27 @@ function rfidPopupHtml(){
   `;
 }
 
+function normalizeRfidTagInput(value){
+  const needLen = Number(state.labelingConfig.rfidTagLength || 24);
+  const raw = String(value || '').toUpperCase().replace(/[^0-9A-F]/g, '');
+  const ePos = raw.indexOf('E');
+  let tag = ePos >= 0 ? raw.substring(ePos) : raw;
+  if(needLen > 0 && tag.length > needLen) tag = tag.substring(0, needLen);
+  return tag;
+}
+
+function validateRfidTag(tag){
+  const needLen = Number(state.labelingConfig.rfidTagLength || 24);
+  const cleanTag = normalizeRfidTagInput(tag);
+  if(cleanTag === '') return { ok:false, tag:cleanTag, message:'Kein RFID-Tag gelesen.' };
+  if(needLen > 0 && cleanTag.length < needLen)
+    return { ok:false, tag:cleanTag, message:'RFID-Tag unvollständig: ' + cleanTag.length + ' / ' + needLen + ' Zeichen' };
+  if(needLen > 0 && cleanTag.length !== needLen)
+    return { ok:false, tag:cleanTag, message:'RFID-Tag hat falsche Länge: ' + cleanTag.length + ' / ' + needLen + ' Zeichen' };
+  if(!/^E[0-9A-F]+$/.test(cleanTag))
+    return { ok:false, tag:cleanTag, message:'RFID-Tag ungültig: Bitte Tag erneut auflegen. Der Code muss mit E beginnen.' };
+  return { ok:true, tag:cleanTag, message:'' };
+}
 function rfidCheckResultHtml(r){
   const ok = !!(r && r.ok && r.found !== false);
   return `<div class="rfidCheckResult ${ok ? 'ok' : 'bad'}">
@@ -985,31 +1006,33 @@ function bind(){
   const rfid = $('rfidInput');
   if(rfid){
     rfid.oninput = async e => {
-      const tag = e.target.value.trim();
+      const raw = e.target.value;
+      const tag = normalizeRfidTagInput(raw);
       const needLen = Number(state.labelingConfig.rfidTagLength || 24);
-      debugLog('rfid input', { length: tag.length, needLen, tag });
+      debugLog('rfid input', { rawLength: raw.length, length: tag.length, needLen, tag });
       if(tag.length >= needLen){
         e.target.value = '';
-        await handleRfidTag(tag.substring(0, needLen));
+        await handleRfidTag(tag);
       }
     };
 
     rfid.onkeydown = async e => {
       if(e.key === 'Enter'){
-        const tag = e.target.value.trim();
+        const raw = e.target.value;
+        const tag = normalizeRfidTagInput(raw);
         e.target.value = '';
         const needLen = Number(state.labelingConfig.rfidTagLength || 24);
-        debugLog('rfid enter', { length: tag.length, needLen, tag });
+        debugLog('rfid enter', { rawLength: raw.length, length: tag.length, needLen, tag });
         if(tag.length >= needLen)
-          await handleRfidTag(tag.substring(0, needLen));
-        else if(tag){
-          state.rfidMessage = 'RFID-Tag unvollständig: ' + tag.length + ' / ' + needLen + ' Zeichen';
+          await handleRfidTag(tag);
+        else if(raw){
+          const check = validateRfidTag(raw);
+          state.rfidMessage = check.message;
           render();
           setTimeout(() => $('rfidInput')?.focus(), 100);
         }
       }
     };
-
     if(state.waitingForRfid){
       setTimeout(() => {
         const x = $('rfidInput');
@@ -1422,17 +1445,11 @@ async function handleRfidTag(tag){
 }
 
 async function checkRfidTag(tag){
-  const needLen = Number(state.labelingConfig.rfidTagLength || 24);
-  let cleanTag = String(tag || '').trim();
-  if(needLen > 0 && cleanTag.length > needLen)
-    cleanTag = cleanTag.substring(0, needLen);
-  if(cleanTag === ''){
-    state.rfidMessage = 'Kein RFID-Tag gelesen.';
-    render();
-    return;
-  }
-  if(needLen > 0 && cleanTag.length < needLen){
-    state.rfidMessage = 'RFID-Tag unvollständig: ' + cleanTag.length + ' / ' + needLen + ' Zeichen';
+  const check = validateRfidTag(tag);
+  const cleanTag = check.tag;
+  if(!check.ok){
+    state.rfidMessage = check.message;
+    state.rfidCheckResult = { ok:false, tag: cleanTag, message: check.message };
     render();
     setTimeout(() => $('rfidInput')?.focus(), 100);
     return;
@@ -1460,20 +1477,10 @@ async function invalidateRfidTag(tag){
     return;
   }
 
-  const needLen = Number(state.labelingConfig.rfidTagLength || 24);
-  let cleanTag = String(tag || '').trim();
-
-  if(needLen > 0 && cleanTag.length > needLen)
-    cleanTag = cleanTag.substring(0, needLen);
-
-  if(cleanTag === ''){
-    state.rfidMessage = 'Kein RFID-Tag gelesen.';
-    render();
-    return;
-  }
-
-  if(needLen > 0 && cleanTag.length < needLen){
-    state.rfidMessage = 'RFID-Tag unvollständig: ' + cleanTag.length + ' / ' + needLen + ' Zeichen';
+  const check = validateRfidTag(tag);
+  const cleanTag = check.tag;
+  if(!check.ok){
+    state.rfidMessage = check.message;
     render();
     setTimeout(() => $('rfidInput')?.focus(), 100);
     return;
@@ -1524,20 +1531,11 @@ async function saveRfidTag(tag, overwrite = false){
   const p = state.selectedProduct;
   if(!p) return;
 
+  const check = validateRfidTag(tag);
+  const cleanTag = check.tag;
   const needLen = Number(state.labelingConfig.rfidTagLength || 24);
-  let cleanTag = String(tag || '').trim();
-
-  if(needLen > 0 && cleanTag.length > needLen)
-    cleanTag = cleanTag.substring(0, needLen);
-
-  if(cleanTag === ''){
-    state.rfidMessage = 'Kein RFID-Tag gelesen.';
-    render();
-    return;
-  }
-
-  if(needLen > 0 && cleanTag.length < needLen){
-    state.rfidMessage = 'RFID-Tag unvollständig: ' + cleanTag.length + ' / ' + needLen + ' Zeichen';
+  if(!check.ok){
+    state.rfidMessage = check.message;
     render();
     setTimeout(() => $('rfidInput')?.focus(), 100);
     return;

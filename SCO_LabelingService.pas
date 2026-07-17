@@ -57,6 +57,55 @@ function LogNumber(Value: Double; const Mask: string): string;
 begin
   Result := StringReplace(FormatFloat(Mask, Value), ',', '.', []);
 end;
+function NormalizeRFIDTag(const S: string; NeedLen: Integer): string;
+var
+  I, StartPos: Integer;
+  Raw: string;
+begin
+  Raw := '';
+  for I := 1 to Length(S) do
+    if CharInSet(UpCase(S[I]), ['0'..'9', 'A'..'F']) then
+      Raw := Raw + UpCase(S[I]);
+
+  StartPos := Pos('E', Raw);
+  if StartPos > 0 then
+    Result := Copy(Raw, StartPos, MaxInt)
+  else
+    Result := Raw;
+
+  if (NeedLen > 0) and (Length(Result) > NeedLen) then
+    Result := Copy(Result, 1, NeedLen);
+end;
+
+function ValidRFIDTag(const Tag: string; NeedLen: Integer; out ErrorText: string): Boolean;
+var
+  I: Integer;
+begin
+  Result := False;
+  ErrorText := '';
+  if Tag = '' then
+  begin
+    ErrorText := 'Kein RFID-Tag gelesen.';
+    Exit;
+  end;
+  if (NeedLen > 0) and (Length(Tag) <> NeedLen) then
+  begin
+    ErrorText := 'RFID-Tag hat falsche Laenge: ' + IntToStr(Length(Tag)) + ' / ' + IntToStr(NeedLen) + '.';
+    Exit;
+  end;
+  if (Length(Tag) < 1) or (Tag[1] <> 'E') then
+  begin
+    ErrorText := 'RFID-Tag ungueltig: Bitte Tag erneut auflegen. Der Code muss mit E beginnen.';
+    Exit;
+  end;
+  for I := 1 to Length(Tag) do
+    if not CharInSet(Tag[I], ['0'..'9', 'A'..'F']) then
+    begin
+      ErrorText := 'RFID-Tag ungueltig: Es sind nur Hex-Zeichen erlaubt.';
+      Exit;
+    end;
+  Result := True;
+end;
 function DigitsOnly(const S: string): string;
 var
   I: Integer;
@@ -350,7 +399,7 @@ function LabelingSaveRfidJsonInternal(PLU: Integer; const Tag, MHD, Source: stri
   Weight: Double; Tara: Double; Price: Double; Overwrite: Boolean): string;
 var
   Q: TFDQuery;
-  CleanTag, UnitName: string;
+  CleanTag, UnitName, TagError: string;
   Typ, ExistingID: Integer;
   NeedLen: Integer;
   ParsedMHD: TDateTime;
@@ -358,7 +407,7 @@ var
 begin
   SCOConfig.Load;
   NeedLen := SCOConfig.LabelingTagLength;
-  CleanTag := Trim(Tag);
+  CleanTag := NormalizeRFIDTag(Tag, NeedLen);
   ExistingID := 0;
 
   LogWeighing('RFID_SAVE_START PLU=' + IntToStr(PLU) + ' TAG=' + CleanTag + ' SOURCE=' + Source + ' BRUTTO=' + LogNumber(Weight + Tara, '0.000') + 'kg TARA=' + LogNumber(Tara, '0.000') + 'kg NETTO=' + LogNumber(Weight, '0.000') + 'kg CLIENTPRICE=' + LogNumber(Price, '0.00') + ' MHD=' + MHD);
@@ -380,17 +429,10 @@ begin
     Exit;
   end;
 
-  if CleanTag = '' then
+  if not ValidRFIDTag(CleanTag, NeedLen, TagError) then
   begin
-    LogError('RFID SAVE ABORT: empty tag');
-    Result := '{"ok":false,"message":"Kein RFID-Tag gelesen."}';
-    Exit;
-  end;
-
-  if (NeedLen > 0) and (Length(CleanTag) <> NeedLen) then
-  begin
-    LogError('RFID SAVE ABORT: tag length ' + IntToStr(Length(CleanTag)) + ' expected ' + IntToStr(NeedLen));
-    Result := '{"ok":false,"message":"RFID-Tag hat falsche Laenge: ' + IntToStr(Length(CleanTag)) + ' / ' + IntToStr(NeedLen) + '."}';
+    LogError('RFID SAVE ABORT: invalid tag RAW=' + Tag + ' CLEAN=' + CleanTag + ' REASON=' + TagError);
+    Result := '{"ok":false,"message":"' + JS(TagError) + '","tag":"' + JS(CleanTag) + '"}';
     Exit;
   end;
 
@@ -554,20 +596,20 @@ end;
 function LabelingInvalidateRfidJsonInternal(const Tag: string): string;
 var
   Q: TFDQuery;
-  CleanTag: string;
+  CleanTag, TagError: string;
   ID, OldStatus, PLU: Integer;
   NeedLen: Integer;
 begin
   SCOConfig.Load;
-  CleanTag := Trim(Tag);
   NeedLen := SCOConfig.LabelingTagLength;
+  CleanTag := NormalizeRFIDTag(Tag, NeedLen);
   LogTransaction('RFID INVALIDATE START TAG=' + CleanTag + ' TAGLEN=' + IntToStr(Length(CleanTag)));
 
-  if CleanTag = '' then
-    Exit('{"ok":false,"message":"Kein RFID-Tag gelesen."}');
-
-  if (NeedLen > 0) and (Length(CleanTag) <> NeedLen) then
-    Exit('{"ok":false,"message":"RFID-Tag hat falsche Laenge: ' + IntToStr(Length(CleanTag)) + ' / ' + IntToStr(NeedLen) + '."}');
+  if not ValidRFIDTag(CleanTag, NeedLen, TagError) then
+  begin
+    LogError('RFID INVALIDATE ABORT: invalid tag RAW=' + Tag + ' CLEAN=' + CleanTag + ' REASON=' + TagError);
+    Exit('{"ok":false,"message":"' + JS(TagError) + '","tag":"' + JS(CleanTag) + '"}');
+  end;
 
   Q := TFDQuery.Create(nil);
   try
@@ -617,20 +659,20 @@ end;
 function LabelingCheckRfidJsonInternal(const Tag: string): string;
 var
   Q: TFDQuery;
-  CleanTag, StatusText, ArticleName, UnitName, MHDText, CreatedText, ChangedText: string;
+  CleanTag, StatusText, ArticleName, UnitName, MHDText, CreatedText, ChangedText, TagError: string;
   NeedLen, ID, PLU, Status: Integer;
   Weight, Tara, Price, UnitPrice: Double;
 begin
   SCOConfig.Load;
-  CleanTag := Trim(Tag);
   NeedLen := SCOConfig.LabelingTagLength;
+  CleanTag := NormalizeRFIDTag(Tag, NeedLen);
   LogTransaction('RFID CHECK START TAG=' + CleanTag + ' TAGLEN=' + IntToStr(Length(CleanTag)));
 
-  if CleanTag = '' then
-    Exit('{"ok":false,"message":"Kein RFID-Tag gelesen."}');
-
-  if (NeedLen > 0) and (Length(CleanTag) <> NeedLen) then
-    Exit('{"ok":false,"message":"RFID-Tag hat falsche Laenge: ' + IntToStr(Length(CleanTag)) + ' / ' + IntToStr(NeedLen) + '.","tag":"' + JS(CleanTag) + '"}');
+  if not ValidRFIDTag(CleanTag, NeedLen, TagError) then
+  begin
+    LogError('RFID CHECK ABORT: invalid tag RAW=' + Tag + ' CLEAN=' + CleanTag + ' REASON=' + TagError);
+    Exit('{"ok":false,"message":"' + JS(TagError) + '","tag":"' + JS(CleanTag) + '"}');
+  end;
 
   Q := TFDQuery.Create(nil);
   try
