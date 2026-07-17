@@ -40,6 +40,8 @@ const state = {
   rfidStatus: 'idle',
   rfidLastOk: 0,
   rfidLastPollOk: 0,
+  rfidLastEventAt: 0,
+  rfidLastRestartAt: 0,
   rfidAutoCartTimer: null,
   theme: {
     customer: 'Herbst Hofladen',
@@ -75,6 +77,7 @@ const state = {
     rfid_exit_alarm_sound: '',
     rfid_start_on_scan: 0,
     rfid_start_delay_seconds: 5,
+    rfid_watchdog_seconds: 20,
     rating_questions: [
       'Wie zufrieden sind Sie mit unserem Sortiment?',
       'Wie zufrieden sind Sie mit der Abwicklung des Zahlvorgangs?',
@@ -202,7 +205,7 @@ async function flushRFIDEvents(){
 function isRFIDCheckoutBlocked(){
   return !!(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked);
 }
-function startRFIDSession(force = false){
+function startRFIDSession(force = false, clearClientState = force){
   if(!state.config.rfid_active) return;
   const now = Date.now();
   if(state.rfidStartBusy && !force && state.rfidStartAt && now - state.rfidStartAt < 4500) return;
@@ -211,7 +214,7 @@ function startRFIDSession(force = false){
   state.rfidStartAt = now;
   state.rfidStatus = 'starting';
   state.rfidSessionActive = false;
-  if(force){
+  if(force && clearClientState){
     Object.keys(rfidAccepted).forEach(k => delete rfidAccepted[k]);
     Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
     Object.keys(recentRfidScans).forEach(k => delete recentRfidScans[k]);
@@ -235,6 +238,8 @@ function startRFIDSession(force = false){
         state.rfidSessionActive = true;
         state.rfidStatus = 'active';
         state.rfidLastOk = Date.now();
+        state.rfidLastPollOk = Date.now();
+        state.rfidLastEventAt = Date.now();
         state.scanMessage = 'Scanner aktiv - bitte Artikel auflegen';
         if(state.page === 'cart') render();
       }
@@ -242,9 +247,9 @@ function startRFIDSession(force = false){
     .catch(e => {
       clearTimeout(timeout);
       state.rfidStartBusy = false;
-      state.rfidSessionActive = true;
-      state.rfidStatus = 'active';
-      state.scanMessage = 'Scanner aktiv - bitte Artikel auflegen';
+      state.rfidSessionActive = false;
+      state.rfidStatus = 'error';
+      state.scanMessage = 'Scanner nicht erreichbar - Neustart wird versucht';
       if(state.page === 'cart') render();
     });
 }
@@ -254,6 +259,30 @@ function shouldKeepRFIDReaderActive(){
 function ensureRFIDReaderActive(){
   if(!shouldKeepRFIDReaderActive()) return;
   if(!state.rfidSessionActive && !state.rfidStartBusy) startRFIDSession(false);
+}
+function restartRFIDReader(reason){
+  if(!shouldKeepRFIDReaderActive() || state.rfidStartBusy) return;
+  const now = Date.now();
+  const minGap = Math.max(8000, Number(state.config.rfid_watchdog_seconds || 20) * 1000);
+  if(state.rfidLastRestartAt && now - state.rfidLastRestartAt < minGap) return;
+  state.rfidLastRestartAt = now;
+  state.rfidSessionActive = false;
+  state.rfidStatus = 'starting';
+  state.scanMessage = reason || 'Scanner wird neu verbunden ...';
+  if(state.page === 'cart') render();
+  startRFIDSession(true, false);
+}
+function rfidWatchdogTick(){
+  if(!shouldKeepRFIDReaderActive() || state.rfidStartBusy) return;
+  const now = Date.now();
+  const maxSilent = Math.max(8, Number(state.config.rfid_watchdog_seconds || 20)) * 1000;
+  const lastEventOrStart = Math.max(Number(state.rfidLastEventAt || 0), Number(state.rfidLastOk || 0));
+  if(state.rfidStatus === 'error'){
+    restartRFIDReader('Scanner wird erneut gestartet ...');
+    return;
+  }
+  if(state.rfidSessionActive && lastEventOrStart && now - lastEventOrStart > maxSilent)
+    restartRFIDReader('Scanner wird geprüft und neu verbunden ...');
 }
 function ensureRFIDForCart(){
   ensureRFIDReaderActive();
@@ -310,6 +339,7 @@ async function boot(){
   focusScanner();
   setInterval(pollRFIDEvents, 350);
   setInterval(ensureRFIDForCart, 2000);
+  setInterval(rfidWatchdogTick, 3000);
 }
 
 async function loadConfig(){
@@ -352,6 +382,7 @@ async function loadConfig(){
       state.config.rfid_exit_alarm_sound = c.rfid.exitAlarmSound || '';
       state.config.rfid_start_on_scan = c.rfid.startOnScan ? 1 : 0;
       state.config.rfid_start_delay_seconds = Math.max(0, Number(c.rfid.startDelaySeconds || 5));
+      state.config.rfid_watchdog_seconds = Math.max(8, Number(c.rfid.watchdogSeconds || c.rfidWatchdogSeconds || 20));
     }
     if(c.receipt){
       state.config.bon_auto_print = c.receipt.autoPrint ? 1 : 0;
@@ -1299,6 +1330,7 @@ async function pollRFIDEvents(){
     const j = await r.json();
     if(!j.ok || !Array.isArray(j.events)) return;
     state.rfidLastPollOk = Date.now();
+    if(j.events.length) state.rfidLastEventAt = Date.now();
     if(state.page === 'cart' && state.rfidSessionActive && state.rfidStatus !== 'active') state.rfidStatus = 'active';
     const autoStartByRfid = !!state.config.rfid_start_on_scan;
     const shoppingActive = !blocked && state.rfidSessionActive && (state.page === 'cart' || (state.page === 'start' && autoStartByRfid));
