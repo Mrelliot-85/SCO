@@ -42,6 +42,7 @@ const state = {
   rfidLastPollOk: 0,
   rfidLastEventAt: 0,
   rfidLastRestartAt: 0,
+  rfidSuppressUntil: 0,
   rfidAutoCartTimer: null,
   theme: {
     customer: 'Herbst Hofladen',
@@ -317,6 +318,7 @@ function stopRFIDSession(){
 function resetRFIDSession(){
   if(!state.config.rfid_active) return;
   stopRFIDSession();
+  state.rfidSuppressUntil = Date.now() + 2500;
   state.scanMessage = 'RFID wird neu gestartet ...';
   startRFIDSession(true);
   render();
@@ -1052,11 +1054,13 @@ function action(a){
   if(a === 'focus') focusScanner();
   if(a === 'rfidReset') resetRFIDSession();
   if(a === 'rfidHelp'){
-    const hadItems = state.items.length > 0;
+    const removedCount = state.items.length;
+    const hadItems = removedCount > 0;
     releaseRfidItems(state.items);
     state.items = [];
     resetRFIDSession();
     state.scanMessage = 'Scanner wird neu gestartet. Bitte legen Sie die Artikel erneut auf.';
+    logLocalEvent({ art:'RFID_NOTFALL', level:'warn', message:'RFID-Hilfe: Artikelerfassung neu gestartet', qty:removedCount });
     showNotice('Bitte Artikel neu auflegen', hadItems ? 'Wir starten die Artikelerfassung neu. Bitte legen Sie alle Artikel noch einmal auf die gekennzeichnete Fläche.' : 'Wir starten die Artikelerfassung neu. Bitte legen Sie Ihre Artikel auf die gekennzeichnete Fläche.');
   }
   if(a === 'products'){
@@ -1334,11 +1338,13 @@ async function pollRFIDEvents(){
     if(state.page === 'cart' && state.rfidSessionActive && state.rfidStatus !== 'active') state.rfidStatus = 'active';
     const autoStartByRfid = !!state.config.rfid_start_on_scan;
     const shoppingActive = !blocked && state.rfidSessionActive && (state.page === 'cart' || (state.page === 'start' && autoStartByRfid));
+    const resetSuppress = Date.now() < Number(state.rfidSuppressUntil || 0);
     const jobs = [];
     for(const ev of j.events){
       state.lastRfidEventId = Math.max(Number(state.lastRfidEventId || 0), Number(ev.id || 0));
       if(blocked) continue;
       if(Number(ev.status || 0) !== 1 || !ev.tag) continue;
+      if(resetSuppress) continue;
       if(isExitAlarmEvent(ev)){
         jobs.push(scanRFIDExitAlarm(ev.tag, Number(ev.antenna || 0)));
         continue;
