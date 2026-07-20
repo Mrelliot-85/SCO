@@ -101,6 +101,8 @@ const recentRfidScans = Object.create(null);
 const rfidIgnoredUntil = Object.create(null);
 const rfidInFlight = Object.create(null);
 const rfidAccepted = Object.create(null);
+const rfidRemovedThisOrder = Object.create(null);
+const rfidSoldTags = Object.create(null);
 
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s ?? '').replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
@@ -156,6 +158,24 @@ function hasRfidTag(tag){
   const key = tagKey(tag);
   return !!key && (rfidAccepted[key] || state.items.some(x => tagKey(x.tag) === key));
 }
+function clearMap(map){ Object.keys(map).forEach(k => delete map[k]); }
+function blockRemovedRfidTag(tag){
+  const key = tagKey(tag);
+  if(key) rfidRemovedThisOrder[key] = true;
+}
+function blockSoldRfidTag(tag){
+  const key = tagKey(tag);
+  if(!key) return;
+  rfidSoldTags[key] = true;
+  delete rfidRemovedThisOrder[key];
+  delete rfidAccepted[key];
+  delete rfidInFlight[key];
+  rfidIgnoredUntil[key] = Date.now() + 60 * 60 * 1000;
+}
+function isRfidBlockedForCurrentCart(tag){
+  const key = tagKey(tag);
+  return !!key && (rfidRemovedThisOrder[key] || rfidSoldTags[key]);
+}
 async function releaseRfidTag(tag){
   const key = tagKey(tag);
   if(!key) return;
@@ -173,8 +193,9 @@ function forgetRfidTag(tag){
   delete recentRfidScans[key];
   delete rfidIgnoredUntil[key];
 }
-function releaseRfidItems(items){
+function releaseRfidItems(items, blockForCurrentOrder = true){
   (items || []).filter(x => x && x.source === 'rfid' && x.tag).forEach(x => {
+    if(blockForCurrentOrder) blockRemovedRfidTag(x.tag);
     logRfidRemoval(x);
     releaseRfidTag(x.tag);
     forgetRfidTag(x.tag);
@@ -227,10 +248,11 @@ function startRFIDSession(force = false, clearClientState = force){
   state.rfidStatus = 'starting';
   state.rfidSessionActive = false;
   if(force && clearClientState){
-    Object.keys(rfidAccepted).forEach(k => delete rfidAccepted[k]);
-    Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
-    Object.keys(recentRfidScans).forEach(k => delete recentRfidScans[k]);
-    Object.keys(rfidIgnoredUntil).forEach(k => delete rfidIgnoredUntil[k]);
+    clearMap(rfidAccepted);
+    clearMap(rfidInFlight);
+    clearMap(recentRfidScans);
+    clearMap(rfidIgnoredUntil);
+    clearMap(rfidRemovedThisOrder);
     state.lastRfidEventId = 0;
   }
   state.scanMessage = 'Scanner wird gestartet ...';
@@ -322,9 +344,9 @@ function stopRFIDSession(){
   state.rfidSessionActive = false;
   state.rfidStartBusy = false;
   state.rfidStatus = 'idle';
-  Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
-  Object.keys(recentRfidScans).forEach(k => delete recentRfidScans[k]);
-  Object.keys(rfidIgnoredUntil).forEach(k => delete rfidIgnoredUntil[k]);
+  clearMap(rfidInFlight);
+  clearMap(recentRfidScans);
+  clearMap(rfidIgnoredUntil);
 }
 function resetRFIDSession(){
   if(!state.config.rfid_active) return;
@@ -945,9 +967,10 @@ function resetOrder(){
   state.saleBonNo = 0;
   state.selectedPayment = '';
   state.rfidSessionActive = false;
-  Object.keys(rfidAccepted).forEach(k => delete rfidAccepted[k]);
-  Object.keys(rfidInFlight).forEach(k => delete rfidInFlight[k]);
-  Object.keys(recentRfidScans).forEach(k => delete recentRfidScans[k]);
+  clearMap(rfidAccepted);
+  clearMap(rfidInFlight);
+  clearMap(recentRfidScans);
+  clearMap(rfidRemovedThisOrder);
   state.scanMessage = 'Scanner bereit';
   state.ratings = [5, 5, 5, 5];
 }
@@ -1019,7 +1042,7 @@ async function completeSale(){
       const j = await r.json();
       if(j.ok){
         state.saleBonNo = Number(j.bonNo || 0);
-        soldTags.forEach(tag => { rfidIgnoredUntil[tag] = Date.now() + 10 * 60 * 1000; });
+        soldTags.forEach(tag => blockSoldRfidTag(tag));
         flushRFIDEvents();
         if(state.receiptPreview) state.receiptPreview = '';
         if(state.config.bon_auto_preview) ensureReceiptPreview(true);
@@ -1181,6 +1204,7 @@ function addItem(item){
   if(item && (item.source === 'rfid' || item.source === 'ean') && state.page !== 'cart' && !backgroundRfidStart) return;
   if(item && item.source === 'rfid' && !state.rfidSessionActive) return;
   if(item && item.source === 'rfid') item.tag = tagKey(item.tag);
+  if(item && item.source === 'rfid' && isRfidBlockedForCurrentCart(item.tag)) return;
   if(item && item.source === 'rfid' && hasRfidTag(item.tag)){
     state.scanMessage = item.name + ' ist bereits im Warenkorb';
     render();
@@ -1216,6 +1240,7 @@ function removeItem(id){
 function removeItemNow(id){
   const item = state.items.find(x => String(x.rowId) === String(id));
   if(item && item.source === 'rfid'){
+    blockRemovedRfidTag(item.tag);
     logRfidRemoval(item);
     releaseRfidTag(item.tag);
     forgetRfidTag(item.tag);
@@ -1238,6 +1263,7 @@ async function scanRFID(tag, antenna = 0){
   if(!state.rfidSessionActive || (state.page !== 'cart' && !(state.page === 'start' && state.config.rfid_start_on_scan))) return;
   const key = tagKey(tag);
   if(!key) return;
+  if(isRfidBlockedForCurrentCart(key)) return;
   if(hasRfidTag(key) || rfidInFlight[key]) return;
   const now = Date.now();
   if(rfidIgnoredUntil[key] && now < rfidIgnoredUntil[key]) return;
@@ -1275,7 +1301,8 @@ async function scanRFID(tag, antenna = 0){
     const msg = String(j.message || '');
     const status = Number(j.status || 0);
     if(status !== 0 || msg.toLowerCase().includes('verkauft') || msg.toLowerCase().includes('gesperrt') || msg.toLowerCase().includes('entwertet')){
-      rfidIgnoredUntil[key] = Date.now() + 30000;
+      if(status !== 0 || msg.toLowerCase().includes('verkauft') || msg.toLowerCase().includes('bezahlt') || msg.toLowerCase().includes('entwertet')) blockSoldRfidTag(key);
+      else rfidIgnoredUntil[key] = Date.now() + 30000;
     }else{
       rfidIgnoredUntil[key] = Date.now() + 10000;
     }
@@ -1350,7 +1377,7 @@ function isExitAlarmEvent(ev){
 }
 async function scanRFIDExitAlarm(tag, antenna){
   const key = tagKey(tag);
-  if(!key) return;
+  if(!key || rfidSoldTags[key]) return;
   try{
     const r = await fetch('/api/rfid/scan?tag=' + encodeURIComponent(key) + '&antenna=' + encodeURIComponent(antenna), { cache:'no-store' });
     const j = await r.json();
@@ -1391,6 +1418,7 @@ async function pollRFIDEvents(){
         continue;
       }
       if(!shoppingActive) continue;
+      if(isRfidBlockedForCurrentCart(ev.tag)) continue;
       if(rfidIgnoredUntil[tagKey(ev.tag)] && Date.now() < rfidIgnoredUntil[tagKey(ev.tag)]) continue;
       jobs.push(scanRFID(ev.tag, Number(ev.antenna || 0)));
     }
