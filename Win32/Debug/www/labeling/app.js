@@ -124,7 +124,7 @@ async function fetchJsonDebug(url, label, timeoutMs = 8000){
   let text;
 
   try{
-    response = await fetch(url, { signal: controller.signal });
+    response = await fetch(url, { signal: controller.signal, cache:'no-store' });
     text = await response.text();
   }catch(e){
     debugLog(label + ' fetch-error', { message: e.message, name: e.name });
@@ -337,7 +337,7 @@ async function loadProductFoodDetails(p){
 }
 async function loadGroups(){
   try{
-    const r = await fetch('/api/labeling/groups');
+    const r = await fetch('/api/labeling/groups', {cache:'no-store'});
     state.groups = await r.json();
     sortLabelingGroups();
 
@@ -357,7 +357,7 @@ function setGroupSort(mode){state.groupSort=mode==='number'?'number':'name';sort
 
 async function loadProducts(wg){
   try{
-    const r = await fetch('/api/labeling/products?wg=' + encodeURIComponent(wg));
+    const r = await fetch('/api/labeling/products?wg=' + encodeURIComponent(wg), {cache:'no-store'});
     const arr = await r.json();
     state.products = arr.map(mapProduct);
     sortLabelingProducts();
@@ -391,6 +391,19 @@ function mapProduct(p){
   };
 }
 
+function defaultMhdForProduct(p, fallback){
+  if(!p) return fallback || '';
+  if(p.mhd) return p.mhd;
+  const days = Number(p.mhdDays || 0);
+  if(days > 0){
+    const d = new Date();
+    d.setHours(12, 0, 0, 0);
+    d.setDate(d.getDate() + days);
+    return d.toISOString().slice(0, 10);
+  }
+  return fallback || '';
+}
+
 async function selectProductByPlu(pluText){
   const plu = Number(String(pluText || '').trim());
 
@@ -409,7 +422,7 @@ async function selectProductByPlu(pluText){
   }
 
   try{
-    const r = await fetch('/api/labeling/search?q=' + encodeURIComponent(String(plu)));
+    const r = await fetch('/api/labeling/search?q=' + encodeURIComponent(String(plu)), {cache:'no-store'});
     const arr = await r.json();
     const list = arr.map(mapProduct);
     p = list.find(x => Number(x.plu) === plu);
@@ -441,7 +454,7 @@ async function searchProducts(qOverride){
       return;
     }
 
-    const r = await fetch('/api/labeling/search?q=' + encodeURIComponent(q));
+    const r = await fetch('/api/labeling/search?q=' + encodeURIComponent(q), {cache:'no-store'});
     const arr = await r.json();
     state.products = arr.map(mapProduct);
     render();
@@ -453,7 +466,7 @@ async function searchProducts(qOverride){
 
 async function loadTaras(){
   try{
-    const r = await fetch('/api/labeling/taras');
+    const r = await fetch('/api/labeling/taras', {cache:'no-store'});
     state.taras = await r.json();
   }catch(e){
     state.taras = [];
@@ -515,10 +528,7 @@ function selectProduct(p){
     if(String(p.unit || '').toLowerCase() === 'kg' && state.config?.scale?.active)
       setTimeout(() => readWeight(false), 120);
 
-    if(!state.mhd){
-      if(p.mhd) state.mhd=p.mhd;
-      else if(p.mhdDays>0){const d=new Date();d.setDate(d.getDate()+p.mhdDays);state.mhd=d.toISOString().slice(0,10)}
-    }
+    state.mhd = defaultMhdForProduct(p, '');
   }
 
   if(state.mode === 'rfidwrite' && state.autoMode)
@@ -1644,7 +1654,7 @@ async function searchByScan(ean){
       }else{
         clearPieceWeight();
       }
-      state.mhd = j.mhd || p.mhd || state.mhd || '';
+      state.mhd = defaultMhdForProduct(Object.assign({}, p, { mhd: j.mhd || p.mhd }), '');
       state.message = j.name + ' gefunden' + (j.source ? ' (' + j.source + ')' : '');
 
       if(state.mode === 'rfidwrite' && state.autoMode)

@@ -22,6 +22,7 @@ function LabelingProtocolStatusJson(ID, Status: Integer): string;
 implementation
 uses
   FireDAC.Comp.Client,
+  Data.DB,
   System.Classes, System.Types, System.StrUtils, System.Math, System.SyncObjs,
   Winapi.Windows, Winapi.WinSpool,
   IdTCPClient, IdGlobal,
@@ -164,6 +165,47 @@ begin
   end;
 end;
 
+function ProductMHDDateInputDef(Q: TFDQuery): string;
+var
+  F: TField;
+begin
+  Result := '';
+  F := Q.FindField('MHD');
+  if (F = nil) or F.IsNull then
+    Exit;
+  case F.DataType of
+    ftDate, ftDateTime, ftTimeStamp:
+      try
+        Result := FormatDateTime('yyyy-mm-dd', F.AsDateTime);
+      except
+        Result := '';
+      end;
+  else
+    Result := '';
+  end;
+end;
+
+function ProductMHDDaysJson(Q: TFDQuery): string;
+var
+  F: TField;
+  S: string;
+  Days: Integer;
+begin
+  Result := '0';
+  F := Q.FindField('MHD');
+  if (F = nil) or F.IsNull then
+    Exit;
+  case F.DataType of
+    ftSmallint, ftInteger, ftWord, ftLargeint, ftShortint, ftByte:
+      Exit(IntToStr(F.AsInteger));
+    ftFloat, ftCurrency, ftBCD, ftFMTBcd, ftSingle, ftExtended:
+      Exit(IntToStr(Round(F.AsFloat)));
+  end;
+  S := Trim(F.AsString);
+  Days := StrToIntDef(S, 0);
+  if Days > 0 then
+    Result := IntToStr(Days);
+end;
 function SafeJsonNumber(const S: string; DefaultValue: string): string;
 begin
   Result := Trim(S);
@@ -183,7 +225,7 @@ begin
     UnitPrice := FieldFloatDef(Q, 'VK_BRUTTO', 0);
 
   NennGewicht := FieldFloatDef(Q, 'NENNGEWICHT', 0);
-  MHDText := FieldDateInputDef(Q, 'MHD');
+  MHDText := ProductMHDDateInputDef(Q);
 
   Result :=
     '{' +
@@ -204,7 +246,7 @@ begin
     '"eanprice":' + PriceJson(EanPrice) + ',' +
     '"totalPrice":' + PriceJson(EanPrice) + ',' +
     '"mhd":"' + JS(MHDText) + '",' +
-    '"mhdDays":' + SafeJsonNumber(FieldStrDef(Q, 'MHD', '0'), '0') + ',' +
+    '"mhdDays":' + ProductMHDDaysJson(Q) + ',' +
     '"labelNumber":' + SafeJsonNumber(FieldStrDef(Q, 'STANDARD_ETIKETT', '0'), '0') + ',' +
     '"ean":"' + JS(FieldStrDef(Q, 'EAN', '')) + '",' +
     '"ingredients":"' + JS(FieldStrDef(Q, 'ZUTATENTEXT', '')) + '",' +
@@ -288,8 +330,8 @@ begin
         '"ep":' + PriceJson(FieldFloatDef(Q, 'PREIS', 0)) + ',' +
         '"nenngewicht":' + FloatJson(FieldFloatDef(Q, 'NENNGEWICHT', 0)) + ',' +
         '"taranr":' + SafeJsonNumber(FieldStrDef(Q, 'TARANR', '0'), '0') + ',' +
-        '"mhd":"",' +
-        '"mhdDays":' + SafeJsonNumber(FieldStrDef(Q, 'MHD', '0'), '0') + ',' +
+        '"mhd":"' + JS(ProductMHDDateInputDef(Q)) + '",' +
+        '"mhdDays":' + ProductMHDDaysJson(Q) + ',' +
         '"labelNumber":' + SafeJsonNumber(FieldStrDef(Q, 'STANDARD_ETIKETT', '0'), '0') + ',' +
         '"ean":"' + JS(FieldStrDef(Q, 'EAN', '')) + '",' +
         '"ingredients":"",' +
@@ -703,7 +745,7 @@ begin
       if ArticleName = '' then
         ArticleName := FieldStrDef(Q, 'BEZEICHNUNG2', '');
       UnitName := FieldStrDef(Q, 'ME_BEZ', '');
-      MHDText := FieldDateInputDef(Q, 'MHD');
+      MHDText := ProductMHDDateInputDef(Q);
       CreatedText := FieldDateInputDef(Q, 'CREATEDATE');
       ChangedText := FieldDateInputDef(Q, 'CHANGEDATE');
 
@@ -845,8 +887,8 @@ begin
         '"price":' + PriceJson(FieldFloatDef(Q, 'PREIS', 0)) + ',' +
         '"nenngewicht":' + FloatJson(FieldFloatDef(Q, 'NENNGEWICHT', 0)) + ',' +
         '"taranr":' + SafeJsonNumber(FieldStrDef(Q, 'TARANR', '0'), '0') + ',' +
-        '"mhd":"",' +
-        '"mhdDays":' + SafeJsonNumber(FieldStrDef(Q, 'MHD', '0'), '0') + ',' +
+        '"mhd":"' + JS(ProductMHDDateInputDef(Q)) + '",' +
+        '"mhdDays":' + ProductMHDDaysJson(Q) + ',' +
         '"labelNumber":' + SafeJsonNumber(FieldStrDef(Q, 'STANDARD_ETIKETT', '0'), '0') + ',' +
         '"ean":"' + JS(FieldStrDef(Q, 'EAN', '')) + '",' +
         '"ingredients":"' + JS(FieldStrDef(Q, 'ZUTATENTEXT', '')) + '",' +
