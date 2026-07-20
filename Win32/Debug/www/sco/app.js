@@ -504,8 +504,13 @@ function render(){
   if(state.page === 'payment') return layout(paymentHtml(), 'workPage paymentPage');
   if(state.page === 'receipt'){
     layout(receiptHtml(), 'workPage receiptPage');
-    if(state.paymentComplete && !state.saleBooked) completeSale();
-    if(!state.paymentComplete || (state.saleBonNo && state.config.bon_auto_preview)) ensureReceiptPreview();
+    if(state.paymentComplete){
+      if(!state.saleBooked) completeSale().then(ok => { if(ok && state.page === 'receipt') ensureReceiptPreview(); });
+      else if(state.saleBonNo) ensureReceiptPreview();
+      if(!state.paymentOkTimer) startSuccessTimer();
+    }else{
+      ensureReceiptPreview();
+    }
     return;
   }
   if(state.page === 'rating'){ clearSuccessTimer(); return layout(ratingHtml(), 'workPage ratingPage'); }
@@ -877,9 +882,31 @@ function clearSuccessTimer(){
 }
 
 function playSuccessSound(){
-  if(!state.config.bon_success_sound) return;
   try{
-    new Audio('/api/receipt/success/sound?t=' + encodeURIComponent(Date.now())).play().catch(()=>{});
+    if(state.config.bon_success_sound){
+      new Audio('/api/receipt/success/sound?t=' + encodeURIComponent(Date.now())).play().catch(()=>playSuccessBeep());
+    }else{
+      playSuccessBeep();
+    }
+  }catch(e){ playSuccessBeep(); }
+}
+
+function playSuccessBeep(){
+  try{
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if(!Ctx) return;
+    const ctx = new Ctx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 880;
+    gain.gain.setValueAtTime(0.001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.18, ctx.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.32);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.35);
   }catch(e){}
 }
 
