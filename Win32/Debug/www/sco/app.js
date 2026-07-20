@@ -509,6 +509,7 @@ function render(){
   if(state.page === 'start'){
     layout(startHtml(), 'startPage');
     recoverStartImage();
+    ensureRFIDForCart();
     return;
   }
   if(state.page === 'cart'){ layout(cartHtml(), 'workPage cartPage'); ensureRFIDForCart(); return; }
@@ -1413,7 +1414,8 @@ function submitScannerValue(value, force){
 
   if(looksLikeRfidTag(raw)){
     const tag = raw.substring(0, needLen);
-    if(state.rfidSessionActive && state.page === 'cart') scanRFID(tag);
+    const rfidPageReady = state.page === 'cart' || (state.page === 'start' && !!state.config.rfid_start_on_scan);
+    if(state.rfidSessionActive && rfidPageReady) scanRFID(tag);
     return '';
   }
 
