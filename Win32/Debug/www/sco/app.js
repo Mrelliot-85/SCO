@@ -136,6 +136,7 @@ function scheduleIdleReset(){
     resetOrder();
     state.page = 'start';
     render();
+    armRFIDAfterCartReset();
     focusScanner();
   }, seconds * 1000);
 }
@@ -196,12 +197,22 @@ async function flushRFIDEvents(){
   try{
     const r = await fetch('/api/rfid/events?after=' + encodeURIComponent(state.lastRfidEventId || 0), { cache:'no-store' });
     const j = await r.json();
+    state.rfidLastPollOk = Date.now();
     if(j.ok && Array.isArray(j.events)){
       for(const ev of j.events) state.lastRfidEventId = Math.max(Number(state.lastRfidEventId || 0), Number(ev.id || 0));
     }
   }catch(e){
     console.warn('rfid flush nicht erreichbar', e);
   }
+}
+function armRFIDAfterCartReset(){
+  if(!state.config.rfid_active) return;
+  state.rfidSuppressUntil = Date.now() + 5000;
+  state.rfidSessionActive = false;
+  state.rfidStatus = 'starting';
+  flushRFIDEvents().finally(() => {
+    if(shouldKeepRFIDReaderActive() && !isRFIDCheckoutBlocked()) startRFIDSession(true, false);
+  });
 }
 function isRFIDCheckoutBlocked(){
   return !!(state.checkoutLocked || state.paymentBusy || state.paymentComplete || state.saleBooked);
@@ -276,14 +287,14 @@ function restartRFIDReader(reason){
 function rfidWatchdogTick(){
   if(!shouldKeepRFIDReaderActive() || state.rfidStartBusy) return;
   const now = Date.now();
-  const maxSilent = Math.max(8, Number(state.config.rfid_watchdog_seconds || 20)) * 1000;
-  const lastEventOrStart = Math.max(Number(state.rfidLastEventAt || 0), Number(state.rfidLastOk || 0));
+  const maxSilent = Math.max(15, Number(state.config.rfid_watchdog_seconds || 20) * 2) * 1000;
+  const lastPollOrStart = Math.max(Number(state.rfidLastPollOk || 0), Number(state.rfidLastOk || 0));
   if(state.rfidStatus === 'error'){
     restartRFIDReader('Scanner wird erneut gestartet ...');
     return;
   }
-  if(state.rfidSessionActive && lastEventOrStart && now - lastEventOrStart > maxSilent)
-    restartRFIDReader('Scanner wird geprüft und neu verbunden ...');
+  if(state.rfidSessionActive && lastPollOrStart && now - lastPollOrStart > maxSilent)
+    restartRFIDReader('Scanner wird geprueft und neu verbunden ...');
 }
 function ensureRFIDForCart(){
   ensureRFIDReaderActive();
@@ -1077,6 +1088,7 @@ function action(a){
     state.items = [];
     state.scanMessage = RFID_RETURN_ALL_MESSAGE;
     if(hadItems) showNotice('Alle Artikel entfernt', RFID_RETURN_ALL_MESSAGE); else render();
+    armRFIDAfterCartReset();
   }
   if(a === 'focus') focusScanner();
   if(a === 'rfidReset') resetRFIDSession();
@@ -1110,6 +1122,7 @@ function action(a){
     state.scanMessage = RFID_RETURN_ALL_MESSAGE;
     state.page = 'start';
     if(hadItems) showNotice('Alle Artikel entfernt', RFID_RETURN_ALL_MESSAGE); else render();
+    armRFIDAfterCartReset();
   }
   if(a === 'toggleCoupon'){
     state.coupon = state.coupon ? 0 : 5;
