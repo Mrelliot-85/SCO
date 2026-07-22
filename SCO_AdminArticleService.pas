@@ -1,4 +1,4 @@
-unit SCO_AdminArticleService;
+﻿unit SCO_AdminArticleService;
 
 interface
 
@@ -88,6 +88,74 @@ begin
     Result := Q.FieldByName(Name).AsFloat;
 end;
 
+function RtfToPlainText(const S: string): string;
+var
+  I, Code: Integer;
+  C: Char;
+  InCommand: Boolean;
+  Command, Hex: string;
+begin
+  Result := '';
+  if Pos('{\rtf', Trim(LowerCase(S))) <> 1 then
+    Exit(S);
+
+  I := 1;
+  while I <= Length(S) do
+  begin
+    C := S[I];
+    case C of
+      '{', '}':
+        Inc(I);
+      '\':
+        begin
+          Inc(I);
+          if I > Length(S) then Break;
+          if S[I] in ['\', '{', '}'] then
+          begin
+            Result := Result + S[I];
+            Inc(I);
+            Continue;
+          end;
+          if S[I] = '''' then
+          begin
+            Inc(I);
+            Hex := Copy(S, I, 2);
+            if TryStrToInt('$' + Hex, Code) then
+              Result := Result + Char(Code);
+            Inc(I, 2);
+            Continue;
+          end;
+
+          Command := '';
+          InCommand := True;
+          while (I <= Length(S)) and InCommand do
+          begin
+            if S[I] in ['a'..'z', 'A'..'Z'] then
+            begin
+              Command := Command + LowerCase(S[I]);
+              Inc(I);
+            end
+            else
+              InCommand := False;
+          end;
+          if Command = 'par' then
+            Result := Result + sLineBreak
+          else if Command = 'tab' then
+            Result := Result + #9;
+          while (I <= Length(S)) and (S[I] in ['-', '0'..'9']) do
+            Inc(I);
+          if (I <= Length(S)) and (S[I] = ' ') then
+            Inc(I);
+        end;
+      #13, #10:
+        Inc(I);
+    else
+      Result := Result + C;
+      Inc(I);
+    end;
+  end;
+  Result := Trim(Result);
+end;
 function TableHasField(const TableName, FieldName: string): Boolean;
 var
   Q: TFDQuery;
@@ -274,7 +342,7 @@ begin
       '"hwg":' + IntToStr(FieldInt(Q,'HWG')) + ',' +
       '"wg":' + IntToStr(FieldInt(Q,'WG')) + ',' +
       '"ean":"' + JS(FieldStr(Q,'EAN')) + '",' +
-      '"zutatentext":"' + JS(FieldStr(Q,'ZUTATENTEXT')) + '",' +
+      '"zutatentext":"' + JS(RtfToPlainText(FieldStr(Q,'ZUTATENTEXT'))) + '",' +
       '"mwst":' + IntToStr(FieldInt(Q,'MWST_1')) + ',' +
       '"standardEtikett":"' + JS(FieldStr(Q,'STANDARD_ETIKETT')) + '",' +
       '"mhd":' + IntToStr(FieldInt(Q,'MHD')) + ',' +
@@ -666,7 +734,7 @@ function AdminGroupSaveJson(const Body: string): string;
 var O: TJSONObject; Q: TFDQuery; Number: Integer; Name: string;
 begin
   O := TJSONObject.ParseJSONValue(Body) as TJSONObject;
-  if O = nil then Exit('{"ok":false,"message":"Ungültige Warengruppe."}');
+  if O = nil then Exit('{"ok":false,"message":"UngÃ¼ltige Warengruppe."}');
   Q := TFDQuery.Create(nil);
   try
     SCOConfig.Load;
@@ -707,13 +775,9 @@ begin
     if Used > 0 then raise Exception.Create('Warengruppe ist noch ' + IntToStr(Used) + ' Artikel(n) zugeordnet.');
     Q.SQL.Text := 'delete from GRUPPEN where NL_KEY = :NLKEY and NUMMER = :WG';
     Q.ParamByName('NLKEY').AsInteger := SCOConfig.NLKey; Q.ParamByName('WG').AsInteger := Number; Q.ExecSQL;
-    Result := '{"ok":true,"message":"Warengruppe gelöscht."}';
+    Result := '{"ok":true,"message":"Warengruppe gelÃ¶scht."}';
   except on E: Exception do begin LogError('ADMIN GROUP DELETE ERROR: ' + E.Message); Result := '{"ok":false,"message":"' + JS(E.Message) + '"}'; end; end;
   Q.Free;
 end;
 end.
-
-
-
-
 
