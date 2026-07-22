@@ -860,8 +860,8 @@ begin
       '  cast(NUMMER as varchar(20)) as ELENO, VK_BRUTTO as PREIS, VK_BRUTTO, NENNGEWICHT, MHD, TARANR, STANDARD_ETIKETT, EAN, ZUTATENTEXT, ID, BEZEICHNUNG, BEZEICHNUNG2, ' +
       '  ME_BEZ, WG, WG_BEZ ' +
       'from VARTIKEL ' +
-      'where upper(BEZEICHNUNG) containing upper(:S) ' +
-      '   or upper(coalesce(BEZEICHNUNG2, '''')) containing upper(:S) ' +
+      'where upper(cast(coalesce(BEZEICHNUNG, '''') as varchar(255))) containing upper(:S) ' +
+      '   or upper(cast(coalesce(BEZEICHNUNG2, '''') as varchar(255))) containing upper(:S) ' +
       '   or cast(ELENO as varchar(20)) containing :S ' +
       '   or cast(NUMMER as varchar(20)) containing :S ' +
       '   or coalesce(EAN, '''') containing :S ' +
@@ -898,9 +898,14 @@ begin
       Q.Next;
     end;
     Result := Result + ']';
-  finally
-    Q.Free;
+  except
+    on E: Exception do
+    begin
+      LogError('LABEL SEARCH ERROR: ' + E.Message);
+      Result := '[]';
+    end;
   end;
+  Q.Free;
 end;
 function GetArtikelVKBrutto(ArtikelID: Integer): Double;
 var

@@ -181,8 +181,10 @@ begin
       'or upper(cast(ELENO as varchar(30))) like :LIKEQ ' +
       'or upper(coalesce(cast(EAN as varchar(50)),'''')) like :LIKEQ) ' +
       'order by ' + OrderField + ' ' + Dir;
-    Q.ParamByName('Q').AsString := S;
-    Q.ParamByName('LIKEQ').AsString := SearchLike;
+    Q.ParamByName('Q').Size := 100;
+    Q.ParamByName('Q').AsString := Copy(S, 1, 100);
+    Q.ParamByName('LIKEQ').Size := 110;
+    Q.ParamByName('LIKEQ').AsString := Copy(SearchLike, 1, 110);
     Q.Open;
 
     Result := '[';
@@ -307,8 +309,10 @@ var
 begin
   if TableExists('EINHEIT') then
     UnitSql := 'select NUMMER, KURZBEZ from EINHEIT where coalesce(KZ_GESPERRT,''F'') <> ''T'' order by NUMMER'
+  else if TableExists('MENGENEINHEIT') then
+    UnitSql := 'select NUMMER, KURZBEZ from MENGENEINHEIT where coalesce(KZ_GESPERRT,''F'') <> ''T'' order by NUMMER'
   else
-    UnitSql := 'select NUMMER, KURZBEZ from ME where coalesce(KZ_GESPERRT,''F'') <> ''T'' order by NUMMER';
+    UnitSql := 'select distinct EINHEIT as NUMMER, cast(coalesce(ME_BEZ, cast(EINHEIT as varchar(10))) as varchar(40)) as KURZBEZ from VARTIKEL where EINHEIT is not null order by 1';
 
   Result := '{' +
     '"groups":' + GetGroupsJson + ',' +
